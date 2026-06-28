@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+import LandingPage from '../views/LandingPage.vue';
 import Dashboard from '../views/Dashboard.vue';
 import Kanban from '../views/Kanban.vue';
 import Login from '../views/Login.vue';
@@ -10,6 +11,12 @@ import Profile from '../views/Profile.vue';
 import Settings from '../views/Settings.vue';
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    name: 'Landing',
+    component: LandingPage,
+    meta: { title: 'SprintFlow - Quản lý dự án thông minh' }
+  },
   {
     path: '/login',
     name: 'Login',
@@ -23,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { title: 'Đăng ký tài khoản - SprintFlow' }
   },
   {
-    path: '/',
+    path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
     meta: { title: 'Tổng quan - SprintFlow', requiresAuth: true }
@@ -93,7 +100,9 @@ router.beforeEach((to, _from, next) => {
   if (requiresAuth && !token) {
     next('/login');
   } else if ((to.path === '/login' || to.path === '/register') && token) {
-    next('/');
+    next('/dashboard');
+  } else if (to.path === '/' && token) {
+    next('/dashboard');
   } else {
     next();
   }

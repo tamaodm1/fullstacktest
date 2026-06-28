@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useTaskStore } from './stores/taskStore';
+import { useRoute } from 'vue-router';
 import Sidebar from './components/Sidebar.vue';
 import { Radio, Terminal, X, ZapOff } from '@lucide/vue';
 
 const taskStore = useTaskStore();
+const route = useRoute();
 const isEventHubOpen = ref(false);
+const isLanding = computed(() => route.name === 'Landing');
 
 onMounted(() => {
   taskStore.init();
@@ -13,7 +16,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
+  <!-- Landing Page: render full-width without app shell -->
+  <router-view v-if="isLanding" />
+
+  <!-- App Shell: sidebar + main content -->
+  <div v-else class="flex min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
     <!-- Sidebar Navigation -->
     <Sidebar v-if="taskStore.currentUser && taskStore.currentUser.id" />
 
