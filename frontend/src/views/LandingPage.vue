@@ -292,7 +292,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const words = ['hiệu quả hơn', 'chuyên nghiệp hơn', 'thông minh hơn', 'dễ dàng hơn']
 let wordIdx = 0, charIdx = 0, deleting = false
 const typedText = ref('')
-const cursor = ref(true)
 
 function typeLoop() {
   const word = words[wordIdx]
@@ -330,8 +329,8 @@ function animateCounter(key: 'services' | 'tasks', target: number, duration = 15
 const particleCanvas = ref<HTMLCanvasElement | null>(null)
 let animFrame = 0
 function initParticles() {
-  const canvas = particleCanvas.value
-  if (!canvas) return
+  if (!particleCanvas.value) return
+  const canvas: HTMLCanvasElement = particleCanvas.value
   const ctx = canvas.getContext('2d')!
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
