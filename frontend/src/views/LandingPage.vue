@@ -319,12 +319,6 @@ const currentLang = ref('vi');
 const langMenuOpen = ref(false);
 
 const activeFeature = ref(0);
-const featureBgs = [
-  'transparent',
-  'rgba(245, 158, 11, 0.05)',
-  'rgba(16, 185, 129, 0.05)',
-  'rgba(139, 92, 246, 0.05)'
-];
 
 const setLang = (lang: string) => {
   currentLang.value = lang;

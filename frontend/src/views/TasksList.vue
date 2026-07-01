@@ -33,14 +33,14 @@
                 <div class="flex items-center justify-between">
                   <p class="text-sm font-medium text-indigo-600 truncate">{{ task.title }}</p>
                   <div class="ml-2 flex-shrink-0 flex">
-                    <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                       :class="{
-                         'bg-gray-100 text-gray-800': task.status === 'To Do',
-                         'bg-blue-100 text-blue-800': task.status === 'In Progress',
-                         'bg-yellow-100 text-yellow-800': task.status === 'Review',
-                         'bg-green-100 text-green-800': task.status === 'Done'
-                       }">
-                      {{ task.status }}
+                     <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                        :class="{
+                          'bg-gray-100 text-gray-800': task.status === 'ToDo' || task.status === 'Backlog',
+                          'bg-blue-100 text-blue-800': task.status === 'InProgress',
+                          'bg-yellow-100 text-yellow-800': task.status === 'Review',
+                          'bg-green-100 text-green-800': task.status === 'Done'
+                        }">
+                       {{ task.status }}
                     </p>
                   </div>
                 </div>
@@ -103,9 +103,7 @@ const filteredTasks = computed(() => {
   return tasks.value.filter(t => t.status === filterStatus.value);
 });
 
-const fetchTasks = async () => {
-  // taskStore automatically handles updates, no explicit fetchTasks needed here
-};
+
 
 const openTaskDetail = (task: Task) => {
   selectedTask.value = task;

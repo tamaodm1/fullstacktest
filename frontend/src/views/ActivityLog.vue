@@ -107,13 +107,11 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
-import { ClipboardList, RefreshCw, Search, MessageSquare, UserPlus, CheckCircle, Edit3 } from '@lucide/vue';
-import { useTaskStore } from '../stores/taskStore';
+import { ClipboardList, RefreshCw, Search, MessageSquare, UserPlus, CheckCircle } from '@lucide/vue';
 import ActivityLogTimeline from '../components/ActivityLogTimeline.vue';
 import { apiService } from '../services/api';
 import type { ActivityLog } from '../services/mockData';
 
-const taskStore = useTaskStore();
 const loading = ref(false);
 const taskIdFilter = ref('');
 const activeTab = ref<'all' | 'comment' | 'status' | 'user'>('all');

@@ -12,7 +12,7 @@ const pinia = createPinia()
 const vuetify = createVuetify()
 
 // Bắt lỗi Vue toàn cục - không để trang bị trắng
-app.config.errorHandler = (err, instance, info) => {
+app.config.errorHandler = (err, _instance, info) => {
   console.error('[Vue Error]', info, err);
   // Không crash app - chỉ log lỗi
 };
