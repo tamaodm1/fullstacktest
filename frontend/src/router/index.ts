@@ -49,6 +49,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { title: 'Dự án - SprintFlow', requiresAuth: true }
   },
   {
+    path: '/tasks',
+    name: 'Tasks',
+    component: () => import('../views/TasksList.vue'),
+    meta: { title: 'Danh sách công việc - SprintFlow', requiresAuth: true }
+  },
+  {
     path: '/notifications',
     name: 'Notifications',
     component: Notifications,

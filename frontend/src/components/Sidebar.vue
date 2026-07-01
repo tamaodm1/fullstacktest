@@ -84,6 +84,7 @@ import {
   FolderKanban,
   Kanban,
   LayoutDashboard,
+  ListTodo,
   LogOut,
   Settings,
   ShieldCheck,
@@ -130,6 +131,12 @@ const filteredNavItems = computed<NavItem[]>(() => {
       path: '/kanban',
       icon: Kanban,
       activeIconClass: 'text-blue-300'
+    },
+    {
+      name: 'Danh sách công việc',
+      path: '/tasks',
+      icon: ListTodo,
+      activeIconClass: 'text-indigo-300'
     },
     {
       name: 'Thông báo',

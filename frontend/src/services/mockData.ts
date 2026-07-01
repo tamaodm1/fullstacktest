@@ -19,6 +19,20 @@ export interface Project {
   createdAt: string;
 }
 
+export interface Attachment {
+  id: string;
+  commentId: string;
+  fileName: string;
+  fileUrl: string;
+}
+
+export interface Reaction {
+  commentId: string;
+  emoji: string;
+  userId: string;
+  userName: string;
+}
+
 export interface Comment {
   id: string;
   taskId?: string;
@@ -28,6 +42,8 @@ export interface Comment {
   content: string;
   createdAt: string;
   updatedAt?: string | null;
+  attachments?: Attachment[];
+  reactions?: Reaction[];
 }
 
 export interface Notification {

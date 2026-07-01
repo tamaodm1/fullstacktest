@@ -235,7 +235,7 @@ export const apiService = {
   },
 
   // --- COMMENT API ---
-  async addComment(taskId: string, content: string): Promise<Comment> {
+  async addComment(taskId: string, content: string, attachments?: {fileName: string, fileUrl: string}[]): Promise<Comment> {
     if (USE_MOCK) {
       const tasks = mockStorage.getTasks();
       const task = tasks.find(t => t.id === taskId);
@@ -247,7 +247,9 @@ export const apiService = {
         userName: currentUser.fullName,
         userAvatar: currentUser.avatarUrl,
         content,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        attachments: attachments ? attachments.map(a => ({...a, id: 'a_'+Date.now(), commentId: 'c_' + Date.now()})) : [],
+        reactions: []
       };
       if (task) {
         if (!task.comments) task.comments = [];
@@ -257,8 +259,39 @@ export const apiService = {
       }
       return Promise.reject(new Error('Task not found'));
     }
-    const response = await apiClient.post<Comment>(`/tasks/${taskId}/comments`, { content });
+    const response = await apiClient.post<Comment>(`/tasks/${taskId}/comments`, { content, attachments });
     return response.data;
+  },
+
+  async toggleReaction(commentId: string, emoji: string): Promise<void> {
+    if (USE_MOCK) return Promise.resolve();
+    await apiClient.post(`/tasks/comments/${commentId}/reactions`, { emoji });
+  },
+
+  async uploadFile(file: File): Promise<{ url: string; name: string }> {
+    if (USE_MOCK) return Promise.resolve({ url: 'mock_url', name: file.name });
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await apiClient.post<{ url: string; name: string }>('/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response.data;
+  },
+
+  async getWatchStatus(taskId: string): Promise<boolean> {
+    if (USE_MOCK) return Promise.resolve(false);
+    const response = await apiClient.get<{isWatching: boolean}>(`/tasks/${taskId}/watch/status`);
+    return response.data.isWatching;
+  },
+
+  async watchTask(taskId: string): Promise<void> {
+    if (USE_MOCK) return Promise.resolve();
+    await apiClient.post(`/tasks/${taskId}/watch`);
+  },
+
+  async unwatchTask(taskId: string): Promise<void> {
+    if (USE_MOCK) return Promise.resolve();
+    await apiClient.delete(`/tasks/${taskId}/watch`);
   },
 
   async getComments(taskId: string): Promise<Comment[]> {

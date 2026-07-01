@@ -30,6 +30,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 
 var db = new SqlDb(app.Configuration.GetConnectionString("NotifyDb")!);
 await db.EnsureDatabaseAsync("NotifyDB");
@@ -196,6 +197,16 @@ app.MapGet("/api/tasks/{taskId}/comments", async (string taskId) =>
     var comments = await QueryAsync<CommentDto>(conn,
         "SELECT id, taskId, userId, userName, userAvatar, content, createdAt, updatedAt FROM Comments WHERE taskId=@taskId ORDER BY createdAt",
         P("@taskId", taskId));
+        
+    var attachments = await QueryAsync<CommentAttachmentDto>(conn, "SELECT id, commentId, fileName, fileUrl FROM CommentAttachments WHERE commentId IN (SELECT id FROM Comments WHERE taskId=@taskId)", P("@taskId", taskId));
+    var reactions = await QueryAsync<CommentReactionDto>(conn, "SELECT commentId, emoji, userId, userName FROM CommentReactions WHERE commentId IN (SELECT id FROM Comments WHERE taskId=@taskId)", P("@taskId", taskId));
+    
+    foreach (var comment in comments)
+    {
+        comment.Attachments.AddRange(attachments.Where(a => a.CommentId == comment.Id));
+        comment.Reactions.AddRange(reactions.Where(r => r.CommentId == comment.Id));
+    }
+    
     return Results.Ok(comments);
 }).RequireAuthorization();
 
@@ -206,7 +217,8 @@ app.MapPost("/api/tasks/{taskId}/comments", async (string taskId, CommentRequest
     if (IsViewer(user)) return Results.Forbid();
 
     var content = (request.Content ?? "").Trim();
-    if (content.Length == 0) return Results.BadRequest(new { error = "Nội dung bình luận không được để trống" });
+    if (content.Length == 0 && (request.Attachments == null || request.Attachments.Count == 0)) 
+        return Results.BadRequest(new { error = "Nội dung bình luận hoặc đính kèm không được để trống" });
 
     var id = "c_" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     var now = DateTimeOffset.UtcNow.ToString("O");
@@ -219,6 +231,16 @@ app.MapPost("/api/tasks/{taskId}/comments", async (string taskId, CommentRequest
         P("@id", id), P("@taskId", taskId), P("@userId", user.Id),
         P("@userName", user.FullName), P("@userAvatar", user.AvatarUrl),
         P("@content", content), P("@createdAt", now));
+        
+    if (request.Attachments != null)
+    {
+        foreach (var att in request.Attachments)
+        {
+            var attId = "att_" + Guid.NewGuid().ToString("N")[..8];
+            await ExecuteAsync(conn, "INSERT INTO CommentAttachments(id, commentId, fileName, fileUrl) VALUES(@id, @commentId, @fileName, @fileUrl)",
+                P("@id", attId), P("@commentId", id), P("@fileName", att.FileName), P("@fileUrl", att.FileUrl));
+        }
+    }
 
     await LogAsync(conn, user, "comment.created", "comment", id, taskId,
         $"{user.FullName} bình luận task {taskId}: \"{(content.Length > 50 ? content[..50] + "..." : content)}\"");
@@ -227,14 +249,21 @@ app.MapPost("/api/tasks/{taskId}/comments", async (string taskId, CommentRequest
         SELECT DISTINCT userId FROM Comments WHERE taskId=@taskId
         UNION
         SELECT id FROM Users WHERE role IN ('Admin', 'Project Manager')
+        UNION
+        SELECT userId FROM TaskWatchers WHERE taskId=@taskId
         """,
         P("@taskId", taskId));
-    foreach (var recipient in recipients.Where(r => r != user.Id))
+        
+    foreach (var recipient in recipients.Where(r => r != user.Id && !mentionedUserIds.Contains(r)))
     {
         await InsertNotificationAsync(conn, recipient, "Bình luận mới", $"{user.FullName} đã bình luận trong task {taskId}.", "comment.created", taskId, null, user);
     }
 
-    return Results.Created($"/api/tasks/{taskId}/comments/{id}", new CommentDto(id, taskId, user.Id, user.FullName, user.AvatarUrl, content, now, null));
+    var commentDto = new CommentDto(id, taskId, user.Id, user.FullName, user.AvatarUrl, content, now, null, new List<CommentAttachmentDto>(), new List<CommentReactionDto>());
+    if (request.Attachments != null) {
+        commentDto.Attachments.AddRange(request.Attachments);
+    }
+    return Results.Created($"/api/tasks/{taskId}/comments/{id}", commentDto);
 }).RequireAuthorization();
 
 app.MapPut("/api/tasks/{taskId}/comments/{commentId}", async (string taskId, string commentId, CommentRequest request, ClaimsPrincipal principal) =>
@@ -273,9 +302,68 @@ app.MapDelete("/api/tasks/{taskId}/comments/{commentId}", async (string taskId, 
     if (comment is null) return Results.NotFound();
     if (!IsManager(user) && comment.UserId != user.Id) return Results.Forbid();
 
+    await ExecuteAsync(conn, "DELETE FROM CommentReactions WHERE commentId=@id", P("@id", commentId));
+    await ExecuteAsync(conn, "DELETE FROM CommentAttachments WHERE commentId=@id", P("@id", commentId));
     await ExecuteAsync(conn, "DELETE FROM Comments WHERE id=@id", P("@id", commentId));
     await LogAsync(conn, user, "comment.deleted", "comment", commentId, taskId, $"{user.FullName} đã xóa bình luận {commentId}");
     return Results.Ok(new { id = commentId });
+}).RequireAuthorization();
+
+app.MapPost("/api/tasks/{taskId}/watch", async (string taskId, ClaimsPrincipal principal) =>
+{
+    var user = CurrentUser(principal);
+    if (user is null) return Results.Unauthorized();
+    await using var conn = await db.OpenAsync();
+    await ExecuteAsync(conn, "IF NOT EXISTS (SELECT 1 FROM TaskWatchers WHERE taskId=@taskId AND userId=@userId) INSERT INTO TaskWatchers(taskId, userId) VALUES(@taskId, @userId)", P("@taskId", taskId), P("@userId", user.Id));
+    return Results.Ok();
+}).RequireAuthorization();
+
+app.MapDelete("/api/tasks/{taskId}/watch", async (string taskId, ClaimsPrincipal principal) =>
+{
+    var user = CurrentUser(principal);
+    if (user is null) return Results.Unauthorized();
+    await using var conn = await db.OpenAsync();
+    await ExecuteAsync(conn, "DELETE FROM TaskWatchers WHERE taskId=@taskId AND userId=@userId", P("@taskId", taskId), P("@userId", user.Id));
+    return Results.Ok();
+}).RequireAuthorization();
+
+app.MapPost("/api/tasks/comments/{commentId}/reactions", async (string commentId, CommentReactionDto request, ClaimsPrincipal principal) =>
+{
+    var user = CurrentUser(principal);
+    if (user is null) return Results.Unauthorized();
+    await using var conn = await db.OpenAsync();
+    var exists = await ExecuteScalarAsync<int>(conn, "SELECT COUNT(1) FROM CommentReactions WHERE commentId=@commentId AND userId=@userId AND emoji=@emoji", P("@commentId", commentId), P("@userId", user.Id), P("@emoji", request.Emoji));
+    if (exists > 0)
+    {
+        await ExecuteAsync(conn, "DELETE FROM CommentReactions WHERE commentId=@commentId AND userId=@userId AND emoji=@emoji", P("@commentId", commentId), P("@userId", user.Id), P("@emoji", request.Emoji));
+    }
+    else
+    {
+        await ExecuteAsync(conn, "INSERT INTO CommentReactions(commentId, userId, emoji, userName) VALUES(@commentId, @userId, @emoji, @userName)", P("@commentId", commentId), P("@userId", user.Id), P("@emoji", request.Emoji), P("@userName", user.FullName));
+    }
+    return Results.Ok();
+}).RequireAuthorization();
+
+app.MapPost("/api/upload", async (HttpRequest request, ClaimsPrincipal principal) =>
+{
+    var user = CurrentUser(principal);
+    if (user is null) return Results.Unauthorized();
+    if (!request.HasFormContentType) return Results.BadRequest("Expected multipart/form-data");
+
+    var form = await request.ReadFormAsync();
+    var file = form.Files.FirstOrDefault();
+    if (file == null || file.Length == 0) return Results.BadRequest("No file uploaded");
+
+    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+    Directory.CreateDirectory(uploadsFolder);
+    
+    var fileName = $"{Guid.NewGuid():N}_{file.FileName}";
+    var filePath = Path.Combine(uploadsFolder, fileName);
+    await using var stream = new FileStream(filePath, FileMode.Create);
+    await file.CopyToAsync(stream);
+
+    var fileUrl = $"/uploads/{fileName}";
+    return Results.Ok(new { url = fileUrl, name = file.FileName });
 }).RequireAuthorization();
 
 app.MapGet("/api/notifications", async (ClaimsPrincipal principal, string status = "all") =>
@@ -318,12 +406,30 @@ app.MapPost("/api/notifications", async (NotificationCreateRequest request, Clai
 app.MapPost("/api/internal/task-events", async (TaskEventRequest request) =>
 {
     await using var conn = await db.OpenAsync();
-    foreach (var userId in request.RecipientUserIds.Distinct().Where(id => !string.IsNullOrWhiteSpace(id)))
+    var allRecipients = new HashSet<string>(request.RecipientUserIds.Where(id => !string.IsNullOrWhiteSpace(id)));
+    if (!string.IsNullOrEmpty(request.TaskId))
+    {
+        var watchers = await QueryAsync<string>(conn, "SELECT userId FROM TaskWatchers WHERE taskId=@taskId", P("@taskId", request.TaskId));
+        foreach (var w in watchers) allRecipients.Add(w);
+    }
+    var actorId = request.Actor?.Id;
+    if (actorId != null) allRecipients.Remove(actorId);
+
+    foreach (var userId in allRecipients)
     {
         await InsertNotificationAsync(conn, userId, request.Title, request.Message, request.Type, request.TaskId, request.ProjectId, request.Actor);
     }
     return Results.Accepted();
 });
+
+app.MapGet("/api/tasks/{taskId}/watch/status", async (string taskId, ClaimsPrincipal principal) =>
+{
+    var user = CurrentUser(principal);
+    if (user is null) return Results.Unauthorized();
+    await using var conn = await db.OpenAsync();
+    var exists = await ExecuteScalarAsync<int>(conn, "SELECT COUNT(1) FROM TaskWatchers WHERE taskId=@taskId AND userId=@userId", P("@taskId", taskId), P("@userId", user.Id));
+    return Results.Ok(new { isWatching = exists > 0 });
+}).RequireAuthorization();
 
 app.MapPatch("/api/notifications/mark-all-read", async (ClaimsPrincipal principal) =>
 {
@@ -472,6 +578,27 @@ static async Task EnsureSchemaAsync(SqlDb db)
             message NVARCHAR(MAX),
             createdAt NVARCHAR(100)
         );
+        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='TaskWatchers' AND xtype='U')
+        CREATE TABLE TaskWatchers(
+            taskId NVARCHAR(50) NOT NULL,
+            userId NVARCHAR(50) NOT NULL,
+            PRIMARY KEY (taskId, userId)
+        );
+        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='CommentReactions' AND xtype='U')
+        CREATE TABLE CommentReactions(
+            commentId NVARCHAR(50) NOT NULL,
+            userId NVARCHAR(50) NOT NULL,
+            emoji NVARCHAR(50) NOT NULL,
+            userName NVARCHAR(100),
+            PRIMARY KEY (commentId, userId, emoji)
+        );
+        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='CommentAttachments' AND xtype='U')
+        CREATE TABLE CommentAttachments(
+            id NVARCHAR(50) PRIMARY KEY,
+            commentId NVARCHAR(50) NOT NULL,
+            fileName NVARCHAR(255),
+            fileUrl NVARCHAR(1000)
+        );
         """);
 }
 
@@ -572,7 +699,9 @@ static T Map<T>(IDataRecord row)
     object? Get(string name) => row[name] == DBNull.Value ? null : row[name];
     if (typeof(T) == typeof(string)) return (T)(object)(Get(row.GetName(0))?.ToString() ?? "");
     if (typeof(T) == typeof(UserDto)) return (T)(object)new UserDto(Get("id")!.ToString()!, Get("fullName")!.ToString()!, Get("avatarUrl")?.ToString() ?? "", Get("role")?.ToString() ?? "Member", Convert.ToBoolean(Get("isOnline") ?? false), Get("email")?.ToString() ?? "");
-    if (typeof(T) == typeof(CommentDto)) return (T)(object)new CommentDto(Get("id")!.ToString()!, Get("taskId")!.ToString()!, Get("userId")?.ToString(), Get("userName")?.ToString() ?? "", Get("userAvatar")?.ToString() ?? "", Get("content")?.ToString() ?? "", Get("createdAt")?.ToString() ?? "", Get("updatedAt")?.ToString());
+    if (typeof(T) == typeof(CommentDto)) return (T)(object)new CommentDto(Get("id")!.ToString()!, Get("taskId")!.ToString()!, Get("userId")?.ToString(), Get("userName")?.ToString() ?? "", Get("userAvatar")?.ToString() ?? "", Get("content")?.ToString() ?? "", Get("createdAt")?.ToString() ?? "", Get("updatedAt")?.ToString(), new List<CommentAttachmentDto>(), new List<CommentReactionDto>());
+    if (typeof(T) == typeof(CommentAttachmentDto)) return (T)(object)new CommentAttachmentDto(Get("id")!.ToString()!, Get("commentId")!.ToString()!, Get("fileName")?.ToString() ?? "", Get("fileUrl")?.ToString() ?? "");
+    if (typeof(T) == typeof(CommentReactionDto)) return (T)(object)new CommentReactionDto(Get("commentId")!.ToString()!, Get("emoji")!.ToString()!, Get("userId")!.ToString()!, Get("userName")?.ToString() ?? "");
     if (typeof(T) == typeof(NotificationDto)) return (T)(object)new NotificationDto(Get("id")!.ToString()!, Get("userId")!.ToString()!, Get("title")?.ToString() ?? "", Get("message")?.ToString() ?? "", Get("type")?.ToString() ?? "", Get("taskId")?.ToString(), Get("projectId")?.ToString(), Get("actorId")?.ToString(), Get("actorName")?.ToString(), Convert.ToBoolean(Get("isRead") ?? false), Get("createdAt")?.ToString() ?? "");
     if (typeof(T) == typeof(ActivityLogDto)) return (T)(object)new ActivityLogDto(Get("id")!.ToString()!, Get("userId")?.ToString(), Get("userName")?.ToString(), Get("action")?.ToString() ?? "", Get("entityType")?.ToString(), Get("entityId")?.ToString(), Get("taskId")?.ToString(), Get("message")?.ToString(), Get("createdAt")?.ToString() ?? "");
     throw new NotSupportedException(typeof(T).Name);
@@ -608,11 +737,13 @@ record RegisterRequest(string FullName, string Email, string Password, string? R
 record ProfileUpdateRequest(string? FullName, string? AvatarUrl);
 record PasswordUpdateRequest(string CurrentPassword, string NewPassword);
 record RoleUpdateRequest(string? Role);
-record CommentRequest(string? Content);
+record CommentRequest(string? Content, List<CommentAttachmentDto>? Attachments);
 record NotificationCreateRequest(string UserId, string Title, string? Message, string? Type, string? TaskId, string? ProjectId);
 record TaskEventRequest(string Type, string Title, string Message, string? TaskId, string? ProjectId, List<string> RecipientUserIds, UserDto? Actor);
 record UserSeed(string Id, string FullName, string Role, string Email, string Password, string AvatarUrl);
 record UserDto(string Id, string FullName, string AvatarUrl, string Role, bool IsOnline, string Email);
-record CommentDto(string Id, string TaskId, string? UserId, string UserName, string UserAvatar, string Content, string CreatedAt, string? UpdatedAt);
+record CommentAttachmentDto(string Id, string CommentId, string FileName, string FileUrl);
+record CommentReactionDto(string CommentId, string Emoji, string UserId, string UserName);
+record CommentDto(string Id, string TaskId, string? UserId, string UserName, string UserAvatar, string Content, string CreatedAt, string? UpdatedAt, List<CommentAttachmentDto> Attachments, List<CommentReactionDto> Reactions);
 record NotificationDto(string Id, string UserId, string Title, string Message, string Type, string? TaskId, string? ProjectId, string? ActorId, string? ActorName, bool IsRead, string CreatedAt);
 record ActivityLogDto(string Id, string? UserId, string? UserName, string Action, string? EntityType, string? EntityId, string? TaskId, string? Message, string CreatedAt);

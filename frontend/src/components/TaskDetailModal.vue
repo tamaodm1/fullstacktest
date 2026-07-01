@@ -18,9 +18,20 @@
             </span>
             <span class="text-xs text-slate-400">• Đã tạo: {{ localTask.createdAt }}</span>
           </div>
-          <button @click="close" class="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-colors">
-            <X class="w-5 h-5" />
-          </button>
+          <div class="flex items-center space-x-2">
+            <button
+              v-if="!isViewer"
+              @click="toggleWatch"
+              class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors"
+              :class="isWatching ? 'bg-indigo-50 border-indigo-200 text-indigo-600 hover:bg-indigo-100' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'"
+            >
+              <Eye class="w-4 h-4" />
+              <span>{{ isWatching ? 'Đang theo dõi' : 'Theo dõi' }}</span>
+            </button>
+            <button @click="close" class="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-colors">
+              <X class="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         <!-- Scrollable content -->
@@ -468,7 +479,45 @@
                       </button>
                     </div>
                   </div>
-                  <p v-else class="text-xs text-slate-600 leading-relaxed break-words">{{ comment.content }}</p>
+                  <p v-else class="text-xs text-slate-600 leading-relaxed break-words whitespace-pre-line" v-html="highlightMentions(comment.content)"></p>
+                    
+                  <!-- Attachments Display -->
+                  <div v-if="comment.attachments && comment.attachments.length > 0" class="mt-2 flex flex-wrap gap-2">
+                    <a v-for="att in comment.attachments" :key="att.id" :href="'http://localhost:5003' + att.fileUrl" target="_blank" class="flex items-center space-x-1 text-[10px] text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100 hover:bg-indigo-100 transition-colors">
+                      <Paperclip class="w-3 h-3" />
+                      <span>{{ att.fileName }}</span>
+                    </a>
+                  </div>
+                  
+                  <!-- Reactions Display & Action -->
+                  <div class="mt-2 flex items-center space-x-2 relative group/reaction w-fit">
+                    <div class="flex items-center space-x-1" v-if="aggregateReactions(comment.reactions)">
+                      <button 
+                        v-for="(count, emoji) in aggregateReactions(comment.reactions)" 
+                        :key="emoji"
+                        @click="toggleReaction(comment.id, String(emoji))"
+                        class="text-[11px] bg-white border border-slate-200 px-1.5 py-0.5 rounded-full hover:bg-slate-50 transition-colors flex items-center space-x-1"
+                        :class="{'border-indigo-300 bg-indigo-50': hasReacted(comment.reactions, String(emoji))}"
+                      >
+                        <span>{{ emoji }}</span>
+                        <span class="text-slate-500 font-semibold">{{ count }}</span>
+                      </button>
+                    </div>
+                    
+                    <!-- Add Reaction Trigger & Picker -->
+                    <div class="relative flex items-center group/picker">
+                      <button class="text-slate-400 hover:text-slate-600 p-0.5 rounded-full hover:bg-slate-200 transition-opacity">
+                        <Smile class="w-3.5 h-3.5" />
+                      </button>
+                      
+                      <!-- Emoji Picker Popup -->
+                      <div class="absolute left-full top-1/2 -translate-y-1/2 pl-3 -ml-2 opacity-0 invisible group-hover/picker:opacity-100 group-hover/picker:visible transition-all z-10">
+                        <div class="bg-white border border-slate-200 rounded-lg shadow-lg flex p-1 space-x-1">
+                          <button v-for="emoji in ['👍','❤️','😂','🎉','👀']" :key="emoji" @click="toggleReaction(comment.id, emoji)" class="hover:bg-slate-100 p-1 rounded text-sm transition-colors">{{ emoji }}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -477,33 +526,50 @@
             </div>
 
             <!-- New Comment Form -->
-            <form v-if="!isViewer" @submit.prevent="submitComment" class="flex space-x-3 items-center pt-2">
-              <img :src="taskStore.currentUser.avatarUrl || 'https://ui-avatars.com/api/?name=User&background=cbd5e1&color=fff'" alt="My avatar" class="w-8 h-8 rounded-full animate-pulse" />
-              <div class="flex-1 relative">
-                <input
-                  v-model="newCommentText"
-                  id="detail_comment"
-                  type="text"
-                  placeholder=" "
-                  required
-                  class="peer w-full pl-4 pr-12 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 text-xs focus:outline-none focus:border-indigo-500 focus:bg-white transition-all font-semibold"
-                />
-                <label
-                  for="detail_comment"
-                  class="absolute left-4 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-400 pointer-events-none transition-all duration-200 ease-out 
-                         peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-xs 
-                         peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[10px] peer-focus:text-indigo-500 peer-focus:px-1.5 peer-focus:bg-white
-                         peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:px-1.5 peer-[:not(:placeholder-shown)]:bg-white"
-                >
-                  Viết bình luận thảo luận...
-                </label>
-                <button
-                  type="submit"
-                  @mousedown="handleButtonClick"
-                  class="absolute right-2.5 top-1/2 -translate-y-1/2 text-indigo-600 hover:text-indigo-800 p-1.5 rounded-lg transition-all relative overflow-hidden"
-                >
-                  <Send class="w-4 h-4 relative z-10" />
-                </button>
+            <form v-if="!isViewer" @submit.prevent="submitComment" class="flex flex-col space-y-2 pt-2 relative">
+              <div class="flex space-x-3 items-center">
+                <img :src="taskStore.currentUser.avatarUrl || 'https://ui-avatars.com/api/?name=User&background=cbd5e1&color=fff'" alt="My avatar" class="w-8 h-8 rounded-full animate-pulse" />
+                <div class="flex-1 relative">
+                  <textarea
+                    v-model="newCommentText"
+                    id="detail_comment"
+                    rows="2"
+                    placeholder=" "
+                    class="peer w-full pl-4 pr-20 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 text-xs focus:outline-none focus:border-indigo-500 focus:bg-white transition-all font-semibold resize-none"
+                  ></textarea>
+                  <label
+                    for="detail_comment"
+                    class="absolute left-4 top-3 text-[10px] font-semibold text-slate-400 pointer-events-none transition-all duration-200 ease-out 
+                           peer-placeholder-shown:top-3 peer-placeholder-shown:text-xs 
+                           peer-focus:-top-2 peer-focus:text-[10px] peer-focus:text-indigo-500 peer-focus:px-1.5 peer-focus:bg-white
+                           peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:px-1.5 peer-[:not(:placeholder-shown)]:bg-white"
+                  >
+                    Gõ @tên_người_nhận để tag, hoặc thả file...
+                  </label>
+                  
+                  <div class="absolute right-2.5 bottom-2 flex items-center space-x-1 z-10">
+                    <label class="text-slate-400 hover:text-indigo-600 p-1.5 rounded-lg transition-all cursor-pointer">
+                      <Paperclip class="w-4 h-4" />
+                      <input type="file" multiple class="hidden" @change="handleFileUpload" />
+                    </label>
+                    <button
+                      type="submit"
+                      @mousedown="handleButtonClick"
+                      :disabled="isUploading"
+                      class="text-indigo-600 hover:text-indigo-800 p-1.5 rounded-lg transition-all relative overflow-hidden disabled:opacity-50"
+                    >
+                      <Send class="w-4 h-4 relative z-10" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Selected Files Preview -->
+              <div v-if="pendingAttachments.length > 0" class="flex flex-wrap gap-2 ml-11">
+                <div v-for="(file, index) in pendingAttachments" :key="index" class="flex items-center space-x-1 text-[10px] bg-slate-100 px-2 py-1 rounded-md border border-slate-200">
+                  <span class="truncate max-w-[150px]">{{ file.name }}</span>
+                  <button type="button" @click="pendingAttachments.splice(index, 1)" class="text-slate-400 hover:text-rose-500"><X class="w-3 h-3" /></button>
+                </div>
               </div>
             </form>
           </div>
@@ -537,8 +603,10 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
-import { X, MessageSquare, Send, Trash2, CheckSquare, Clock, Plus, Pencil, Check } from '@lucide/vue';
+import { X, MessageSquare, Send, Trash2, CheckSquare, Clock, Plus, Pencil, Check, Eye, Paperclip, Smile } from '@lucide/vue';
 import { useTaskStore } from '../stores/taskStore';
+import { apiService } from '../services/api';
+import type { Reaction } from '../services/mockData';
 
 // Sóng nước ripple cho các nút bấm trong modal chi tiết
 function handleButtonClick(event: MouseEvent) {
@@ -602,14 +670,35 @@ const availableLabels = [
   { name: 'Tài liệu', bg: 'bg-slate-100', text: 'text-slate-600', border: 'border-slate-300' }
 ];
 
+const isWatching = ref(false);
+
+async function checkWatchStatus() {
+  if (localTask.value) {
+    isWatching.value = await apiService.getWatchStatus(localTask.value.id);
+  }
+}
+
+async function toggleWatch() {
+  if (!localTask.value) return;
+  if (isWatching.value) {
+    await apiService.unwatchTask(localTask.value.id);
+    isWatching.value = false;
+  } else {
+    await apiService.watchTask(localTask.value.id);
+    isWatching.value = true;
+  }
+}
+
 // Load task data when taskId changes
 watch(
   () => props.isOpen,
-  (isOpen) => {
+  async (isOpen) => {
     if (isOpen && props.taskId) {
       loadTaskData();
+      await checkWatchStatus();
     } else {
       localTask.value = null;
+      isWatching.value = false;
     }
   }
 );
@@ -623,6 +712,7 @@ function loadTaskData() {
     newLogDescription.value = '';
     editingCommentId.value = null;
     editingCommentText.value = '';
+    pendingAttachments.value = [];
     void taskStore.refreshTaskComments(task.id);
   }
 }
@@ -761,11 +851,60 @@ function submitWorkLog() {
 }
 
 // Comments actions
-async function submitComment() {
-  if (localTask.value && newCommentText.value.trim()) {
-    await taskStore.addComment(localTask.value.id, newCommentText.value.trim());
-    newCommentText.value = '';
+const pendingAttachments = ref<File[]>([]);
+const isUploading = ref(false);
+
+function handleFileUpload(event: Event) {
+  const target = event.target as HTMLInputElement;
+  if (target.files) {
+    Array.from(target.files).forEach(file => {
+      pendingAttachments.value.push(file);
+    });
   }
+}
+
+async function submitComment() {
+  if (localTask.value && (newCommentText.value.trim() || pendingAttachments.value.length > 0)) {
+    isUploading.value = true;
+    try {
+      const uploadedFiles = [];
+      for (const file of pendingAttachments.value) {
+        const res = await apiService.uploadFile(file);
+        uploadedFiles.push({ fileName: file.name, fileUrl: res.url });
+      }
+      
+      await taskStore.addComment(localTask.value.id, newCommentText.value.trim(), uploadedFiles);
+      newCommentText.value = '';
+      pendingAttachments.value = [];
+    } finally {
+      isUploading.value = false;
+    }
+  }
+}
+
+function aggregateReactions(reactions?: Reaction[]) {
+  if (!reactions) return null;
+  const counts: Record<string, number> = {};
+  reactions.forEach(r => {
+    counts[r.emoji] = (counts[r.emoji] || 0) + 1;
+  });
+  return Object.keys(counts).length > 0 ? counts : null;
+}
+
+function hasReacted(reactions: Reaction[] | undefined, emoji: string) {
+  if (!reactions) return false;
+  return reactions.some(r => r.emoji === emoji && r.userId === taskStore.currentUser.id);
+}
+
+async function toggleReaction(commentId: string, emoji: string) {
+  if (!localTask.value) return;
+  await apiService.toggleReaction(commentId, emoji);
+  await taskStore.refreshTaskComments(localTask.value.id);
+}
+
+function highlightMentions(text: string) {
+  if (!text) return '';
+  return text.replace(/@([a-zA-Z0-9_\u00C0-\u1EF9]+)/g, '<span class="text-indigo-600 font-semibold bg-indigo-50 px-1 rounded">@$1</span>');
 }
 
 function canManageComment(comment: Comment) {
