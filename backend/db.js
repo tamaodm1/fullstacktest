@@ -9,9 +9,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 const targetDbName = process.env.DB_DATABASE || 'ProjectManagement';
-const useNativeSqlDriver = process.env.DB_DRIVER === 'msnodesqlv8' || !!process.env.DB_CONNECTION_STRING;
-const sqlModule = await import(useNativeSqlDriver ? 'mssql/msnodesqlv8.js' : 'mssql');
-const sql = sqlModule.default;
+import sql from 'mssql';
 
 function connectionStringForDatabase(databaseName) {
   const base = process.env.DB_CONNECTION_STRING;
