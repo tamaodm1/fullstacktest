@@ -9,6 +9,7 @@ import Notifications from '../views/Notifications.vue';
 import Projects from '../views/Projects.vue';
 import Profile from '../views/Profile.vue';
 import Settings from '../views/Settings.vue';
+import ActivityLog from '../views/ActivityLog.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -70,6 +71,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Admin',
     component: Admin,
     meta: { title: 'Quản trị hệ thống - SprintFlow', requiresAuth: true }
+  },
+  {
+    path: '/activity-log',
+    name: 'ActivityLog',
+    component: ActivityLog,
+    meta: { title: 'Nhật ký hoạt động - SprintFlow', requiresAuth: true }
   },
   {
     path: '/projects-stub',

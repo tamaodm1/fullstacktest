@@ -3,6 +3,7 @@ import { onMounted, ref, computed } from 'vue';
 import { useTaskStore } from './stores/taskStore';
 import { useRoute } from 'vue-router';
 import Sidebar from './components/Sidebar.vue';
+import NotificationToast from './components/NotificationToast.vue';
 import { Radio, Terminal, X, ZapOff } from '@lucide/vue';
 
 const taskStore = useTaskStore();
@@ -99,19 +100,8 @@ onMounted(() => {
       </div>
     </Transition>
 
-    <!-- Global Floating Toast Container -->
-    <div class="fixed top-6 right-6 z-[9999] flex flex-col space-y-3 pointer-events-none w-80">
-      <TransitionGroup name="toast">
-        <div
-          v-for="toast in taskStore.toasts"
-          :key="toast.id"
-          class="pointer-events-auto bg-slate-900/95 backdrop-blur-md text-white px-4 py-3 rounded-xl shadow-xl flex items-start space-x-3 border border-slate-800/60 pointer-events-auto animate-toast-in"
-        >
-          <div class="mt-1 w-2 h-2 rounded-full shrink-0" :class="toast.type === 'task.status.changed' ? 'bg-indigo-500 animate-ping' : 'bg-emerald-500 animate-ping'"></div>
-          <span class="text-xs text-slate-200 leading-snug font-medium">{{ toast.message }}</span>
-        </div>
-      </TransitionGroup>
-    </div>
+    <!-- Global Notification Toast -->
+    <NotificationToast />
   </div>
 </template>
 

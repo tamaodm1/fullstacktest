@@ -15,6 +15,32 @@ export const useTaskStore = defineStore('taskStore', () => {
   const events = ref<PublishedEvent[]>([]);
   const toasts = ref<{ id: string; type: string; message: string }[]>([]);
 
+  // Notification polling
+  let _pollTimer: ReturnType<typeof setInterval> | null = null;
+  const lastUnreadCount = ref(0);
+
+  function startNotificationPolling() {
+    if (_pollTimer) return;
+    _pollTimer = setInterval(async () => {
+      if (!localStorage.getItem('token')) return;
+      try {
+        const fresh = await apiService.getNotifications('all');
+        const newUnread = fresh.filter(n => !n.isRead).length;
+        // Nếu unread tăng lên → có notification mới → show toast
+        if (newUnread > lastUnreadCount.value && lastUnreadCount.value >= 0) {
+          const diff = newUnread - lastUnreadCount.value;
+          triggerToast('notification', `Bạn có ${diff} thông báo mới chưa đọc`);
+        }
+        lastUnreadCount.value = newUnread;
+        notifications.value = fresh;
+      } catch { /* silent */ }
+    }, 30000);
+  }
+
+  function stopNotificationPolling() {
+    if (_pollTimer) { clearInterval(_pollTimer); _pollTimer = null; }
+  }
+
   // Initialize data asynchronously from API service
   function normalizeTaskDefaults() {
     tasks.value.forEach(t => {
@@ -43,9 +69,13 @@ export const useTaskStore = defineStore('taskStore', () => {
       tasks.value = await apiService.getTasks();
       currentUser.value = await apiService.getCurrentUser();
       notifications.value = await apiService.getNotifications();
-      
+      lastUnreadCount.value = notifications.value.filter(n => !n.isRead).length;
+
       // Set default values if fields are missing in older storage
       normalizeTaskDefaults();
+
+      // Start polling for new notifications
+      startNotificationPolling();
     } catch (error) {
       console.error('Failed to initialize task store:', error);
       logoutAction();
@@ -69,12 +99,14 @@ export const useTaskStore = defineStore('taskStore', () => {
   }
 
   function logoutAction() {
+    stopNotificationPolling();
     localStorage.removeItem('token');
     currentUser.value = {} as User;
     users.value = [];
     projects.value = [];
     tasks.value = [];
     notifications.value = [];
+    lastUnreadCount.value = 0;
   }
 
   // Get project progress dynamically based on completed tasks
@@ -301,6 +333,7 @@ export const useTaskStore = defineStore('taskStore', () => {
   async function refreshNotifications(status: 'all' | 'unread' | 'read' = 'all') {
     try {
       notifications.value = await apiService.getNotifications(status);
+      lastUnreadCount.value = notifications.value.filter(n => !n.isRead).length;
     } catch (error) {
       console.error('Failed to refresh notifications:', error);
     }

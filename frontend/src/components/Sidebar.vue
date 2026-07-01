@@ -80,6 +80,7 @@
 <script setup lang="ts">
 import {
   Bell,
+  ClipboardList,
   FolderKanban,
   Kanban,
   LayoutDashboard,
@@ -136,6 +137,12 @@ const filteredNavItems = computed<NavItem[]>(() => {
       icon: Bell,
       activeIconClass: 'text-rose-300',
       badgeCount: taskStore.unreadNotificationCount
+    },
+    {
+      name: 'Nhật ký HĐ',
+      path: '/activity-log',
+      icon: ClipboardList,
+      activeIconClass: 'text-sky-300'
     },
     {
       name: 'Hồ sơ',

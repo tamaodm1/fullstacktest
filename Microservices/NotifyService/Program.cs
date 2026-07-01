@@ -112,6 +112,13 @@ app.MapPut("/api/users/me", async (ProfileUpdateRequest request, ClaimsPrincipal
         : request.AvatarUrl.Trim();
 
     await using var conn = await db.OpenAsync();
+
+    // Lấy tên cũ TRƯỚC khi update
+    var oldUser = await QuerySingleAsync<UserDto>(conn,
+        "SELECT id, fullName, avatarUrl, role, CAST(isOnline AS bit) AS isOnline, email FROM Users WHERE id=@id",
+        P("@id", tokenUser.Id));
+    var oldName = oldUser?.FullName ?? tokenUser.FullName;
+
     await ExecuteAsync(conn,
         "UPDATE Users SET fullName=@fullName, avatarUrl=@avatarUrl WHERE id=@id",
         P("@fullName", fullName), P("@avatarUrl", avatarUrl), P("@id", tokenUser.Id));
@@ -121,7 +128,14 @@ app.MapPut("/api/users/me", async (ProfileUpdateRequest request, ClaimsPrincipal
         P("@id", tokenUser.Id));
     if (updated is null) return Results.NotFound();
 
-    await LogAsync(conn, updated, "user.profile.updated", "user", updated.Id, null, $"{updated.FullName} cập nhật hồ sơ cá nhân");
+    // Ghi log rõ thay đổi gì
+    var changes = new List<string>();
+    if (oldName != fullName) changes.Add($"tên: '{oldName}' → '{fullName}'");
+    if (oldUser?.AvatarUrl != avatarUrl) changes.Add("ảnh đại diện");
+    var changeDesc = changes.Count > 0 ? string.Join(", ", changes) : "hồ sơ cá nhân";
+
+    await LogAsync(conn, updated, "user.profile.updated", "user", updated.Id, null,
+        $"{oldName} cập nhật {changeDesc}");
     var token = CreateToken(updated, jwtSecret, issuer, audience);
     return Results.Ok(new { user = updated, token });
 }).RequireAuthorization();
@@ -158,13 +172,21 @@ app.MapPut("/api/users/{id}/role", async (string id, RoleUpdateRequest request, 
     if (!allowedRoles.Contains(role)) return Results.BadRequest(new { error = "Vai trò không hợp lệ" });
 
     await using var conn = await db.OpenAsync();
+
+    // Lấy role cũ TRƯỚC khi update
+    var oldUser = await QuerySingleAsync<UserDto>(conn,
+        "SELECT id, fullName, avatarUrl, role, CAST(isOnline AS bit) AS isOnline, email FROM Users WHERE id=@id",
+        P("@id", id));
+    var oldRole = oldUser?.Role ?? "?";
+
     await ExecuteAsync(conn, "UPDATE Users SET role=@role WHERE id=@id", P("@role", role), P("@id", id));
     var updated = await QuerySingleAsync<UserDto>(conn,
         "SELECT id, fullName, avatarUrl, role, CAST(isOnline AS bit) AS isOnline, email FROM Users WHERE id=@id",
         P("@id", id));
     if (updated is null) return Results.NotFound();
 
-    await LogAsync(conn, actor, "user.role.updated", "user", id, null, $"{actor.FullName} đổi vai trò {updated.FullName} thành {role}");
+    await LogAsync(conn, actor, "user.role.updated", "user", id, null,
+        $"{actor.FullName} đổi vai trò của '{updated.FullName}': '{oldRole}' → '{role}'");
     return Results.Ok(updated);
 }).RequireAuthorization();
 
@@ -198,7 +220,8 @@ app.MapPost("/api/tasks/{taskId}/comments", async (string taskId, CommentRequest
         P("@userName", user.FullName), P("@userAvatar", user.AvatarUrl),
         P("@content", content), P("@createdAt", now));
 
-    await LogAsync(conn, user, "comment.created", "comment", id, taskId, $"{user.FullName} đã bình luận task {taskId}");
+    await LogAsync(conn, user, "comment.created", "comment", id, taskId,
+        $"{user.FullName} bình luận task {taskId}: \"{(content.Length > 50 ? content[..50] + "..." : content)}\"");
     var recipients = await QueryAsync<string>(conn,
         """
         SELECT DISTINCT userId FROM Comments WHERE taskId=@taskId
