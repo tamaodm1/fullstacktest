@@ -18,12 +18,26 @@
           <span class="logo-text">SprintFlow</span>
         </div>
         <div class="nav-links">
-          <a href="#features" class="nav-link">Tính năng</a>
-          <a href="#how" class="nav-link">Cách hoạt động</a>
-          <a href="#stats" class="nav-link">Kiến trúc</a>
-          <router-link to="/login" class="btn-nav-login">Đăng nhập</router-link>
+          <a href="#features" class="nav-link">{{ tNav.features }}</a>
+          <a href="#how" class="nav-link">{{ tNav.how }}</a>
+          <a href="#stats" class="nav-link">{{ tNav.stats }}</a>
+          
+          <div class="nav-lang-dropdown" @click="langMenuOpen = !langMenuOpen" @blur="langMenuOpen = false" tabindex="0">
+            <span class="current-lang">
+              {{ currentLang === 'vi' ? '🇻🇳 VN' : '🇺🇸 EN' }}
+            </span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            <transition name="fade">
+              <div class="lang-menu" v-show="langMenuOpen">
+                <div class="lang-item" :class="{active: currentLang === 'vi'}" @click.stop="setLang('vi')">🇻🇳 Tiếng Việt</div>
+                <div class="lang-item" :class="{active: currentLang === 'en'}" @click.stop="setLang('en')">🇺🇸 English</div>
+              </div>
+            </transition>
+          </div>
+
+          <router-link to="/login" class="btn-nav-login">{{ tNav.login }}</router-link>
           <router-link to="/register" class="btn-nav-register">
-            Bắt đầu miễn phí
+            {{ tNav.register }}
             <span class="btn-shimmer"></span>
           </router-link>
         </div>
@@ -41,21 +55,25 @@
       <div class="hero-content reveal-left">
         <div class="hero-badge">
           <span class="badge-dot"></span>
-          Quản lý dự án thông minh · Microservices Architecture
+          {{ currentLang === 'vi' ? 'Quản lý dự án thông minh · Microservices Architecture' : 'Smart Project Management · Microservices Architecture' }}
         </div>
-        <h1 class="hero-title">
+        <h1 class="hero-title" v-if="currentLang === 'vi'">
           Quản lý dự án<br/>
           <span class="hero-gradient typing-text">{{ typedText }}<span class="cursor">|</span></span><br/>
           cùng SprintFlow
         </h1>
+        <h1 class="hero-title" v-else>
+          Project Management<br/>
+          <span class="hero-gradient typing-text">{{ typedText }}<span class="cursor">|</span></span><br/>
+          with SprintFlow
+        </h1>
         <p class="hero-desc">
-          Nền tảng quản lý công việc toàn diện — từ lên kế hoạch sprint, phân công task,
-          theo dõi tiến độ đến thông báo thời gian thực. Tất cả trong một giao diện đẹp mắt.
+          {{ currentLang === 'vi' ? 'Nền tảng quản lý công việc toàn diện — từ lên kế hoạch sprint, phân công task, theo dõi tiến độ đến thông báo thời gian thực. Tất cả trong một giao diện đẹp mắt.' : 'A comprehensive project management platform — from sprint planning, task assignment, progress tracking to real-time notifications. All in a beautiful interface.' }}
         </p>
         <div class="hero-actions">
           <router-link to="/register" class="btn-primary magnetic">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            Bắt đầu miễn phí
+            {{ tNav.register }}
             <span class="btn-shimmer"></span>
           </router-link>
           <router-link to="/login" class="btn-ghost">
@@ -176,23 +194,31 @@
 
     <!-- FEATURES -->
     <section id="features" class="features">
-      <div class="section-badge reveal-up">Tính năng</div>
-      <h2 class="section-title reveal-up" style="--delay: 0.1s">Mọi thứ bạn cần để<br/><span class="text-gradient">quản lý dự án hiệu quả</span></h2>
-      <p class="section-sub reveal-up" style="--delay: 0.2s">SprintFlow tích hợp đầy đủ công cụ từ lập kế hoạch đến báo cáo, giúp team làm việc đồng bộ và minh bạch.</p>
-      <div class="features-grid">
-        <div class="feat-card reveal-up" v-for="(feat, i) in features" :key="feat.title" :style="{ '--delay': (i * 0.1 + 0.1) + 's' }">
-          <div class="feat-glow" :style="{ background: feat.glow }"></div>
-          <div class="feat-icon" :style="{ background: feat.bg }">
-            <span v-html="feat.icon"></span>
+      <div class="section-badge reveal-up">{{ tNav.features }}</div>
+      <h2 class="section-title reveal-up" style="--delay: 0.1s" v-if="currentLang === 'vi'">Mọi thứ bạn cần để<br/><span class="text-gradient">quản lý dự án hiệu quả</span></h2>
+      <h2 class="section-title reveal-up" style="--delay: 0.1s" v-else>Everything you need for<br/><span class="text-gradient">efficient project management</span></h2>
+      
+      <p class="section-sub reveal-up" style="--delay: 0.2s">{{ currentLang === 'vi' ? 'SprintFlow tích hợp đầy đủ công cụ từ lập kế hoạch đến báo cáo, giúp team làm việc đồng bộ và minh bạch.' : 'SprintFlow integrates everything from planning to reporting, keeping your team synced and transparent.' }}</p>
+      
+      <div class="features-zigzag">
+        <div class="feat-row" v-for="(feat, i) in features" :key="i" :class="{ 'row-reverse': i % 2 === 1 }">
+          <div class="feat-text" :class="i % 2 === 0 ? 'reveal-left' : 'reveal-right'">
+            <div class="feat-icon" :style="{ background: feat.bg }">
+              <span v-html="feat.icon"></span>
+            </div>
+            <h3 class="feat-title">{{ feat.title }}</h3>
+            <p class="feat-desc">{{ feat.desc }}</p>
+            <ul class="feat-list">
+              <li v-for="item in feat.items" :key="item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                {{ item }}
+              </li>
+            </ul>
           </div>
-          <h3 class="feat-title">{{ feat.title }}</h3>
-          <p class="feat-desc">{{ feat.desc }}</p>
-          <ul class="feat-list">
-            <li v-for="item in feat.items" :key="item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              {{ item }}
-            </li>
-          </ul>
+          <div class="feat-image-wrap" :class="i % 2 === 0 ? 'reveal-right' : 'reveal-left'" :style="{ '--delay': '0.2s' }">
+            <div class="feat-glow" :style="{ background: feat.glow }"></div>
+            <div class="feat-mockup-container" v-html="feat.mockupHtml"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -200,8 +226,9 @@
     <!-- HOW IT WORKS -->
     <section id="how" class="how">
       <div class="how-inner">
-        <div class="section-badge reveal-up">Cách hoạt động</div>
-        <h2 class="section-title reveal-up" style="--delay: 0.1s">Bắt đầu chỉ trong<br/><span class="text-gradient">3 bước đơn giản</span></h2>
+        <div class="section-badge reveal-up">{{ tNav.how }}</div>
+        <h2 class="section-title reveal-up" style="--delay: 0.1s" v-if="currentLang === 'vi'">Bắt đầu chỉ trong<br/><span class="text-gradient">3 bước đơn giản</span></h2>
+        <h2 class="section-title reveal-up" style="--delay: 0.1s" v-else>Get started in<br/><span class="text-gradient">3 simple steps</span></h2>
         <div class="steps">
           <div class="step reveal-up" v-for="(step, i) in steps" :key="i" :style="{ '--delay': (i * 0.15 + 0.1) + 's' }">
             <div class="step-num">{{ i + 1 }}</div>
@@ -286,15 +313,47 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
+
+const currentLang = ref('vi');
+const langMenuOpen = ref(false);
+
+const activeFeature = ref(0);
+const featureBgs = [
+  'transparent',
+  'rgba(245, 158, 11, 0.05)',
+  'rgba(16, 185, 129, 0.05)',
+  'rgba(139, 92, 246, 0.05)'
+];
+
+const setLang = (lang: string) => {
+  currentLang.value = lang;
+  langMenuOpen.value = false;
+};
+
+const tNav = computed(() => currentLang.value === 'vi' ? {
+  features: 'Tính năng', how: 'Cách hoạt động', stats: 'Kiến trúc',
+  login: 'Đăng nhập', register: 'Bắt đầu miễn phí'
+} : {
+  features: 'Features', how: 'How it works', stats: 'Architecture',
+  login: 'Login', register: 'Get Started'
+});
 
 // ── TYPING EFFECT ──
-const words = ['hiệu quả hơn', 'chuyên nghiệp hơn', 'thông minh hơn', 'dễ dàng hơn']
+const wordsVi = ['hiệu quả hơn', 'chuyên nghiệp hơn', 'thông minh hơn', 'dễ dàng hơn']
+const wordsEn = ['more efficiently', 'more professionally', 'smarter', 'easier']
+const words = computed(() => currentLang.value === 'vi' ? wordsVi : wordsEn)
+
 let wordIdx = 0, charIdx = 0, deleting = false
 const typedText = ref('')
 
+watch(currentLang, () => {
+  wordIdx = 0; charIdx = 0; deleting = false; typedText.value = '';
+});
+
 function typeLoop() {
-  const word = words[wordIdx]
+  const word = words.value[wordIdx]
+  if (!word) return;
   if (!deleting) {
     typedText.value = word.slice(0, ++charIdx)
     if (charIdx === word.length) {
@@ -306,7 +365,7 @@ function typeLoop() {
     typedText.value = word.slice(0, --charIdx)
     if (charIdx === 0) {
       deleting = false
-      wordIdx = (wordIdx + 1) % words.length
+      wordIdx = (wordIdx + 1) % words.value.length
     }
   }
   setTimeout(typeLoop, deleting ? 60 : 90)
@@ -410,11 +469,30 @@ onMounted(() => {
       particleCanvas.value.height = window.innerHeight
     }
   })
+
+  // Feature observer for background transitions
+  featObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        activeFeature.value = parseInt(entry.target.getAttribute('data-index') || '0')
+      }
+    })
+  }, { threshold: 0.5 })
+
+  setTimeout(() => {
+    document.querySelectorAll('.feat-row').forEach((el, index) => {
+      el.setAttribute('data-index', index.toString())
+      featObserver?.observe(el)
+    })
+  }, 500)
 })
+
+let featObserver: IntersectionObserver | null = null
 
 onUnmounted(() => {
   cancelAnimationFrame(animFrame)
   observer?.disconnect()
+  featObserver?.disconnect()
   window.removeEventListener('scroll', onScroll)
 })
 
@@ -424,42 +502,217 @@ const marquee = [
   'Microservices', 'Kanban Board', 'Real-time Notify', 'REST API', 'CORS', 'Swagger'
 ]
 
-const features = [
+const featuresVi = [
   {
     title: 'Quản lý dự án',
     desc: 'Tạo và quản lý nhiều dự án song song với đầy đủ thông tin về tiến độ, thành viên và trạng thái.',
     bg: 'linear-gradient(135deg, #667eea20, #764ba220)',
-    glow: 'radial-gradient(circle at top left, rgba(99,102,241,0.15), transparent 70%)',
+    glow: 'radial-gradient(circle at top left, rgba(99,102,241,0.25), transparent 70%)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
-    items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh']
+    items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-flex">
+          <div class="mk-sidebar">
+            <div class="mk-sb-item mk-active"></div><div class="mk-sb-item"></div><div class="mk-sb-item"></div>
+          </div>
+          <div class="mk-content">
+            <div class="mk-row">
+              <div class="mk-card mk-w40" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
+                <div style="font-size:0.7rem;color:#a1a1aa">Tổng dự án</div>
+                <div style="font-size:1.3rem;font-weight:700;color:#fff">12</div>
+              </div>
+              <div class="mk-card mk-w60" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
+                <div style="font-size:0.7rem;color:#a1a1aa;margin-bottom:6px">Tiến độ chung</div>
+                <div style="width:100%;height:6px;background:#3f3f46;border-radius:3px">
+                  <div style="width:75%;height:100%;background:#10b981;border-radius:3px"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mk-row">
+              <div class="mk-card mk-w100" style="padding:12px;display:flex;flex-direction:column;gap:10px;height:auto">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#10b981"></span><span style="font-size:0.8rem;color:#e4e4e7">Thiết kế UI Dashboard</span></div>
+                  <span style="font-size:0.65rem;background:rgba(16,185,129,0.15);color:#10b981;padding:2px 6px;border-radius:4px">Xong</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#f59e0b"></span><span style="font-size:0.8rem;color:#e4e4e7">API Gateway Integration</span></div>
+                  <span style="font-size:0.65rem;background:rgba(245,158,11,0.15);color:#f59e0b;padding:2px 6px;border-radius:4px">Đang làm</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
   },
   {
     title: 'Task & Kanban Board',
     desc: 'Phân công công việc, đặt deadline, theo dõi tiến độ từng task với bảng Kanban trực quan.',
     bg: 'linear-gradient(135deg, #f59e0b20, #ef444420)',
-    glow: 'radial-gradient(circle at top left, rgba(245,158,11,0.12), transparent 70%)',
+    glow: 'radial-gradient(circle at top left, rgba(245,158,11,0.25), transparent 70%)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
-    items: ['Kanban board kéo-thả', 'Subtasks & work log', 'Độ ưu tiên & deadline', 'Phân công nhân sự']
+    items: ['Kanban board kéo-thả', 'Subtasks & work log', 'Độ ưu tiên & deadline', 'Phân công nhân sự'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-kanban">
+          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#a1a1aa">To Do</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
+          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#6366f1">In Progress</div><div class="mk-kb-card mk-kb-active"></div></div>
+          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#10b981">Done</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
+        </div>
+      </div>
+    `
   },
   {
     title: 'Bình luận & Thông báo',
     desc: 'Giao tiếp trực tiếp trong task, nhận thông báo tự động khi có hoạt động mới trong dự án.',
     bg: 'linear-gradient(135deg, #10b98120, #059f4620)',
-    glow: 'radial-gradient(circle at top left, rgba(16,185,129,0.12), transparent 70%)',
+    glow: 'radial-gradient(circle at top left, rgba(16,185,129,0.25), transparent 70%)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`,
-    items: ['Bình luận theo task', 'Thông báo realtime', 'Đánh dấu đã đọc', 'Nhật ký hoạt động']
+    items: ['Bình luận theo task', 'Thông báo realtime', 'Đánh dấu đã đọc', 'Nhật ký hoạt động'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-chat">
+          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done! 🚀</div></div>
+          <div class="mk-chat-msg mk-right"><div class="mk-bubble mk-primary">Great, I will review the PR.</div></div>
+          <div class="mk-chat-msg"><div class="mk-avatar" style="background:#10b981"></div><div class="mk-bubble">LGTM! Merging now.</div></div>
+          <div class="mk-notif"><div class="mk-notif-icon">🔔</div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
+        </div>
+      </div>
+    `
   },
   {
     title: 'Bảo mật & Phân quyền',
     desc: 'Hệ thống JWT authentication, phân quyền theo vai trò từ Admin đến Viewer rõ ràng và an toàn.',
     bg: 'linear-gradient(135deg, #8b5cf620, #6366f120)',
-    glow: 'radial-gradient(circle at top left, rgba(139,92,246,0.12), transparent 70%)',
+    glow: 'radial-gradient(circle at top left, rgba(139,92,246,0.25), transparent 70%)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-    items: ['JWT Authentication', 'Phân quyền Admin/Manager/Member/Viewer', 'Đăng ký & quản lý tài khoản', 'Bảo mật API Gateway']
+    items: ['JWT Authentication', 'Phân quyền Admin/Manager/Member/Viewer', 'Đăng ký & quản lý tài khoản', 'Bảo mật API Gateway'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-security">
+          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">Two-Factor Authentication</div><div class="mk-sec-desc">Require 2FA for all members</div></div><div class="mk-toggle mk-active"></div></div>
+          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">API Gateway Access</div><div class="mk-sec-desc">Allow external integrations</div></div><div class="mk-toggle"></div></div>
+          <div class="mk-sec-roles">
+            <span class="mk-role mk-admin">Admin</span><span class="mk-role mk-manager">Manager</span><span class="mk-role mk-viewer">Viewer</span>
+          </div>
+        </div>
+      </div>
+    `
   }
 ]
 
-const steps = [
+const featuresEn = [
+  {
+    title: 'Project Management',
+    desc: 'Create and manage multiple projects concurrently with full details on progress, members, and status.',
+    bg: 'linear-gradient(135deg, #667eea20, #764ba220)',
+    glow: 'radial-gradient(circle at top left, rgba(99,102,241,0.25), transparent 70%)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
+    items: ['Create projects with colors & desc', 'Manage project members', 'Realtime progress tracking', 'Fast filter & search'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-flex">
+          <div class="mk-sidebar">
+            <div class="mk-sb-item mk-active"></div><div class="mk-sb-item"></div><div class="mk-sb-item"></div>
+          </div>
+          <div class="mk-content">
+            <div class="mk-row">
+              <div class="mk-card mk-w40" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
+                <div style="font-size:0.7rem;color:#a1a1aa">Projects</div>
+                <div style="font-size:1.3rem;font-weight:700;color:#fff">12</div>
+              </div>
+              <div class="mk-card mk-w60" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
+                <div style="font-size:0.7rem;color:#a1a1aa;margin-bottom:6px">Progress</div>
+                <div style="width:100%;height:6px;background:#3f3f46;border-radius:3px">
+                  <div style="width:75%;height:100%;background:#10b981;border-radius:3px"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mk-row">
+              <div class="mk-card mk-w100" style="padding:12px;display:flex;flex-direction:column;gap:10px;height:auto">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#10b981"></span><span style="font-size:0.8rem;color:#e4e4e7">Dashboard UI Design</span></div>
+                  <span style="font-size:0.65rem;background:rgba(16,185,129,0.15);color:#10b981;padding:2px 6px;border-radius:4px">Done</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#f59e0b"></span><span style="font-size:0.8rem;color:#e4e4e7">API Gateway Integration</span></div>
+                  <span style="font-size:0.65rem;background:rgba(245,158,11,0.15);color:#f59e0b;padding:2px 6px;border-radius:4px">Doing</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: 'Task & Kanban Board',
+    desc: 'Assign tasks, set deadlines, and track individual task progress using an intuitive Kanban board.',
+    bg: 'linear-gradient(135deg, #f59e0b20, #ef444420)',
+    glow: 'radial-gradient(circle at top left, rgba(245,158,11,0.25), transparent 70%)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+    items: ['Drag & drop Kanban board', 'Subtasks & work log', 'Priority & deadlines', 'Assign team members'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-kanban">
+          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#a1a1aa">To Do</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
+          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#6366f1">In Progress</div><div class="mk-kb-card mk-kb-active"></div></div>
+          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#10b981">Done</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: 'Comments & Notifications',
+    desc: 'Communicate directly within tasks, and receive automatic notifications for new project activities.',
+    bg: 'linear-gradient(135deg, #10b98120, #059f4620)',
+    glow: 'radial-gradient(circle at top left, rgba(16,185,129,0.25), transparent 70%)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`,
+    items: ['Task-based comments', 'Realtime notifications', 'Mark as read', 'Activity log'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-chat">
+          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done! 🚀</div></div>
+          <div class="mk-chat-msg mk-right"><div class="mk-bubble mk-primary">Great, I will review the PR.</div></div>
+          <div class="mk-chat-msg"><div class="mk-avatar" style="background:#10b981"></div><div class="mk-bubble">LGTM! Merging now.</div></div>
+          <div class="mk-notif"><div class="mk-notif-icon">🔔</div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: 'Security & Roles',
+    desc: 'JWT authentication system and robust role-based access control from Admin to Viewer.',
+    bg: 'linear-gradient(135deg, #8b5cf620, #6366f120)',
+    glow: 'radial-gradient(circle at top left, rgba(139,92,246,0.25), transparent 70%)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    items: ['JWT Authentication', 'Admin/Manager/Member/Viewer roles', 'Account management', 'API Gateway Security'],
+    mockupHtml: `
+      <div class="mk-window">
+        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+        <div class="mk-body mk-security">
+          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">Two-Factor Authentication</div><div class="mk-sec-desc">Require 2FA for all members</div></div><div class="mk-toggle mk-active"></div></div>
+          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">API Gateway Access</div><div class="mk-sec-desc">Allow external integrations</div></div><div class="mk-toggle"></div></div>
+          <div class="mk-sec-roles">
+            <span class="mk-role mk-admin">Admin</span><span class="mk-role mk-manager">Manager</span><span class="mk-role mk-viewer">Viewer</span>
+          </div>
+        </div>
+      </div>
+    `
+  }
+]
+
+const features = computed(() => currentLang.value === 'vi' ? featuresVi : featuresEn)
+
+const stepsVi = [
   {
     title: 'Tạo tài khoản',
     desc: 'Đăng ký miễn phí với email và mật khẩu. Được cấp quyền Member ngay lập tức.',
@@ -479,6 +732,29 @@ const steps = [
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`
   }
 ]
+
+const stepsEn = [
+  {
+    title: 'Create Account',
+    desc: 'Register for free with email and password. Get Member access instantly.',
+    bg: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
+  },
+  {
+    title: 'Create Project & Invite',
+    desc: 'Create a new project, invite colleagues, and start assigning tasks in the system.',
+    bg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`
+  },
+  {
+    title: 'Work & Track',
+    desc: 'Use the Kanban board, comment, receive notifications, and view progress in real-time.',
+    bg: 'linear-gradient(135deg, #10b981, #0ea5e9)',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`
+  }
+]
+
+const steps = computed(() => currentLang.value === 'vi' ? stepsVi : stepsEn)
 
 const services = [
   {
@@ -568,11 +844,12 @@ const services = [
   display: flex; align-items: center; justify-content: space-between;
   height: 64px;
 }
-.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  width: 34px; height: 34px; border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
   display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3);
   animation: logo-spin 8s linear infinite;
 }
 @keyframes logo-spin {
@@ -581,26 +858,34 @@ const services = [
   100% { transform: rotate(360deg); }
 }
 .logo-icon.small { width: 28px; height: 28px; border-radius: 8px; animation: none; }
-.logo-text { font-weight: 700; font-size: 1.1rem; color: #fff; }
-.nav-links { display: flex; align-items: center; gap: 1.5rem; }
-.nav-link {
-  color: #a1a1aa; font-size: 0.9rem; text-decoration: none;
-  position: relative; transition: color 0.2s;
-}
-.nav-link::after {
-  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
-  height: 1px; background: #6366f1; transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
+.logo-text { font-size: 1.25rem; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-link { color: #a1a1aa; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: color 0.2s; }
 .nav-link:hover { color: #fff; }
-.nav-link:hover::after { transform: scaleX(1); }
-.btn-nav-login {
-  color: #a1a1aa; font-size: 0.9rem; text-decoration: none;
-  padding: 0.4rem 1rem; border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: all 0.2s;
+
+.nav-lang-dropdown {
+  position: relative; display: flex; align-items: center; gap: 6px;
+  cursor: pointer; padding: 6px 12px; border-radius: 8px;
+  background: rgba(255,255,255,0.05); color: #fff; font-size: 0.85rem;
+  font-weight: 500; transition: background 0.2s; outline: none;
+  border: 1px solid rgba(255,255,255,0.05);
 }
-.btn-nav-login:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+.nav-lang-dropdown:hover { background: rgba(255,255,255,0.08); }
+.lang-menu {
+  position: absolute; top: 130%; right: 0; background: #18181b;
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+  padding: 6px; min-width: 140px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column; gap: 4px;
+  z-index: 100; transform-origin: top right;
+}
+.lang-item {
+  padding: 8px 12px; border-radius: 6px; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s; color: #a1a1aa; font-size: 0.85rem;
+}
+.lang-item:hover, .lang-item.active { background: rgba(99,102,241,0.15); color: #fff; }
+
+.btn-nav-login { color: #fff; font-size: 0.95rem; font-weight: 500; text-decoration: none; }
 .btn-nav-register {
   position: relative; overflow: hidden;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -801,6 +1086,26 @@ const services = [
   0%, 100% { transform: translateY(-50%) scale(1); }
   50% { transform: translateY(-50%) scale(1.2); }
 }
+.preview-img-wrap {
+  position: relative; overflow: hidden;
+  border-radius: 0 0 12px 12px;
+  max-height: 280px;
+}
+.preview-img {
+  width: 100%; display: block;
+  object-fit: cover; object-position: top;
+  transition: transform 6s ease;
+  animation: slow-pan 12s ease-in-out infinite alternate;
+}
+@keyframes slow-pan {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-15%); }
+}
+.preview-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, #141416);
+  pointer-events: none;
+}
 .preview-main { flex: 1; padding: 14px; }
 .pm-title { font-size: 0.8rem; font-weight: 600; color: #e4e4e7; margin-bottom: 10px; }
 .pm-cards { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -915,53 +1220,107 @@ const services = [
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 
+
 /* ── FEATURES ── */
 .features {
   padding: 100px 2rem;
   max-width: 1200px; margin: 0 auto;
   text-align: center; position: relative; z-index: 1;
+  transition: background-color 0.8s ease;
 }
-.features > .section-sub { margin: 0 auto 3.5rem; }
-.features-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
-  text-align: left;
+.features > .section-sub { margin: 0 auto 2rem; }
+
+.features-zigzag {
+  display: flex; flex-direction: column; gap: 8rem;
+  max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;
 }
-.feat-card {
-  position: relative; overflow: hidden;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 16px; padding: 1.8rem;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.feat-row {
+  display: flex; align-items: center; gap: 6rem;
 }
-.feat-glow {
-  position: absolute; inset: 0; opacity: 0;
-  transition: opacity 0.3s;
+.feat-row.row-reverse {
+  flex-direction: row-reverse;
 }
-.feat-card:hover .feat-glow { opacity: 1; }
-.feat-card:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(99,102,241,0.3);
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+.feat-text {
+  flex: 1; text-align: left;
 }
-.feat-icon {
-  width: 48px; height: 48px; border-radius: 12px;
+.feat-image-wrap {
+  flex: 1.2; position: relative;
+  border-radius: 24px; overflow: hidden;
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(20,20,22,0.8);
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateY(-8deg) rotateX(4deg);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s, box-shadow 0.4s;
+}
+.feat-row.row-reverse .feat-image-wrap {
+  transform: perspective(1000px) rotateY(8deg) rotateX(4deg);
+}
+.feat-image-wrap:hover { 
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.04) translateY(-10px); 
+  border-color: rgba(99,102,241,0.5); 
+  box-shadow: 0 50px 100px -20px rgba(99,102,241,0.2), 0 0 40px rgba(99,102,241,0.1); 
+}
+
+@keyframes float-img {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+.feat-mockup-container {
+  width: 100%; height: 100%; min-height: 400px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1rem; position: relative;
-  transition: transform 0.3s;
+  padding: 2rem;
+  animation: float-img 6s ease-in-out infinite;
+  opacity: 0.9; transition: opacity 0.5s;
 }
-.feat-card:hover .feat-icon { transform: scale(1.1) rotate(5deg); }
-.feat-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0 0 0.5rem; }
-.feat-desc { font-size: 0.88rem; color: #71717a; line-height: 1.6; margin: 0 0 1rem; }
-.feat-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.feat-image-wrap:hover .feat-mockup-container { opacity: 1; animation-play-state: paused; }
+
+
+
+.feat-glow {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  transition: opacity 0.5s; z-index: 2; mix-blend-mode: color-dodge;
+}
+.feat-image-wrap:hover .feat-glow { opacity: 0.8; }
+
+.feat-icon {
+  width: 54px; height: 54px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem; position: relative; z-index: 2;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.feat-row:hover .feat-icon { transform: scale(1.1) translateY(-4px) rotate(3deg); }
+.feat-title {
+  font-size: 1.8rem; font-weight: 800; color: #fff;
+  margin-bottom: 1rem; position: relative; z-index: 2;
+  letter-spacing: -0.5px;
+}
+.feat-desc {
+  font-size: 1.05rem; color: #a1a1aa; line-height: 1.7;
+  margin-bottom: 2rem; position: relative; z-index: 2;
+}
+.feat-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 1rem;
+  position: relative; z-index: 2;
+}
 .feat-list li {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 0.83rem; color: #a1a1aa;
+  font-size: 0.95rem; color: #d4d4d8;
+  display: flex; align-items: center; gap: 12px;
   transition: color 0.2s, transform 0.2s;
 }
-.feat-card:hover .feat-list li { color: #d4d4d8; }
-.feat-list li:hover { transform: translateX(4px); color: #fff; }
+.feat-row:hover .feat-list li { color: #fff; }
+.feat-list li:hover { transform: translateX(6px); color: #818cf8; }
 .feat-list svg { color: #6366f1; flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  .feat-row, .feat-row.row-reverse { flex-direction: column; gap: 3rem; min-height: auto; padding: 4rem 0; }
+  .features-zigzag { gap: 0; }
+}
 
 /* ── HOW IT WORKS ── */
 .how {
@@ -1133,4 +1492,65 @@ const services = [
   .services-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; text-align: center; }
 }
+</style>
+
+<style>
+/* ── MOCKUP UI CSS ── */
+.mk-window {
+  width: 100%; max-width: 500px; background: #121214;
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.mk-header {
+  height: 36px; background: #1a1a1e; border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; padding: 0 16px;
+}
+.mk-dots { display: flex; gap: 8px; }
+.mk-dots span { width: 12px; height: 12px; border-radius: 50%; opacity: 0.8; }
+.mk-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+
+/* Dashboard Mockup */
+.mk-flex { display: flex; flex-direction: row; gap: 20px; padding: 16px; }
+.mk-sidebar { width: 60px; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid rgba(255,255,255,0.05); padding-right: 16px; }
+.mk-sb-item { height: 24px; border-radius: 6px; background: rgba(255,255,255,0.05); }
+.mk-sb-item.mk-active { background: rgba(99,102,241,0.2); }
+.mk-content { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.mk-row { display: flex; gap: 12px; }
+.mk-card { height: 60px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+.mk-w30 { flex: 0.33; } .mk-w40 { flex: 0.4; } .mk-w60 { flex: 0.6; } .mk-w100 { flex: 1; height: 100px; }
+
+/* Kanban Mockup */
+.mk-kanban { flex-direction: row; gap: 16px; }
+.mk-kb-col { flex: 1; display: flex; flex-direction: column; gap: 10px; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; }
+.mk-kb-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.mk-kb-card { height: 50px; background: rgba(255,255,255,0.06); border-radius: 6px; }
+.mk-kb-card.mk-kb-active { border: 1px solid rgba(99,102,241,0.5); box-shadow: 0 4px 12px rgba(99,102,241,0.2); }
+
+/* Chat Mockup */
+.mk-chat { gap: 16px; }
+.mk-chat-msg { display: flex; gap: 12px; align-items: flex-end; }
+.mk-chat-msg.mk-right { flex-direction: row-reverse; }
+.mk-avatar { width: 32px; height: 32px; border-radius: 50%; background: #6366f1; flex-shrink: 0; }
+.mk-bubble { background: rgba(255,255,255,0.08); padding: 10px 14px; border-radius: 12px; border-bottom-left-radius: 2px; font-size: 0.85rem; color: #d4d4d8; }
+.mk-right .mk-bubble { border-bottom-left-radius: 12px; border-bottom-right-radius: 2px; }
+.mk-bubble.mk-primary { background: #6366f1; color: #fff; }
+.mk-notif { margin-top: auto; display: flex; gap: 12px; align-items: center; background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(245,158,11,0.2); }
+.mk-notif-icon { font-size: 1.2rem; }
+.mk-notif-text { font-size: 0.85rem; color: #fcd34d; }
+
+/* Security Mockup */
+.mk-security { gap: 20px; }
+.mk-sec-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.mk-sec-title { font-size: 0.95rem; color: #fff; font-weight: 500; margin-bottom: 4px; }
+.mk-sec-desc { font-size: 0.8rem; color: #71717a; }
+.mk-toggle { width: 40px; height: 22px; background: rgba(255,255,255,0.1); border-radius: 11px; position: relative; }
+.mk-toggle::after { content:''; position: absolute; top:2px; left:2px; width:18px; height:18px; background:#fff; border-radius:50%; transition: 0.2s; }
+.mk-toggle.mk-active { background: #10b981; }
+.mk-toggle.mk-active::after { transform: translateX(18px); }
+.mk-sec-roles { display: flex; gap: 8px; margin-top: 8px; }
+.mk-role { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: 600; }
+.mk-role.mk-admin { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.mk-role.mk-manager { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+.mk-role.mk-viewer { background: rgba(255,255,255,0.1); color: #a1a1aa; border: 1px solid rgba(255,255,255,0.1); }
 </style>

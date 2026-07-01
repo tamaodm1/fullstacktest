@@ -244,6 +244,20 @@ app.MapPost("/api/tasks/{taskId}/comments", async (string taskId, CommentRequest
 
     await LogAsync(conn, user, "comment.created", "comment", id, taskId,
         $"{user.FullName} bình luận task {taskId}: \"{(content.Length > 50 ? content[..50] + "..." : content)}\"");
+    
+    // @mention: notify tagged users
+    var mentionedUserIds = new HashSet<string>();
+    var allUsers = await QueryAsync<UserDto>(conn, "SELECT id, fullName, avatarUrl, role, CAST(isOnline AS bit) AS isOnline, email FROM Users");
+    foreach (var u in allUsers)
+    {
+        if (content.Contains($"@{u.FullName}") || content.Contains($"@{u.Id}"))
+        {
+            mentionedUserIds.Add(u.Id);
+            if (u.Id != user.Id)
+                await InsertNotificationAsync(conn, u.Id, "Bạn được nhắc đến", $"{user.FullName} đã nhắc đến bạn trong bình luận task {taskId}.", "comment.mention", taskId, null, user);
+        }
+    }
+
     var recipients = await QueryAsync<string>(conn,
         """
         SELECT DISTINCT userId FROM Comments WHERE taskId=@taskId
@@ -421,6 +435,17 @@ app.MapPost("/api/internal/task-events", async (TaskEventRequest request) =>
     }
     return Results.Accepted();
 });
+
+// Endpoint để các service khác / frontend ghi nhật ký hoạt động
+app.MapPost("/api/internal/log-event", async (LogEventRequest request, ClaimsPrincipal principal) =>
+{
+    var user = CurrentUser(principal);
+    if (user is null) return Results.Unauthorized();
+    await using var conn = await db.OpenAsync();
+    await LogAsync(conn, user, request.Action, request.EntityType ?? "system",
+        request.EntityId ?? "0", request.TaskId, request.Message);
+    return Results.Accepted();
+}).RequireAuthorization();
 
 app.MapGet("/api/tasks/{taskId}/watch/status", async (string taskId, ClaimsPrincipal principal) =>
 {
@@ -747,3 +772,4 @@ record CommentReactionDto(string CommentId, string Emoji, string UserId, string 
 record CommentDto(string Id, string TaskId, string? UserId, string UserName, string UserAvatar, string Content, string CreatedAt, string? UpdatedAt, List<CommentAttachmentDto> Attachments, List<CommentReactionDto> Reactions);
 record NotificationDto(string Id, string UserId, string Title, string Message, string Type, string? TaskId, string? ProjectId, string? ActorId, string? ActorName, bool IsRead, string CreatedAt);
 record ActivityLogDto(string Id, string? UserId, string? UserName, string Action, string? EntityType, string? EntityId, string? TaskId, string? Message, string CreatedAt);
+record LogEventRequest(string Action, string Message, string? EntityType, string? EntityId, string? TaskId, string? ProjectId);

@@ -72,13 +72,14 @@
       </div>
 
     </div>
-  </div>
 
-  <TaskDetailModal 
-    :isOpen="isTaskDetailOpen" 
-    :taskId="selectedTask?.id"
-    @close="isTaskDetailOpen = false"
-  />
+    <!-- Modal nằm trong cùng root div -->
+    <TaskDetailModal 
+      :isOpen="isTaskDetailOpen" 
+      :taskId="selectedTask?.id"
+      @close="isTaskDetailOpen = false"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">

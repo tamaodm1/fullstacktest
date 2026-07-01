@@ -128,7 +128,7 @@ import { computed, onMounted, ref } from 'vue';
 import { Bell, CheckCheck, ClipboardCheck, Inbox, MessageSquare, RefreshCw, Trash2, UserPlus } from '@lucide/vue';
 import { useTaskStore } from '../stores/taskStore';
 import TaskDetailModal from '../components/TaskDetailModal.vue';
-import type { NotificationDto } from '../services/api';
+import type { Notification } from '../services/mockData';
 
 const taskStore = useTaskStore();
 const activeFilter = ref<'all' | 'unread' | 'read'>('all');
@@ -167,7 +167,7 @@ function getTaskTitle(taskId: string) {
   return taskStore.tasks.find(task => task.id === taskId)?.title || `Task ${taskId}`;
 }
 
-async function openTask(notification: NotificationDto) {
+async function openTask(notification: Notification) {
   if (notification.taskId) {
     activeTaskId.value = notification.taskId;
     isDetailModalOpen.value = true;

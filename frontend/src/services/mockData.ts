@@ -103,6 +103,7 @@ export interface Task {
   loggedHours?: number;
   workLogs?: WorkLog[];
   comments?: Comment[];
+  updatedAt?: string;
 }
 
 export interface PublishedEvent {

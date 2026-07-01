@@ -606,30 +606,23 @@ import { ref, watch, computed } from 'vue';
 import { X, MessageSquare, Send, Trash2, CheckSquare, Clock, Plus, Pencil, Check, Eye, Paperclip, Smile } from '@lucide/vue';
 import { useTaskStore } from '../stores/taskStore';
 import { apiService } from '../services/api';
-import type { Reaction } from '../services/mockData';
+import type { Task, Comment, Reaction } from '../services/mockData';
 
-// Sóng nước ripple cho các nút bấm trong modal chi tiết
+// Ripple effect cho các nút bấm trong modal
 function handleButtonClick(event: MouseEvent) {
   const el = event.currentTarget as HTMLElement;
   const circle = document.createElement('span');
   const diameter = Math.max(el.clientWidth, el.clientHeight);
   const radius = diameter / 2;
-
   const rect = el.getBoundingClientRect();
-  
   circle.style.width = circle.style.height = `${diameter}px`;
   circle.style.left = `${event.clientX - rect.left - radius}px`;
   circle.style.top = `${event.clientY - rect.top - radius}px`;
   circle.classList.add('ripple-span-detail');
-
   const oldRipple = el.querySelector('.ripple-span-detail');
-  if (oldRipple) {
-    oldRipple.remove();
-  }
-
+  if (oldRipple) oldRipple.remove();
   el.appendChild(circle);
 }
-import type { Task, Comment } from '../services/mockData';
 
 const props = defineProps<{
   isOpen: boolean;

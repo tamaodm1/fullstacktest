@@ -20,6 +20,20 @@ apiClient.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
+// Bắt lỗi 401 - token hết hạn → redirect về login
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/register' && window.location.pathname !== '/') {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Cờ cấu hình: bật true để chạy thử bằng LocalStorage, tắt false để kết nối Backend thật
 const USE_MOCK = false;
 
@@ -409,6 +423,13 @@ export const apiService = {
       return Promise.resolve();
     }
     await apiClient.delete(`/notifications/${notificationId}`);
+  },
+
+  async logEvent(action: string, message: string, opts?: { entityType?: string; entityId?: string; taskId?: string; projectId?: string }): Promise<void> {
+    if (USE_MOCK) return;
+    try {
+      await apiClient.post('/internal/log-event', { action, message, ...opts });
+    } catch { /* silent - không để lỗi log chặn UI */ }
   },
 
   async getActivityLogs(taskId?: string): Promise<ActivityLog[]> {

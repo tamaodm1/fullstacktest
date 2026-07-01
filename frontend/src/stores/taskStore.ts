@@ -76,9 +76,13 @@ export const useTaskStore = defineStore('taskStore', () => {
 
       // Start polling for new notifications
       startNotificationPolling();
-    } catch (error) {
-      console.error('Failed to initialize task store:', error);
-      logoutAction();
+    } catch (error: any) {
+      // Chỉ logout khi 401 (token hết hạn) - còn lỗi mạng thì giữ nguyên UI
+      if (error?.response?.status === 401) {
+        logoutAction();
+      } else {
+        console.warn('Init warning (network/server):', error?.message || error);
+      }
     }
   }
 
@@ -191,6 +195,12 @@ export const useTaskStore = defineStore('taskStore', () => {
       const newTask = await apiService.createTask(taskData);
       tasks.value.push(newTask);
       updateProjectProgressLocal(newTask.projectId);
+
+      // Ghi nhật ký hoạt động
+      const projName = projects.value.find(p => p.id === newTask.projectId)?.name || newTask.projectId;
+      apiService.logEvent('task.created', `${currentUser.value.fullName} tạo task mới '${newTask.title}' trong dự án '${projName}'`, {
+        entityType: 'task', entityId: newTask.id, taskId: newTask.id
+      });
 
       if (newTask.assigneeId) {
         const names = newTask.assigneeId.split(',')
@@ -428,6 +438,10 @@ export const useTaskStore = defineStore('taskStore', () => {
     try {
       const newProj = await apiService.createProject(projData);
       projects.value.push(newProj);
+      // Ghi nhật ký hoạt động
+      apiService.logEvent('project.created', `${currentUser.value.fullName} tạo dự án mới '${newProj.name}'`, {
+        entityType: 'project', entityId: newProj.id
+      });
       return newProj;
     } catch (error) {
       console.error('Failed to add project:', error);
