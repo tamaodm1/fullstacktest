@@ -75,13 +75,13 @@
               <div class="flex flex-wrap items-center gap-2 text-[10px] text-slate-500">
                 <span class="px-2 py-1 rounded-md bg-slate-100 font-bold">{{ notification.type }}</span>
                 <span v-if="notification.actorName">Từ: {{ notification.actorName }}</span>
-                <router-link
+                <button
                   v-if="notification.taskId"
-                  to="/kanban"
-                  class="text-indigo-600 hover:text-indigo-800 font-bold"
+                  @click.prevent="openTask(notification)"
+                  class="text-indigo-600 hover:text-indigo-800 font-bold text-left"
                 >
                   {{ getTaskTitle(notification.taskId) }}
-                </router-link>
+                </button>
               </div>
 
               <div class="flex items-center gap-1">
@@ -114,6 +114,12 @@
         <p class="text-xs text-slate-400 mt-1">Các cập nhật về task và bình luận sẽ xuất hiện tại đây.</p>
       </div>
     </main>
+
+    <TaskDetailModal
+      :isOpen="isDetailModalOpen"
+      :taskId="activeTaskId"
+      @close="isDetailModalOpen = false"
+    />
   </div>
 </template>
 
@@ -121,9 +127,13 @@
 import { computed, onMounted, ref } from 'vue';
 import { Bell, CheckCheck, ClipboardCheck, Inbox, MessageSquare, RefreshCw, Trash2, UserPlus } from '@lucide/vue';
 import { useTaskStore } from '../stores/taskStore';
+import TaskDetailModal from '../components/TaskDetailModal.vue';
+import type { NotificationDto } from '../services/api';
 
 const taskStore = useTaskStore();
 const activeFilter = ref<'all' | 'unread' | 'read'>('all');
+const isDetailModalOpen = ref(false);
+const activeTaskId = ref<string | undefined>(undefined);
 
 const filters = [
   { label: 'Tất cả', value: 'all' as const },
@@ -155,6 +165,16 @@ async function markAllRead() {
 
 function getTaskTitle(taskId: string) {
   return taskStore.tasks.find(task => task.id === taskId)?.title || `Task ${taskId}`;
+}
+
+async function openTask(notification: NotificationDto) {
+  if (notification.taskId) {
+    activeTaskId.value = notification.taskId;
+    isDetailModalOpen.value = true;
+    if (!notification.isRead) {
+      await taskStore.markNotificationRead(notification.id);
+    }
+  }
 }
 
 function formatDate(value: string) {

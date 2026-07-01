@@ -259,11 +259,11 @@ export const useTaskStore = defineStore('taskStore', () => {
     task.comments = await apiService.getComments(taskId);
   }
 
-  async function addComment(taskId: string, content: string) {
+  async function addComment(taskId: string, content: string, attachments?: {fileName: string, fileUrl: string}[]) {
     try {
       const task = tasks.value.find(t => t.id === taskId);
       if (task) {
-        await apiService.addComment(taskId, content);
+        await apiService.addComment(taskId, content, attachments);
         await refreshWorkspaceApis();
         await refreshTaskComments(taskId);
         await refreshNotifications();

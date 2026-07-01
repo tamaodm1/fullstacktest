@@ -22,6 +22,27 @@
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5003 }]
     },
     {
+      "UpstreamPathTemplate": "/api/upload",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/upload",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5003 }]
+    },
+    {
+      "UpstreamPathTemplate": "/api/tasks/{taskId}/watch/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ],
+      "DownstreamPathTemplate": "/api/tasks/{taskId}/watch/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5003 }]
+    },
+    {
+      "UpstreamPathTemplate": "/api/tasks/{taskId}/watch",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
+      "DownstreamPathTemplate": "/api/tasks/{taskId}/watch",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5003 }]
+    },
+    {
       "UpstreamPathTemplate": "/api/tasks/{taskId}/comments/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ],
       "DownstreamPathTemplate": "/api/tasks/{taskId}/comments/{everything}",
@@ -32,6 +53,13 @@
       "UpstreamPathTemplate": "/api/tasks/{taskId}/comments",
       "UpstreamHttpMethod": [ "GET", "POST" ],
       "DownstreamPathTemplate": "/api/tasks/{taskId}/comments",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5003 }]
+    },
+    {
+      "UpstreamPathTemplate": "/api/tasks/comments/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ],
+      "DownstreamPathTemplate": "/api/tasks/comments/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5003 }]
     },
