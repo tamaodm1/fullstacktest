@@ -68,6 +68,13 @@ export const useTaskStore = defineStore('taskStore', () => {
       projects.value = await apiService.getProjects();
       tasks.value = await apiService.getTasks();
       currentUser.value = await apiService.getCurrentUser();
+      
+      // Auto logout if user is completely invalid or missing in DB
+      if (!currentUser.value || !currentUser.value.id) {
+        logoutAction();
+        return;
+      }
+
       notifications.value = await apiService.getNotifications();
       lastUnreadCount.value = notifications.value.filter(n => !n.isRead).length;
 
@@ -77,8 +84,9 @@ export const useTaskStore = defineStore('taskStore', () => {
       // Start polling for new notifications
       startNotificationPolling();
     } catch (error: any) {
-      // Chỉ logout khi 401 (token hết hạn) - còn lỗi mạng thì giữ nguyên UI
-      if (error?.response?.status === 401) {
+      // Nếu có lỗi trong lúc lấy thông tin user hoặc token không hợp lệ (Bao gồm cả 500, 502 do server sập)
+      // Mà lúc này currentUser vẫn chưa được set, thì bắt buộc phải văng ra trang Login để tránh lỗi trắng trang
+      if (!currentUser.value || !currentUser.value.id) {
         logoutAction();
       } else {
         console.warn('Init warning (network/server):', error?.message || error);
@@ -111,6 +119,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     tasks.value = [];
     notifications.value = [];
     lastUnreadCount.value = 0;
+    window.location.href = '/login';
   }
 
   // Get project progress dynamically based on completed tasks

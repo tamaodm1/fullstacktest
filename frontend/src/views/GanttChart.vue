@@ -144,34 +144,36 @@
                   class="h-16 border-b border-transparent relative flex items-center group"
                 >
                   <div 
-                    class="absolute h-10 rounded-xl shadow-md flex items-center cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 group/bar border border-white/20"
+                    class="absolute h-8 rounded shadow-sm flex items-center cursor-pointer transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 group/bar border border-black/5 overflow-hidden"
                     :class="[getStatusColorBg(task.status)]"
                     :style="{
                       left: `${getTaskPosition(task).left}px`,
                       width: `${getTaskPosition(task).width}px`
                     }"
+                    :title="getTaskTooltip(task)"
                     @click="openTaskDetail(task)"
                   >
-                    <!-- Glossy overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent rounded-xl pointer-events-none"></div>
                     
-                    <!-- Content inside bar (if width >= 100) -->
-                    <div v-if="getTaskPosition(task).width >= 100" class="px-3 flex items-center justify-between w-full relative z-10">
-                      <span class="text-xs font-black text-white truncate drop-shadow-md pr-2">
+                    <!-- Content inside bar (if width >= 120) -->
+                    <div v-if="getTaskPosition(task).width >= 120" class="pl-3 pr-2 flex items-center justify-between w-full relative z-10 gap-2">
+                      <span class="text-[11px] font-bold text-white truncate drop-shadow-md">
                         {{ task.title }}
                       </span>
-                      <img v-if="task.assigneeId" :src="getAvatar(task.assigneeId)" @error="(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=User&background=6366f1&color=fff` }" class="w-6 h-6 rounded-full ring-2 ring-white/50 shadow-sm shrink-0" />
+                      <img v-if="task.assigneeId" :src="getAvatar(task.assigneeId)" @error="(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=User&background=6366f1&color=fff` }" class="w-5 h-5 rounded-full ring-1 ring-white/50 shadow-sm shrink-0" />
                     </div>
                     
                     <!-- Content inside short bar -->
-                    <div v-else class="w-full h-full flex items-center justify-center relative z-10">
-                      <img v-if="task.assigneeId" :src="getAvatar(task.assigneeId)" @error="(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=User&background=6366f1&color=fff` }" class="w-6 h-6 rounded-full ring-1 ring-white/50 shadow-sm shrink-0" />
+                    <div v-else class="w-full h-full flex items-center justify-center relative z-10 pl-1">
+                      <img v-if="task.assigneeId" :src="getAvatar(task.assigneeId)" @error="(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=User&background=6366f1&color=fff` }" class="w-5 h-5 rounded-full ring-1 ring-slate-100 shadow-sm shrink-0" />
                     </div>
                   </div>
                   
-                  <!-- Title outside bar if too short -->
-                  <div v-if="getTaskPosition(task).width < 100" class="absolute flex items-center gap-2 pointer-events-none" :style="{ left: `${getTaskPosition(task).left + getTaskPosition(task).width + 8}px` }">
-                    <span class="text-xs font-bold text-slate-700 whitespace-nowrap drop-shadow-sm">{{ task.title }}</span>
+                  <!-- Title & Status outside bar if too short -->
+                  <div v-if="getTaskPosition(task).width < 120" class="absolute flex items-center gap-1.5 pointer-events-none" :style="{ left: `${getTaskPosition(task).left + getTaskPosition(task).width + 6}px` }">
+                    <span class="px-1.5 py-0.5 text-[9px] font-extrabold uppercase rounded shadow-sm bg-white" :class="getStatusBadgeClass(task.status)">
+                      {{ getStatusText(task.status) }}
+                    </span>
+                    <span class="text-[11px] font-bold text-slate-700 whitespace-nowrap drop-shadow-sm">{{ task.title }}</span>
                   </div>
                 </div>
               </div>
@@ -360,11 +362,11 @@ const getAvatar = (id: string) => {
 
 const getStatusColorBg = (status: string) => {
   switch (status) {
-    case 'ToDo': return 'bg-gradient-to-r from-slate-500 to-slate-400';
-    case 'InProgress': return 'bg-gradient-to-r from-indigo-600 to-blue-500';
-    case 'Review': return 'bg-gradient-to-r from-amber-500 to-orange-400';
-    case 'Done': return 'bg-gradient-to-r from-emerald-500 to-teal-400';
-    default: return 'bg-gradient-to-r from-slate-500 to-slate-400';
+    case 'ToDo': return 'bg-slate-400';
+    case 'InProgress': return 'bg-indigo-500';
+    case 'Review': return 'bg-amber-500';
+    case 'Done': return 'bg-emerald-500';
+    default: return 'bg-slate-400';
   }
 };
 
@@ -378,6 +380,24 @@ const getStatusColorDot = (status: string) => {
   }
 };
 
+const getTaskTooltip = (task: Task) => {
+  const start = new Date(task.createdAt);
+  const end = task.dueDate ? new Date(task.dueDate) : new Date(start.getTime() + 2 * 24 * 60 * 60 * 1000);
+  const diffTime = Math.abs(end.getTime() - start.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+  return `📌 Công việc: ${task.title}\n📊 Trạng thái: ${getStatusText(task.status)}\n⏳ Thời gian: ${diffDays} ngày (Độ dài dải màu tương ứng với số ngày)`;
+};
+
+const getStatusBorderColor = (status: string) => {
+  switch (status) {
+    case 'ToDo': return 'bg-slate-300';
+    case 'InProgress': return 'bg-indigo-500';
+    case 'Review': return 'bg-amber-400';
+    case 'Done': return 'bg-emerald-500';
+    default: return 'bg-slate-300';
+  }
+};
+
 const getStatusBadgeClass = (status: string) => {
   switch (status) {
     case 'ToDo': return 'bg-slate-100 text-slate-600';
@@ -387,6 +407,17 @@ const getStatusBadgeClass = (status: string) => {
     default: return 'bg-slate-100 text-slate-600';
   }
 };
+
+const getStatusText = (status: string) => {
+  switch (status) {
+    case 'ToDo': return 'To-do';
+    case 'InProgress': return 'In Progress';
+    case 'Review': return 'In Review';
+    case 'Done': return 'Done';
+    default: return status;
+  }
+};
+
 
 onMounted(() => {
   // Auto-scroll to today after render

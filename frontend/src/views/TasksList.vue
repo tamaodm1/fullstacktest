@@ -1,348 +1,376 @@
 <template>
-  <div class="min-h-screen bg-gray-50 p-6">
-    <div class="max-w-7xl mx-auto space-y-6">
+  <div class="min-h-screen p-8 font-inter">
+    <div class="max-w-7xl mx-auto space-y-8">
       
-      <!-- Header -->
+      <!-- Top Navigation -->
       <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-bold text-gray-900">Danh sách công việc</h1>
-          <p class="mt-1 text-sm text-gray-500">Xem tất cả công việc dưới dạng danh sách hoặc lịch</p>
+        <div class="flex items-center space-x-2 text-sm">
+          <span class="text-slate-400 font-medium">Synchro</span>
+          <span class="text-slate-400">/</span>
+          <span class="text-slate-900 font-bold">My Task</span>
         </div>
-        <div class="flex space-x-3 items-center">
-          <div class="flex bg-gray-200 p-1 rounded-lg">
-            <button @click="viewMode = 'list'" :class="{'bg-white shadow-sm': viewMode === 'list', 'text-gray-500 hover:text-gray-700': viewMode !== 'list'}" class="px-3 py-1.5 text-sm font-medium rounded-md flex items-center gap-2 transition-all">
-              <List class="w-4 h-4"/> Danh sách
-            </button>
-            <button @click="viewMode = 'calendar'" :class="{'bg-white shadow-sm': viewMode === 'calendar', 'text-gray-500 hover:text-gray-700': viewMode !== 'calendar'}" class="px-3 py-1.5 text-sm font-medium rounded-md flex items-center gap-2 transition-all">
-              <CalendarIcon class="w-4 h-4"/> Lịch
-            </button>
+        <div class="flex items-center space-x-4">
+          <div class="relative cursor-pointer" @click="alert('Tính năng tìm kiếm đang phát triển')">
+            <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input type="text" placeholder="Search task..." class="pl-9 pr-4 py-2 glass-panel rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 w-64 cursor-pointer" readonly />
           </div>
-          <div class="relative group">
-            <button class="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-              <Download class="w-4 h-4" /> Xuất dữ liệu
-            </button>
-            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block border border-gray-200">
-              <button @click="exportCSV" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Xuất file CSV (Excel)</button>
-              <button @click="exportPDF" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Xuất file PDF</button>
-            </div>
+          <div class="flex items-center text-slate-400 text-sm">
+            <Clock class="w-4 h-4 mr-1.5" />
+            <span>3 min ago</span>
           </div>
-          <select v-model="filterStatus" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-            <option value="all">Tất cả trạng thái</option>
-            <option value="To Do">To Do</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Review">Review</option>
-            <option value="Done">Done</option>
-          </select>
+          <div class="flex -space-x-2">
+            <img class="w-8 h-8 rounded-full border-2 border-[#F8F9FB]" src="https://ui-avatars.com/api/?name=K&background=0D8ABC&color=fff" />
+            <img class="w-8 h-8 rounded-full border-2 border-[#F8F9FB]" src="https://ui-avatars.com/api/?name=L&background=F59E0B&color=fff" />
+            <img class="w-8 h-8 rounded-full border-2 border-[#F8F9FB]" src="https://ui-avatars.com/api/?name=A&background=10B981&color=fff" />
+            <div class="w-8 h-8 rounded-full border-2 border-[#F8F9FB] bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-600">+2</div>
+          </div>
+          <button @click="alert('Tính năng mời thành viên đang phát triển')" class="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition-colors flex items-center space-x-2">
+            <Plus class="w-4 h-4" />
+            <span>Invite</span>
+          </button>
+          <button @click="alert('Tính năng tùy chọn đang phát triển')" class="w-9 h-9 border border-slate-200 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all"><MoreHorizontal class="w-5 h-5" /></button>
         </div>
       </div>
 
-      <!-- Loading State -->
-      <div v-if="loading" class="flex justify-center py-12">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      <h1 class="text-2xl font-extrabold text-slate-900">My Task</h1>
+
+      <!-- Interactive Task Calendar -->
+      <div class="glass-panel rounded-2xl p-6 shadow-sm">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-sm font-bold text-slate-900">Task Calendar</h2>
+          <div class="flex space-x-2">
+            <button @click="calendarOffset -= 1" class="w-8 h-8 border border-slate-200 rounded-lg flex items-center justify-center text-slate-500 bg-white/50 hover:text-slate-900 hover:bg-white transition-all"><ChevronLeft class="w-4 h-4" /></button>
+            <button @click="calendarOffset = 0" class="px-3 text-xs font-bold text-slate-600 bg-white/50 border border-slate-200 rounded-lg hover:text-slate-900 hover:bg-white transition-all">Today</button>
+            <button @click="calendarOffset += 1" class="w-8 h-8 border border-slate-200 rounded-lg flex items-center justify-center text-slate-500 bg-white/50 hover:text-slate-900 hover:bg-white transition-all"><ChevronRight class="w-4 h-4" /></button>
+          </div>
+        </div>
+        
+        <!-- Headers -->
+        <div class="flex text-xs font-bold text-slate-400 mb-2 relative">
+          <div v-for="day in timelineDays" :key="day.dateStr" class="flex-1 text-center" :class="{ 'text-slate-900': day.isToday }">
+            {{ day.label }}
+          </div>
+        </div>
+        
+        <!-- Timeline grid -->
+        <div class="relative h-28 border-t border-slate-100 mt-2 overflow-hidden">
+           <!-- Day dividers -->
+           <div class="absolute inset-0 flex pointer-events-none">
+             <div v-for="day in timelineDays" :key="'grid-'+day.dateStr" class="flex-1 border-r border-slate-100 last:border-r-0"></div>
+           </div>
+           
+           <!-- Tasks placed on grid -->
+           <div class="relative w-full h-full pt-4">
+              <!-- Dropzones for each day -->
+              <div class="absolute inset-0 flex">
+                 <div v-for="day in timelineDays" :key="'drop-'+day.dateStr" class="flex-1 h-full transition-colors border border-transparent group relative" 
+                      @dragover.prevent
+                      @dragenter.prevent="dragHoverDate = day.dateStr"
+                      @dragleave="dragHoverDate = null"
+                      @drop="onDropTimeline($event, day.dateStr)"
+                      :class="{ 'bg-slate-50 border-slate-200 border-dashed rounded-lg': dragHoverDate === day.dateStr }">
+                      
+                      <!-- Hover Line -->
+                      <div class="absolute top-0 bottom-0 left-0 w-px bg-slate-900 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                         <!-- Inverted Triangle -->
+                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-slate-900"></div>
+                      </div>
+                 </div>
+              </div>
+              
+              <!-- Placed tasks -->
+              <div v-for="task in timelineTasks" :key="'tl-'+task.id"
+                   draggable="true"
+                   @dragstart="onDragStart($event, task)"
+                   @click="openTaskDetail(task)"
+                   class="absolute h-6 rounded-full flex items-center px-3 text-[10px] font-bold cursor-pointer transition-all z-10 shadow-sm border hover:shadow-md"
+                   :style="getTimelineStyle(task)"
+                   :class="getTimelineClasses(task)">
+                 <span class="mr-1.5 opacity-80 whitespace-nowrap">{{ getShortDate(task) }}</span>
+                 <span class="truncate w-full">{{ task.title }}</span>
+              </div>
+           </div>
+        </div>
       </div>
 
-      <!-- Task Grid -->
-      <div v-else-if="viewMode === 'list'" class="p-4 sm:p-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          <a v-for="task in filteredTasks" :key="task.id" href="#" @click.prevent="openTaskDetail(task)" 
-             class="glass-card rounded-3xl p-6 premium-hover flex flex-col h-full bg-white/60 hover:bg-white/80 group border border-white/60 shadow-lg shadow-slate-200/40 relative overflow-hidden">
-            
-            <!-- Deco Glow -->
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+      <!-- Kanban Board -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-bold text-slate-900">All Task (Drag & Drop to update status)</h2>
+          <div class="flex space-x-2 glass-panel rounded-lg p-1">
+            <button class="px-3 py-1.5 text-xs font-bold text-slate-500 rounded-md hover:bg-slate-50 flex items-center space-x-1.5 transition-colors">
+              <LayoutGrid class="w-3.5 h-3.5" /> <span>Spreadsheet</span>
+            </button>
+            <button class="px-3 py-1.5 text-xs font-bold text-slate-500 rounded-md hover:bg-slate-50 flex items-center space-x-1.5 transition-colors">
+              <CalendarIcon class="w-3.5 h-3.5" /> <span>Timeline</span>
+            </button>
+            <button class="px-3 py-1.5 text-xs font-bold text-slate-900 bg-white rounded-md shadow-sm border border-slate-200 flex items-center space-x-1.5 transition-colors">
+              <Kanban class="w-3.5 h-3.5" /> <span>Kanban</span>
+            </button>
+          </div>
+        </div>
 
-            <div class="flex justify-between items-start mb-5 relative z-10">
-              <span class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider rounded-xl border shadow-sm flex items-center gap-1.5"
-                    :class="{
-                      'bg-slate-100 text-slate-500 border-slate-200': task.status === 'ToDo' || task.status === 'Backlog',
-                      'bg-blue-100 text-blue-700 border-blue-200': task.status === 'InProgress',
-                      'bg-yellow-100 text-yellow-700 border-yellow-200': task.status === 'Review',
-                      'bg-emerald-100 text-emerald-700 border-emerald-200': task.status === 'Done'
-                    }">
-                <span class="w-1.5 h-1.5 rounded-full" 
-                      :class="{
-                        'bg-slate-400': task.status === 'ToDo' || task.status === 'Backlog',
-                        'bg-blue-500': task.status === 'InProgress',
-                        'bg-yellow-500': task.status === 'Review',
-                        'bg-emerald-500': task.status === 'Done'
-                      }"></span>
-                {{ task.status }}
-              </span>
-              <span v-if="task.dueDate" class="text-xs font-bold text-slate-500 group-hover:text-indigo-600 transition-colors flex items-center bg-white/50 px-2.5 py-1.5 rounded-lg shadow-sm border border-white">
-                <CalendarIcon class="w-3.5 h-3.5 mr-1.5" />
-                {{ formatDate(task.dueDate) }}
-              </span>
+        <div class="flex gap-6 overflow-x-auto pb-4">
+          <!-- Columns -->
+          <div v-for="(col, index) in columns" :key="index" class="flex-1 min-w-[280px]"
+               @dragover.prevent
+               @dragenter.prevent="dragHoverStatus = col.status"
+               @dragleave="dragHoverStatus = null"
+               @drop="onDropKanban($event, col.status)">
+            
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center space-x-2 glass-panel px-3 py-1.5 rounded-lg shadow-sm">
+                <div class="w-2 h-2 rounded-full" :class="col.colorClass"></div>
+                <span class="text-xs font-bold text-slate-700">{{ col.title }}</span>
+                <span class="text-xs font-bold text-slate-400 ml-1">{{ getTasksByStatus(col.status).length }}</span>
+              </div>
+              <div class="flex space-x-1 text-slate-400">
+                <button class="hover:text-slate-900" title="More options" @click="alert('Tính năng đang phát triển')"><MoreHorizontal class="w-4 h-4" /></button>
+                <button class="hover:text-slate-900" title="Add task" @click="openQuickTask(col.status)"><Plus class="w-4 h-4" /></button>
+              </div>
             </div>
-            
-            <h3 class="text-lg font-black text-slate-800 mb-3 leading-snug group-hover:text-indigo-600 transition-colors line-clamp-2 relative z-10">
-              {{ task.title }}
-            </h3>
-            
-            <p class="text-[13px] text-slate-500 line-clamp-2 mb-6 flex-grow font-medium leading-relaxed relative z-10">
-              {{ task.description || 'Không có mô tả chi tiết cho công việc này.' }}
-            </p>
-            
-            <div class="pt-5 border-t border-slate-200/50 flex justify-between items-center mt-auto relative z-10">
-              <div class="flex items-center gap-3">
-                <div v-if="task.assigneeId" class="relative">
-                  <img :src="getAvatar(task.assigneeId)" alt="" class="h-9 w-9 rounded-full ring-2 ring-white shadow-sm object-cover" />
-                  <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full ring-2 ring-white"></div>
+
+            <!-- Task Cards Container (Dropzone) -->
+            <div class="space-y-3 min-h-[150px] p-2 -mx-2 rounded-xl transition-colors border-2 border-transparent"
+                 :class="{ 'bg-slate-100/50 border-slate-300 border-dashed': dragHoverStatus === col.status }">
+              <div v-for="task in getTasksByStatus(col.status)" :key="task.id" 
+                   draggable="true"
+                   @dragstart="onDragStart($event, task)"
+                   @click="openTaskDetail(task)"
+                   class="glass-card rounded-xl p-4 premium-hover cursor-pointer transition-all">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-sm font-bold text-slate-900">{{ task.title }}</h3>
+                  <button class="text-slate-400 hover:text-slate-900"><MoreHorizontal class="w-4 h-4" /></button>
                 </div>
-                <div v-if="task.assigneeId" class="flex flex-col">
-                  <span class="text-sm font-bold text-slate-700">{{ getAssigneeName(task.assigneeId) }}</span>
-                  <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Người thực hiện</span>
+                
+                <div class="flex items-center space-x-1.5 mb-4 text-[10px] font-bold text-rose-600 bg-rose-50/80 w-max px-2 py-1 rounded-md border border-rose-100">
+                  <CalendarIcon class="w-3 h-3 text-rose-500" />
+                  <span>{{ formatDate(task.dueDate) }}</span>
                 </div>
-                <div v-else class="flex items-center gap-2">
-                  <div class="h-9 w-9 rounded-full bg-slate-100 border border-slate-200 border-dashed flex items-center justify-center">
-                    <User class="w-4 h-4 text-slate-400" />
+
+                <div class="mb-4">
+                  <p class="text-xs font-medium text-slate-600 truncate">{{ task.description || 'Không có mô tả' }}</p>
+                </div>
+
+                <div v-if="task.status !== 'Done'" class="mb-4">
+                  <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1.5">
+                    <span>Progress</span>
+                    <span>{{ col.progress }}%</span>
                   </div>
-                  <span class="text-xs font-bold text-slate-400 italic">Chưa giao việc</span>
+                  <div class="h-1.5 w-full bg-slate-100/50 rounded-full overflow-hidden">
+                    <div class="h-full bg-emerald-500 rounded-full" :style="`width: ${col.progress}%`"></div>
+                  </div>
                 </div>
-              </div>
-              <div class="h-9 w-9 rounded-full bg-white border border-slate-200 flex items-center justify-center group-hover:bg-indigo-600 group-hover:border-indigo-600 transition-colors shadow-sm">
-                <ArrowRight class="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-              </div>
-            </div>
-          </a>
-        </div>
-        
-        <!-- Empty State -->
-        <div v-if="filteredTasks.length === 0" class="glass-card rounded-3xl p-12 text-center text-slate-500 font-bold mt-8">
-          Không tìm thấy công việc nào phù hợp.
-        </div>
-      </div>
 
-      <!-- Calendar View -->
-      <div v-else-if="viewMode === 'calendar'" class="glass-card sm:rounded-3xl overflow-hidden">
-        <div class="px-6 py-4 border-b border-white/20 flex items-center justify-between bg-white/40">
-          <div class="flex items-center gap-4">
-            <button @click="prevMonth" class="p-1 rounded-full hover:bg-white/60 transition-colors"><ChevronLeft class="w-5 h-5"/></button>
-            <h2 class="text-lg font-bold text-gray-900">{{ currentMonthName }}</h2>
-            <button @click="nextMonth" class="p-1 rounded-full hover:bg-white/60 transition-colors"><ChevronRight class="w-5 h-5"/></button>
-          </div>
-          <button @click="currentDate = new Date()" class="px-3 py-1 text-sm font-bold border border-slate-300 rounded-xl hover:bg-white/60 transition-colors">Hôm nay</button>
-        </div>
-        
-        <div class="grid grid-cols-7 border-b border-white/20 bg-white/20 text-center">
-          <div v-for="day in ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7']" :key="day" class="py-2 text-xs font-black text-slate-500 uppercase tracking-wider border-r border-white/20 last:border-r-0">
-            {{ day }}
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-7 gap-px bg-slate-200 border border-slate-200 rounded-b-3xl">
-          <div v-for="(day, idx) in calendarDays" :key="idx" 
-               class="min-h-[140px] p-2 flex flex-col transition-colors bg-white group/cell"
-               :class="{
-                 'bg-indigo-50/30': day.isToday,
-                 'opacity-60 bg-slate-50': !day.isCurrentMonth
-               }">
-            <div class="flex justify-between items-start mb-1.5">
-              <span class="text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full"
-                    :class="{'bg-indigo-600 text-white shadow-sm shadow-indigo-200': day.isToday, 'text-slate-700': day.isCurrentMonth && !day.isToday, 'text-slate-400': !day.isCurrentMonth}">
-                {{ day.date.getDate() }}
-              </span>
-            </div>
-            <div class="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scrollbar">
-              <div v-for="t in day.tasks" :key="t.id" 
-                   @click.prevent="openTaskDetail(t)"
-                   class="flex flex-col px-2 py-1.5 rounded-md cursor-pointer transition-all border border-transparent hover:shadow-sm relative overflow-hidden group/task"
-                   :class="{
-                     'bg-emerald-50 text-emerald-700 hover:border-emerald-200': t.status === 'Done',
-                     'bg-blue-50 text-blue-700 hover:border-blue-200': t.status === 'InProgress',
-                     'bg-amber-50 text-amber-700 hover:border-amber-200': t.status === 'Review',
-                     'bg-rose-50 text-rose-700 hover:border-rose-200': isOverdue(t),
-                     'bg-slate-50 text-slate-700 hover:border-slate-200': t.status === 'ToDo' && !isOverdue(t)
-                   }"
-                   :title="t.title">
-                
-                <!-- Left Accent Border -->
-                <div class="absolute left-0 top-0 bottom-0 w-0.5"
-                     :class="{
-                       'bg-emerald-400': t.status === 'Done',
-                       'bg-blue-400': t.status === 'InProgress',
-                       'bg-amber-400': t.status === 'Review',
-                       'bg-rose-400': isOverdue(t),
-                       'bg-slate-300': t.status === 'ToDo' && !isOverdue(t)
-                     }"></div>
-                
-                <div class="flex items-start justify-between gap-1 w-full pl-0.5">
-                  <span class="text-[10px] font-bold truncate flex-1 leading-tight">{{ t.title }}</span>
-                  <img v-if="t.assigneeId" :src="getAvatar(t.assigneeId)" class="w-3.5 h-3.5 rounded-full shrink-0 mt-0.5 opacity-80 group-hover/task:opacity-100" />
+                <div class="flex justify-between items-center border-t border-slate-200/50 pt-3">
+                  <div class="flex -space-x-1.5">
+                    <img v-if="task.assigneeId" :src="getAvatar(task.assigneeId)" class="w-6 h-6 rounded-full border-2 border-white object-cover shadow-sm" />
+                    <div v-else class="w-6 h-6 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[8px] text-slate-400"><User class="w-3 h-3"/></div>
+                  </div>
+                  <div class="flex items-center space-x-3 text-slate-400 text-xs font-bold">
+                    <div class="flex items-center space-x-1"><MessageSquare class="w-3.5 h-3.5"/><span>3</span></div>
+                    <div class="flex items-center space-x-1"><Paperclip class="w-3.5 h-3.5"/><span>2</span></div>
+                  </div>
                 </div>
               </div>
+              
+              <!-- Empty state placeholder -->
+              <div v-if="getTasksByStatus(col.status).length === 0" class="h-24 rounded-xl border-2 border-slate-200/50 border-dashed flex items-center justify-center text-xs font-bold text-slate-400">
+                Kéo thả task vào đây
+              </div>
             </div>
+            
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- Modal nằm trong cùng root div -->
+    <!-- Modal -->
     <TaskDetailModal 
       :isOpen="isTaskDetailOpen" 
       :taskId="selectedTask?.id"
       @close="isTaskDetailOpen = false"
     />
+    <!-- Quick Task Modal -->
+    <QuickTaskModal 
+      :isOpen="isQuickTaskOpen" 
+      :defaultStatus="quickTaskStatus"
+      @close="isQuickTaskOpen = false" 
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useTaskStore } from '../stores/taskStore';
 import TaskDetailModal from '../components/TaskDetailModal.vue';
+import QuickTaskModal from '../components/QuickTaskModal.vue';
 import type { Task } from '../services/mockData';
-import { Download, List, Calendar as CalendarIcon, ChevronLeft, ChevronRight, ArrowRight, User } from 'lucide-vue-next';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import { 
+  Search, Clock, Plus, MoreHorizontal, 
+  ChevronLeft, ChevronRight,
+  LayoutGrid, Calendar as CalendarIcon, Kanban, 
+  MessageSquare, Paperclip, User 
+} from 'lucide-vue-next';
 
 const taskStore = useTaskStore();
 
-const viewMode = ref<'list' | 'calendar'>('list');
-const filterStatus = ref('all');
 const isTaskDetailOpen = ref(false);
 const selectedTask = ref<Task | null>(null);
 
-const loading = computed(() => false);
+const isQuickTaskOpen = ref(false);
+const quickTaskStatus = ref<string>('ToDo');
+
 const tasks = computed(() => taskStore.tasks);
 const users = computed(() => taskStore.users);
 
-const filteredTasks = computed(() => {
-  if (filterStatus.value === 'all') return tasks.value;
-  return tasks.value.filter(t => t.status === filterStatus.value);
+// ===================
+// KANBAN LOGIC
+// ===================
+const columns = [
+  { title: 'To-do', status: 'ToDo', colorClass: 'bg-slate-400', progress: 0 },
+  { title: 'In Progress', status: 'InProgress', colorClass: 'bg-blue-400', progress: 45 },
+  { title: 'In Review', status: 'Review', colorClass: 'bg-amber-400', progress: 85 },
+  { title: 'Completed', status: 'Done', colorClass: 'bg-emerald-400', progress: 100 }
+];
+
+const getTasksByStatus = (status: string) => {
+  return tasks.value.filter(t => t.status === status);
+};
+
+const dragHoverStatus = ref<string | null>(null);
+
+const onDropKanban = async (e: DragEvent, status: string) => {
+  dragHoverStatus.value = null;
+  const taskId = e.dataTransfer?.getData('taskId');
+  if (taskId) {
+    const task = tasks.value.find(t => t.id === taskId);
+    if (task && task.status !== status) {
+      await taskStore.updateTaskStatus(taskId, status as any);
+    }
+  }
+};
+
+// ===================
+// TIMELINE LOGIC
+// ===================
+const calendarOffset = ref(0);
+const dragHoverDate = ref<string | null>(null);
+
+const timelineDays = computed(() => {
+  const days = [];
+  const baseDate = new Date();
+  baseDate.setDate(baseDate.getDate() + calendarOffset.value - 2); // Show from 2 days ago
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(baseDate);
+    d.setDate(d.getDate() + i);
+    // Correct local ISO string equivalent
+    const offset = d.getTimezoneOffset() * 60000;
+    const dateStr = (new Date(d.getTime() - offset)).toISOString().split('T')[0];
+    
+    const todayOffset = new Date().getTimezoneOffset() * 60000;
+    const todayStr = (new Date(Date.now() - todayOffset)).toISOString().split('T')[0];
+    const isToday = dateStr === todayStr;
+    
+    const label = d.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+    days.push({ date: d, dateStr, label, isToday, index: i });
+  }
+  return days;
 });
 
+const timelineTasks = computed(() => {
+  if (timelineDays.value.length === 0) return [];
+  const startStr = timelineDays.value[0].dateStr;
+  const endStr = timelineDays.value[timelineDays.value.length - 1].dateStr;
+  
+  return tasks.value.filter(t => {
+    const due = t.dueDate?.split('T')[0] || t.createdAt.split('T')[0];
+    return due >= startStr && due <= endStr;
+  });
+});
+
+const getTimelineStyle = (task: Task) => {
+  const due = task.dueDate?.split('T')[0] || task.createdAt.split('T')[0];
+  const dayIndex = timelineDays.value.findIndex(d => d.dateStr === due);
+  if (dayIndex === -1) return { display: 'none' };
+  
+  // Deterministic row assignment based on ID to avoid overlaps
+  let tIndex = 0;
+  for(let i=0; i<task.id.length; i++){
+    tIndex += task.id.charCodeAt(i);
+  }
+  const row = tIndex % 3; 
+  
+  const left = (dayIndex * (100 / 7)) + 1; 
+  const width = (100 / 7) - 2; 
+  const top = row * 28; 
+  
+  return {
+    left: `${left}%`,
+    width: `${width}%`,
+    top: `${top}px`
+  };
+};
+
+const getTimelineClasses = (task: Task) => {
+  if (task.status === 'InProgress' || task.status === 'Review') return 'bg-slate-900 text-white border-slate-900';
+  return 'bg-slate-50 text-slate-600 border-slate-200';
+};
+
+const onDragStart = (e: DragEvent, task: Task) => {
+  if (e.dataTransfer) {
+    e.dataTransfer.dropEffect = 'move';
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('taskId', task.id);
+  }
+};
+
+const onDropTimeline = async (e: DragEvent, dateStr: string) => {
+  dragHoverDate.value = null;
+  const taskId = e.dataTransfer?.getData('taskId');
+  if (taskId) {
+    const task = tasks.value.find(t => t.id === taskId);
+    if (task) {
+      // Create copy of task with new dueDate
+      const updated = { ...task, dueDate: dateStr + 'T00:00:00Z' }; // Append time for proper DB format
+      await taskStore.updateTask(updated);
+    }
+  }
+};
 
 
+// ===================
+// UTILS
+// ===================
 const openTaskDetail = (task: Task) => {
   selectedTask.value = task;
   isTaskDetailOpen.value = true;
+};
+
+const openQuickTask = (status: string) => {
+  quickTaskStatus.value = status;
+  isQuickTaskOpen.value = true;
+};
+
+const alert = (msg: string) => {
+  window.alert(msg);
 };
 
 const getAvatar = (userId: string) => {
   return users.value.find(u => u.id === userId)?.avatarUrl || 'https://ui-avatars.com/api/?name=U';
 };
 
-const getAssigneeName = (userId: string) => {
-  return users.value.find(u => u.id === userId)?.fullName || 'Không rõ';
-};
-
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('vi-VN', {
-    year: 'numeric', month: 'short', day: 'numeric'
+  if (!dateString) return 'No Date';
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric'
   });
 };
 
-const isOverdue = (task: Task) => {
-  if (task.status === 'Done') return false;
-  const due = task.dueDate || task.createdAt;
-  return new Date(due).getTime() < new Date().getTime() - 86400000;
+const getShortDate = (task: Task) => {
+  const due = task.dueDate?.split('T')[0] || task.createdAt.split('T')[0];
+  return new Date(due).toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 };
-
-// --- Calendar Logic ---
-const currentDate = ref(new Date());
-
-const currentMonthName = computed(() => {
-  return currentDate.value.toLocaleDateString('vi-VN', { month: 'long', year: 'numeric' });
-});
-
-const calendarDays = computed(() => {
-  const year = currentDate.value.getFullYear();
-  const month = currentDate.value.getMonth();
-  
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  
-  const daysInMonth = lastDay.getDate();
-  
-  const days = [];
-  
-  for (let i = 0; i < firstDay.getDay(); i++) {
-    const d = new Date(year, month, -firstDay.getDay() + i + 1);
-    days.push({ date: d, isCurrentMonth: false, tasks: getTasksForDate(d) });
-  }
-  
-  for (let i = 1; i <= daysInMonth; i++) {
-    const d = new Date(year, month, i);
-    days.push({ date: d, isCurrentMonth: true, isToday: isToday(d), tasks: getTasksForDate(d) });
-  }
-  
-  const remainingCells = 42 - days.length; 
-  for (let i = 1; i <= remainingCells; i++) {
-    const d = new Date(year, month + 1, i);
-    days.push({ date: d, isCurrentMonth: false, tasks: getTasksForDate(d) });
-  }
-  
-  return days;
-});
-
-const getTasksForDate = (d: Date) => {
-  // Use local time zone offset to get correct YYYY-MM-DD
-  const offset = d.getTimezoneOffset() * 60000;
-  const localISOTime = (new Date(d.getTime() - offset)).toISOString().split('T')[0];
-  return tasks.value.filter(t => (t.dueDate || t.createdAt).startsWith(localISOTime));
-};
-
-const isToday = (d: Date) => {
-  const today = new Date();
-  return d.getDate() === today.getDate() && d.getMonth() === today.getMonth() && d.getFullYear() === today.getFullYear();
-};
-
-const nextMonth = () => {
-  currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() + 1, 1);
-};
-
-const prevMonth = () => {
-  currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() - 1, 1);
-};
-// ----------------------
-
-const exportCSV = () => {
-  const headers = ['ID', 'Tên công việc', 'Trạng thái', 'Người nhận', 'Ngày cập nhật'];
-  const rows = filteredTasks.value.map(t => [
-    t.id, 
-    `"${t.title.replace(/"/g, '""')}"`, 
-    t.status, 
-    `"${t.assigneeId ? getAssigneeName(t.assigneeId) : 'Không có'}"`, 
-    formatDate(t.updatedAt || t.createdAt)
-  ]);
-  const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.setAttribute('href', url);
-  link.setAttribute('download', 'danh-sach-cong-viec.csv');
-  link.style.visibility = 'hidden';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-const removeAccents = (str: string) => {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
-};
-
-const exportPDF = () => {
-  const doc = new jsPDF();
-  doc.text("Danh sach cong viec (Task List)", 14, 15);
-  
-  const headers = [['ID', 'Ten cong viec', 'Trang thai', 'Nguoi nhan', 'Ngay cap nhat']];
-  const data = filteredTasks.value.map(t => [
-    t.id.substring(0, 8), 
-    removeAccents(t.title), 
-    t.status, 
-    removeAccents(t.assigneeId ? getAssigneeName(t.assigneeId) : 'Khong co'), 
-    formatDate(t.updatedAt || t.createdAt)
-  ]);
-  
-  autoTable(doc, {
-    head: headers,
-    body: data,
-    startY: 20
-  });
-  
-  doc.save('danh-sach-cong-viec.pdf');
-};
-
-onMounted(async () => {
-  // Store is initialized in App.vue, so data should be ready
-});
 </script>
