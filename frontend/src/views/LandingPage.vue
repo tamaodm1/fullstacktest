@@ -456,26 +456,7 @@
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta-section">
-      <div class="cta-orb cta-orb-1"></div>
-      <div class="cta-orb cta-orb-2"></div>
-      <div class="cta-inner">
-        
-        <h2 class="cta-title reveal-up">Sẵn sàng bắt đầu?</h2>
-        <p class="cta-sub reveal-up" style="--delay: 0.1s">Đăng ký ngay hôm nay và trải nghiệm cách quản lý dự án thông minh hơn cùng SprintFlow.</p>
-        <div class="cta-actions reveal-up" style="--delay: 0.2s">
-          <router-link to="/register" class="btn-primary large">
-            Tạo tài khoản miễn phí
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            <span class="btn-shimmer"></span>
-          </router-link>
-          <router-link to="/login" class="btn-outline-white">
-            Đăng nhập
-          </router-link>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -736,28 +717,57 @@ const featuresVi = [
     items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="display:flex; flex-direction:column; gap:24px; width:100%; max-width: 450px;">
-        <div class="mk-premium-card float-anim" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div style="color:#a1a1aa; letter-spacing: 2px; font-size:0.8rem; margin-bottom: 8px; font-weight:600;">TỔNG DỰ ÁN</div>
-            <div class="mk-gradient-text count-up-12" style="font-weight:900; font-size:4rem; line-height:1"></div>
-          </div>
-          <div class="ring-progress">
-            <div class="ring-text">75%</div>
-          </div>
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
+        <!-- Sidebar -->
+        <div style="width: 25%; background: #18181b; padding: 20px 15px; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 12px;">
+          <div style="width: 80%; height: 16px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 16px;"></div>
+          <div style="width: 60%; height: 12px; background: rgba(99,102,241,0.2); border-radius: 4px;"></div>
+          <div style="width: 70%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 4px;"></div>
+          <div style="width: 50%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 4px;"></div>
         </div>
-        
-        <div class="mk-premium-card float-anim-delayed">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <div style="color:#a1a1aa; letter-spacing: 2px; font-size:0.8rem; font-weight:600;">TIẾN ĐỘ SPRINT</div>
-            <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+        <!-- Main Content -->
+        <div style="width: 75%; padding: 24px; display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div style="font-size: 1.1rem; font-weight: 600; color: #fff;">Projects</div>
+            <div style="padding: 6px 12px; background: #6366f1; color: #fff; font-size: 0.75rem; border-radius: 6px; font-weight: 500;">+ New Project</div>
           </div>
-          <div class="bar-progress-container">
-            <div class="bar-progress-fill"></div>
+          <!-- Table Header -->
+          <div style="display: flex; font-size: 0.7rem; color: #71717a; margin-bottom: 12px; text-transform: uppercase; font-weight: 600;">
+            <div style="flex: 2;">Name</div>
+            <div style="flex: 1;">Status</div>
+            <div style="flex: 1.5;">Progress</div>
           </div>
-          <div style="display:flex; justify-content:space-between; margin-top: 12px; color:#a1a1aa; font-size:0.9rem;">
-            <span>Sprint 14</span>
-            <span style="color:#fff; font-weight:bold;">68%</span>
+          <!-- Table Row 1 -->
+          <div class="float-anim" style="display: flex; align-items: center; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="flex: 2; display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 6px; background: #6366f1; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: bold;">W</div>
+              <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">Website Redesign</div>
+            </div>
+            <div style="flex: 1;">
+              <span style="background: rgba(16,185,129,0.15); color: #10b981; padding: 2px 8px; border-radius: 12px; font-size: 0.65rem; font-weight: 600;">Active</span>
+            </div>
+            <div style="flex: 1.5; display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                <div style="width: 75%; height: 100%; background: #6366f1; border-radius: 3px;"></div>
+              </div>
+              <span style="font-size: 0.7rem; color: #a1a1aa;">75%</span>
+            </div>
+          </div>
+          <!-- Table Row 2 -->
+          <div class="float-anim-delayed" style="display: flex; align-items: center; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="flex: 2; display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 6px; background: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: bold;">M</div>
+              <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">Mobile App</div>
+            </div>
+            <div style="flex: 1;">
+              <span style="background: rgba(245,158,11,0.15); color: #f59e0b; padding: 2px 8px; border-radius: 12px; font-size: 0.65rem; font-weight: 600;">Paused</span>
+            </div>
+            <div style="flex: 1.5; display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                <div style="width: 30%; height: 100%; background: #f59e0b; border-radius: 3px;"></div>
+              </div>
+              <span style="font-size: 0.7rem; color: #a1a1aa;">30%</span>
+            </div>
           </div>
         </div>
       </div>
@@ -773,30 +783,39 @@ const featuresVi = [
     items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width:100%; max-width: 550px;">
-        <div class="mk-premium-card" style="padding: 24px;">
-          <div class="kanban-board">
-            <div class="kb-col">
-              <div class="kb-col-title">TO DO</div>
-              <div class="kb-task moving" style="border-left: 4px solid #f59e0b;">
-                <div style="width:60%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px; margin-bottom:12px;"></div>
-                <div style="width:40%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px;"></div>
-              </div>
-              <div class="kb-task" style="border-left: 4px solid #3b82f6;">
-                <div style="width:80%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px;"></div>
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; padding: 24px; background: #121214; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); font-family: sans-serif;">
+        <div style="font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 20px; display: flex; justify-content: space-between;">
+          <span>Sprint 14 Board</span>
+          <div style="display: flex; gap: -5px;">
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #ec4899; border: 2px solid #121214;"></div>
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; border: 2px solid #121214; margin-left: -8px;"></div>
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #6366f1; border: 2px solid #121214; margin-left: -8px;"></div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; height: calc(100% - 45px);">
+          <!-- TO DO Column -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+            <div style="font-size: 0.75rem; color: #a1a1aa; font-weight: 600;">TODO (1)</div>
+            <div class="float-anim" style="background: #1f1f22; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              <span style="background: rgba(239,68,68,0.15); color: #ef4444; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; font-weight: 600;">Bug</span>
+              <div style="font-size: 0.8rem; color: #e4e4e7; font-weight: 500; margin: 8px 0;">Fix login API crash</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <div style="width: 16px; height: 16px; border-radius: 50%; background: #ef4444;"></div>
               </div>
             </div>
-            <div class="kb-col">
-              <div class="kb-col-title">IN PROGRESS</div>
-              <div class="kb-task" style="border-left: 4px solid #8b5cf6;">
-                <div style="width:70%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px; margin-bottom:12px;"></div>
-                <div style="width:50%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px;"></div>
-              </div>
-            </div>
-            <div class="kb-col" style="opacity: 0.6;">
-              <div class="kb-col-title">DONE</div>
-              <div class="kb-task" style="border-left: 4px solid #10b981;">
-                <div style="width:50%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px;"></div>
+          </div>
+          <!-- IN PROGRESS Column -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+            <div style="font-size: 0.75rem; color: #a1a1aa; font-weight: 600;">IN PROGRESS (1)</div>
+            <div class="float-anim-delayed" style="background: #1f1f22; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              <span style="background: rgba(99,102,241,0.15); color: #6366f1; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; font-weight: 600;">Feature</span>
+              <div style="font-size: 0.8rem; color: #e4e4e7; font-weight: 500; margin: 8px 0;">Implement Drag & Drop</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <div style="display: flex; align-items: center; gap: 4px; font-size: 0.65rem; color: #71717a;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 2
+                </div>
+                <div style="width: 16px; height: 16px; border-radius: 50%; background: #3b82f6;"></div>
               </div>
             </div>
           </div>
@@ -814,19 +833,32 @@ const featuresVi = [
     items: ['Cập nhật trạng thái tức thì', 'Giao tiếp qua chat bong bóng', 'Nhận thông báo khi được gán', 'Lịch sử hoạt động'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width:100%; max-width: 450px; display:flex; justify-content:center;">
-        <div class="chat-container">
-          <div class="chat-bubble chat-left float-anim">
-            <div style="font-size:0.75rem; color:#a1a1aa; margin-bottom:4px;">Minh • 10:42 AM</div>
-            Team ơi, API tích hợp xong rồi nhé! Mọi người test thử xem.
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-image: radial-gradient(circle at center, rgba(16,185,129,0.1) 0%, transparent 70%);">
+        <!-- Notification Dropdown UI -->
+        <div class="pop-in" style="width: 300px; background: rgba(24,24,27,0.8); backdrop-filter: blur(12px); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); font-family: sans-serif; overflow: hidden;">
+          <div style="padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.9rem; font-weight: 600; color: #fff;">Notifications</div>
+            <div style="font-size: 0.7rem; color: #10b981; cursor: pointer;">Mark all as read</div>
           </div>
-          <div class="chat-bubble chat-right pop-in">
-            <div style="font-size:0.75rem; color:rgba(255,255,255,0.7); margin-bottom:4px; text-align:right;">Bạn • 10:45 AM</div>
-            Tuyệt vời! Mình sẽ review <span style="background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:4px; font-weight:bold;">@Minh</span> PR ngay bây giờ.
+          <!-- Item 1 (Unread) -->
+          <div style="padding: 16px; display: flex; gap: 12px; background: rgba(255,255,255,0.02); border-left: 2px solid #10b981;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #3b82f6; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 0.8rem; color: #e4e4e7; margin-bottom: 4px; line-height: 1.4;">
+                <span style="font-weight: 600; color: #fff;">David</span> assigned you to <span style="font-weight: 600;">Update Landing Page</span>
+              </div>
+              <div style="font-size: 0.65rem; color: #a1a1aa;">2 mins ago</div>
+            </div>
+            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-top: 4px;"></div>
           </div>
-          <div class="chat-bubble chat-left float-anim" style="padding: 12px 20px;">
-            <div class="typing-indicator">
-              <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+          <!-- Item 2 (Read) -->
+          <div style="padding: 16px; display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ec4899; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 0.8rem; color: #a1a1aa; margin-bottom: 4px; line-height: 1.4;">
+                <span style="font-weight: 600; color: #e4e4e7;">Sarah</span> commented on <span style="font-weight: 600;">API Gateway Setup</span>
+              </div>
+              <div style="font-size: 0.65rem; color: #71717a;">1 hour ago</div>
             </div>
           </div>
         </div>
@@ -843,145 +875,47 @@ const featuresVi = [
     items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width:100%; max-width: 500px;">
-        <div class="mk-premium-card" style="padding: 30px;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-            <div>
-              <div style="color:#a1a1aa; letter-spacing: 2px; font-size:0.8rem; font-weight:600;">BÁO CÁO BẢO MẬT</div>
-              <div class="mk-gradient-text count-up-12" style="font-weight:900; font-size:3rem; line-height:1; animation-name: countUp100;"></div>
-              <style>@keyframes countUp100 { 0% { --num: 0; } 100% { --num: 100; } }
-/* NEW MOCKUP CSS ART */
-@property --num { syntax: '<integer>'; initial-value: 0; inherits: false; }
-@property --prog { syntax: '<percentage>'; initial-value: 0%; inherits: false; }
-@property --prog-bar { syntax: '<percentage>'; initial-value: 0%; inherits: false; }
-
-.count-up-12 {
-  animation: countUp12 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  counter-reset: num var(--num);
-}
-.count-up-12::after { content: counter(num); }
-
-@keyframes countUp12 {
-  0% { --num: 0; }
-  100% { --num: 12; }
-}
-
-.ring-progress {
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  background: conic-gradient(#8b5cf6 var(--prog), rgba(255,255,255,0.05) 0);
-  display: flex; align-items: center; justify-content: center;
-  position: relative;
-  animation: ringFill 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: 0.5s;
-}
-.ring-progress::before {
-  content: ''; position: absolute; inset: 10px;
-  background: #111115; /* Match card background */
-  border-radius: 50%;
-}
-.ring-text {
-  position: relative; z-index: 1; font-weight: 800; font-size: 1.2rem; color: #fff;
-  opacity: 0; animation: fadeIn 0.5s forwards 1s;
-}
-@keyframes ringFill {
-  0% { --prog: 0%; }
-  100% { --prog: 75%; }
-}
-
-.bar-progress-container {
-  height: 10px; width: 100%; border-radius: 10px; background: rgba(255,255,255,0.05);
-  position: relative; overflow: hidden;
-}
-.bar-progress-fill {
-  height: 100%; border-radius: 10px;
-  background: linear-gradient(90deg, rgba(99,102,241,0.5), #8b5cf6);
-  width: var(--prog-bar);
-  box-shadow: 0 0 20px rgba(139,92,246,0.6);
-  animation: barFill 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: 0.8s;
-}
-@keyframes barFill {
-  0% { --prog-bar: 0%; }
-  100% { --prog-bar: 68%; }
-}
-
-.live-badge {
-  display: flex; align-items: center; gap: 6px;
-  padding: 4px 10px; border-radius: 100px;
-  border: 1px solid rgba(16,185,129,0.3);
-  color: #10b981; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
-}
-.live-dot {
-  width: 8px; height: 8px; border-radius: 50%; background: #10b981;
-  box-shadow: 0 0 10px #10b981;
-  animation: pulseLive 1.5s infinite;
-}
-@keyframes pulseLive {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
-}
-
-.mk-premium-card {
-  background: #111115;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 24px;
-  padding: 30px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-}
-
-/* Kanban Animations */
-.kanban-board { display: flex; gap: 16px; }
-.kb-col { flex: 1; background: rgba(255,255,255,0.02); border-radius: 16px; padding: 16px; border: 1px solid rgba(255,255,255,0.05); }
-.kb-col-title { font-size: 0.75rem; color: #a1a1aa; letter-spacing: 1px; margin-bottom: 16px; font-weight: 600; }
-.kb-task { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; }
-.kb-task.moving {
-  animation: moveTask 3s ease-in-out infinite alternate;
-  box-shadow: 0 20px 40px rgba(99,102,241,0.3);
-  border-color: rgba(99,102,241,0.5);
-  z-index: 10; position: relative;
-}
-@keyframes moveTask {
-  0% { transform: translate(0, 0) rotate(0); }
-  100% { transform: translate(110%, 40px) rotate(5deg); }
-}
-
-/* Chat Bubble Animations */
-.chat-container { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 400px; }
-.chat-bubble { padding: 16px 24px; border-radius: 24px; color: #fff; max-width: 80%; line-height: 1.5; }
-.chat-left { background: rgba(255,255,255,0.05); border-bottom-left-radius: 4px; align-self: flex-start; border: 1px solid rgba(255,255,255,0.08); }
-.chat-right { background: linear-gradient(135deg, #10b981, #059669); border-bottom-right-radius: 4px; align-self: flex-end; box-shadow: 0 10px 30px rgba(16,185,129,0.3); }
-.typing-indicator { display: flex; gap: 4px; align-items: center; height: 24px; }
-.typing-dot { width: 6px; height: 6px; border-radius: 50%; background: #a1a1aa; animation: typingBounce 1.4s infinite ease-in-out both; }
-.typing-dot:nth-child(1) { animation-delay: -0.32s; }
-.typing-dot:nth-child(2) { animation-delay: -0.16s; }
-@keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-.pop-in { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; animation-delay: 1.5s; opacity: 0; transform: scale(0.8); transform-origin: bottom right; }
-@keyframes popIn { to { opacity: 1; transform: scale(1); } }
-
-/* Chart Animations */
-.chart-container { position: relative; width: 100%; height: 200px; display: flex; align-items: flex-end; gap: 8px; margin-top: 30px; }
-.chart-bar { flex: 1; background: linear-gradient(to top, rgba(236,72,153,0.1), rgba(236,72,153,0.8)); border-radius: 6px 6px 0 0; transform-origin: bottom; opacity: 0; animation: growBar 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-@keyframes growBar { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
-.chart-tooltip { position: absolute; top: -40px; right: 20%; background: #fff; color: #000; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 10px 30px rgba(236,72,153,0.4); opacity: 0; animation: popIn 0.5s forwards 1.5s; }
-.chart-tooltip::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); border-width: 5px 5px 0; border-style: solid; border-color: #fff transparent transparent transparent; }
-
-
-</style>
-              <div style="color:#10b981; font-weight:bold; margin-top:8px;">Hệ thống an toàn 100%</div>
-            </div>
-            <div class="live-badge" style="border-color: rgba(236,72,153,0.3); color: #ec4899;"><div class="live-dot" style="background:#ec4899; box-shadow: 0 0 10px #ec4899;"></div>SECURE</div>
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: sans-serif;">
+        <div class="float-anim" style="width: 90%; background: #18181b; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 40px rgba(0,0,0,0.4); padding: 20px;">
+          <div style="font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            User Roles & Security
           </div>
-          
-          <div class="chart-container">
-            <div class="chart-tooltip">100% Safe</div>
-            <div class="chart-bar" style="height: 30%; animation-delay: 0.1s;"></div>
-            <div class="chart-bar" style="height: 45%; animation-delay: 0.2s;"></div>
-            <div class="chart-bar" style="height: 35%; animation-delay: 0.3s;"></div>
-            <div class="chart-bar" style="height: 60%; animation-delay: 0.4s;"></div>
-            <div class="chart-bar" style="height: 50%; animation-delay: 0.5s;"></div>
-            <div class="chart-bar" style="height: 80%; animation-delay: 0.6s;"></div>
-            <div class="chart-bar" style="height: 100%; animation-delay: 0.7s;"></div>
+          <!-- User Row 1 -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #ec4899;"></div>
+              <div>
+                <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">alex@company.com</div>
+                <div style="font-size: 0.65rem; color: #71717a;">Last active: Just now</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; color: #fff; border: 1px solid rgba(255,255,255,0.1);">Admin <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg></div>
+            </div>
+          </div>
+          <!-- User Row 2 -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #3b82f6;"></div>
+              <div>
+                <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">sarah@company.com</div>
+                <div style="font-size: 0.65rem; color: #71717a;">Last active: 2 days ago</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; color: #a1a1aa; border: 1px solid rgba(255,255,255,0.1);">Member <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg></div>
+            </div>
+          </div>
+          <!-- 2FA Setting -->
+          <div style="margin-top: 16px; padding: 16px; background: rgba(236,72,153,0.05); border-radius: 8px; border: 1px solid rgba(236,72,153,0.2); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 0.85rem; color: #ec4899; font-weight: 600; margin-bottom: 4px;">Enforce 2FA</div>
+              <div style="font-size: 0.7rem; color: #a1a1aa;">Require two-factor authentication for all users</div>
+            </div>
+            <div style="width: 36px; height: 20px; background: #ec4899; border-radius: 10px; position: relative; box-shadow: 0 0 10px rgba(236,72,153,0.4);">
+              <div style="width: 16px; height: 16px; background: #fff; border-radius: 50%; position: absolute; right: 2px; top: 2px;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1000,28 +934,57 @@ const featuresEn = [
     items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="display:flex; flex-direction:column; gap:24px; width:100%; max-width: 450px;">
-        <div class="mk-premium-card float-anim" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div style="color:#a1a1aa; letter-spacing: 2px; font-size:0.8rem; margin-bottom: 8px; font-weight:600;">TỔNG DỰ ÁN</div>
-            <div class="mk-gradient-text count-up-12" style="font-weight:900; font-size:4rem; line-height:1"></div>
-          </div>
-          <div class="ring-progress">
-            <div class="ring-text">75%</div>
-          </div>
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
+        <!-- Sidebar -->
+        <div style="width: 25%; background: #18181b; padding: 20px 15px; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 12px;">
+          <div style="width: 80%; height: 16px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 16px;"></div>
+          <div style="width: 60%; height: 12px; background: rgba(99,102,241,0.2); border-radius: 4px;"></div>
+          <div style="width: 70%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 4px;"></div>
+          <div style="width: 50%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 4px;"></div>
         </div>
-        
-        <div class="mk-premium-card float-anim-delayed">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <div style="color:#a1a1aa; letter-spacing: 2px; font-size:0.8rem; font-weight:600;">TIẾN ĐỘ SPRINT</div>
-            <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+        <!-- Main Content -->
+        <div style="width: 75%; padding: 24px; display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div style="font-size: 1.1rem; font-weight: 600; color: #fff;">Projects</div>
+            <div style="padding: 6px 12px; background: #6366f1; color: #fff; font-size: 0.75rem; border-radius: 6px; font-weight: 500;">+ New Project</div>
           </div>
-          <div class="bar-progress-container">
-            <div class="bar-progress-fill"></div>
+          <!-- Table Header -->
+          <div style="display: flex; font-size: 0.7rem; color: #71717a; margin-bottom: 12px; text-transform: uppercase; font-weight: 600;">
+            <div style="flex: 2;">Name</div>
+            <div style="flex: 1;">Status</div>
+            <div style="flex: 1.5;">Progress</div>
           </div>
-          <div style="display:flex; justify-content:space-between; margin-top: 12px; color:#a1a1aa; font-size:0.9rem;">
-            <span>Sprint 14</span>
-            <span style="color:#fff; font-weight:bold;">68%</span>
+          <!-- Table Row 1 -->
+          <div class="float-anim" style="display: flex; align-items: center; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="flex: 2; display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 6px; background: #6366f1; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: bold;">W</div>
+              <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">Website Redesign</div>
+            </div>
+            <div style="flex: 1;">
+              <span style="background: rgba(16,185,129,0.15); color: #10b981; padding: 2px 8px; border-radius: 12px; font-size: 0.65rem; font-weight: 600;">Active</span>
+            </div>
+            <div style="flex: 1.5; display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                <div style="width: 75%; height: 100%; background: #6366f1; border-radius: 3px;"></div>
+              </div>
+              <span style="font-size: 0.7rem; color: #a1a1aa;">75%</span>
+            </div>
+          </div>
+          <!-- Table Row 2 -->
+          <div class="float-anim-delayed" style="display: flex; align-items: center; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="flex: 2; display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 6px; background: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: bold;">M</div>
+              <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">Mobile App</div>
+            </div>
+            <div style="flex: 1;">
+              <span style="background: rgba(245,158,11,0.15); color: #f59e0b; padding: 2px 8px; border-radius: 12px; font-size: 0.65rem; font-weight: 600;">Paused</span>
+            </div>
+            <div style="flex: 1.5; display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                <div style="width: 30%; height: 100%; background: #f59e0b; border-radius: 3px;"></div>
+              </div>
+              <span style="font-size: 0.7rem; color: #a1a1aa;">30%</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1037,30 +1000,39 @@ const featuresEn = [
     items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width:100%; max-width: 550px;">
-        <div class="mk-premium-card" style="padding: 24px;">
-          <div class="kanban-board">
-            <div class="kb-col">
-              <div class="kb-col-title">TO DO</div>
-              <div class="kb-task moving" style="border-left: 4px solid #f59e0b;">
-                <div style="width:60%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px; margin-bottom:12px;"></div>
-                <div style="width:40%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px;"></div>
-              </div>
-              <div class="kb-task" style="border-left: 4px solid #3b82f6;">
-                <div style="width:80%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px;"></div>
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; padding: 24px; background: #121214; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); font-family: sans-serif;">
+        <div style="font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 20px; display: flex; justify-content: space-between;">
+          <span>Sprint 14 Board</span>
+          <div style="display: flex; gap: -5px;">
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #ec4899; border: 2px solid #121214;"></div>
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; border: 2px solid #121214; margin-left: -8px;"></div>
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #6366f1; border: 2px solid #121214; margin-left: -8px;"></div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; height: calc(100% - 45px);">
+          <!-- TO DO Column -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+            <div style="font-size: 0.75rem; color: #a1a1aa; font-weight: 600;">TODO (1)</div>
+            <div class="float-anim" style="background: #1f1f22; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              <span style="background: rgba(239,68,68,0.15); color: #ef4444; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; font-weight: 600;">Bug</span>
+              <div style="font-size: 0.8rem; color: #e4e4e7; font-weight: 500; margin: 8px 0;">Fix login API crash</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <div style="width: 16px; height: 16px; border-radius: 50%; background: #ef4444;"></div>
               </div>
             </div>
-            <div class="kb-col">
-              <div class="kb-col-title">IN PROGRESS</div>
-              <div class="kb-task" style="border-left: 4px solid #8b5cf6;">
-                <div style="width:70%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px; margin-bottom:12px;"></div>
-                <div style="width:50%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px;"></div>
-              </div>
-            </div>
-            <div class="kb-col" style="opacity: 0.6;">
-              <div class="kb-col-title">DONE</div>
-              <div class="kb-task" style="border-left: 4px solid #10b981;">
-                <div style="width:50%; height:6px; background:rgba(255,255,255,0.2); border-radius:3px;"></div>
+          </div>
+          <!-- IN PROGRESS Column -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+            <div style="font-size: 0.75rem; color: #a1a1aa; font-weight: 600;">IN PROGRESS (1)</div>
+            <div class="float-anim-delayed" style="background: #1f1f22; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              <span style="background: rgba(99,102,241,0.15); color: #6366f1; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; font-weight: 600;">Feature</span>
+              <div style="font-size: 0.8rem; color: #e4e4e7; font-weight: 500; margin: 8px 0;">Implement Drag & Drop</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <div style="display: flex; align-items: center; gap: 4px; font-size: 0.65rem; color: #71717a;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 2
+                </div>
+                <div style="width: 16px; height: 16px; border-radius: 50%; background: #3b82f6;"></div>
               </div>
             </div>
           </div>
@@ -1078,19 +1050,32 @@ const featuresEn = [
     items: ['Cập nhật trạng thái tức thì', 'Giao tiếp qua chat bong bóng', 'Nhận thông báo khi được gán', 'Lịch sử hoạt động'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width:100%; max-width: 450px; display:flex; justify-content:center;">
-        <div class="chat-container">
-          <div class="chat-bubble chat-left float-anim">
-            <div style="font-size:0.75rem; color:#a1a1aa; margin-bottom:4px;">Minh • 10:42 AM</div>
-            Team ơi, API tích hợp xong rồi nhé! Mọi người test thử xem.
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-image: radial-gradient(circle at center, rgba(16,185,129,0.1) 0%, transparent 70%);">
+        <!-- Notification Dropdown UI -->
+        <div class="pop-in" style="width: 300px; background: rgba(24,24,27,0.8); backdrop-filter: blur(12px); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); font-family: sans-serif; overflow: hidden;">
+          <div style="padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.9rem; font-weight: 600; color: #fff;">Notifications</div>
+            <div style="font-size: 0.7rem; color: #10b981; cursor: pointer;">Mark all as read</div>
           </div>
-          <div class="chat-bubble chat-right pop-in">
-            <div style="font-size:0.75rem; color:rgba(255,255,255,0.7); margin-bottom:4px; text-align:right;">Bạn • 10:45 AM</div>
-            Tuyệt vời! Mình sẽ review <span style="background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:4px; font-weight:bold;">@Minh</span> PR ngay bây giờ.
+          <!-- Item 1 (Unread) -->
+          <div style="padding: 16px; display: flex; gap: 12px; background: rgba(255,255,255,0.02); border-left: 2px solid #10b981;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #3b82f6; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 0.8rem; color: #e4e4e7; margin-bottom: 4px; line-height: 1.4;">
+                <span style="font-weight: 600; color: #fff;">David</span> assigned you to <span style="font-weight: 600;">Update Landing Page</span>
+              </div>
+              <div style="font-size: 0.65rem; color: #a1a1aa;">2 mins ago</div>
+            </div>
+            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-top: 4px;"></div>
           </div>
-          <div class="chat-bubble chat-left float-anim" style="padding: 12px 20px;">
-            <div class="typing-indicator">
-              <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+          <!-- Item 2 (Read) -->
+          <div style="padding: 16px; display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ec4899; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 0.8rem; color: #a1a1aa; margin-bottom: 4px; line-height: 1.4;">
+                <span style="font-weight: 600; color: #e4e4e7;">Sarah</span> commented on <span style="font-weight: 600;">API Gateway Setup</span>
+              </div>
+              <div style="font-size: 0.65rem; color: #71717a;">1 hour ago</div>
             </div>
           </div>
         </div>
@@ -1107,27 +1092,47 @@ const featuresEn = [
     items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width:100%; max-width: 500px;">
-        <div class="mk-premium-card" style="padding: 30px;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-            <div>
-              <div style="color:#a1a1aa; letter-spacing: 2px; font-size:0.8rem; font-weight:600;">BÁO CÁO BẢO MẬT</div>
-              <div class="mk-gradient-text count-up-12" style="font-weight:900; font-size:3rem; line-height:1; animation-name: countUp100;"></div>
-              <style>@keyframes countUp100 { 0% { --num: 0; } 100% { --num: 100; } }</style>
-              <div style="color:#10b981; font-weight:bold; margin-top:8px;">Hệ thống an toàn 100%</div>
-            </div>
-            <div class="live-badge" style="border-color: rgba(236,72,153,0.3); color: #ec4899;"><div class="live-dot" style="background:#ec4899; box-shadow: 0 0 10px #ec4899;"></div>SECURE</div>
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: sans-serif;">
+        <div class="float-anim" style="width: 90%; background: #18181b; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 40px rgba(0,0,0,0.4); padding: 20px;">
+          <div style="font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            User Roles & Security
           </div>
-          
-          <div class="chart-container">
-            <div class="chart-tooltip">100% Safe</div>
-            <div class="chart-bar" style="height: 30%; animation-delay: 0.1s;"></div>
-            <div class="chart-bar" style="height: 45%; animation-delay: 0.2s;"></div>
-            <div class="chart-bar" style="height: 35%; animation-delay: 0.3s;"></div>
-            <div class="chart-bar" style="height: 60%; animation-delay: 0.4s;"></div>
-            <div class="chart-bar" style="height: 50%; animation-delay: 0.5s;"></div>
-            <div class="chart-bar" style="height: 80%; animation-delay: 0.6s;"></div>
-            <div class="chart-bar" style="height: 100%; animation-delay: 0.7s;"></div>
+          <!-- User Row 1 -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #ec4899;"></div>
+              <div>
+                <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">alex@company.com</div>
+                <div style="font-size: 0.65rem; color: #71717a;">Last active: Just now</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; color: #fff; border: 1px solid rgba(255,255,255,0.1);">Admin <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg></div>
+            </div>
+          </div>
+          <!-- User Row 2 -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #3b82f6;"></div>
+              <div>
+                <div style="font-size: 0.85rem; color: #e4e4e7; font-weight: 500;">sarah@company.com</div>
+                <div style="font-size: 0.65rem; color: #71717a;">Last active: 2 days ago</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; color: #a1a1aa; border: 1px solid rgba(255,255,255,0.1);">Member <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg></div>
+            </div>
+          </div>
+          <!-- 2FA Setting -->
+          <div style="margin-top: 16px; padding: 16px; background: rgba(236,72,153,0.05); border-radius: 8px; border: 1px solid rgba(236,72,153,0.2); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 0.85rem; color: #ec4899; font-weight: 600; margin-bottom: 4px;">Enforce 2FA</div>
+              <div style="font-size: 0.7rem; color: #a1a1aa;">Require two-factor authentication for all users</div>
+            </div>
+            <div style="width: 36px; height: 20px; background: #ec4899; border-radius: 10px; position: relative; box-shadow: 0 0 10px rgba(236,72,153,0.4);">
+              <div style="width: 16px; height: 16px; background: #fff; border-radius: 50%; position: absolute; right: 2px; top: 2px;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1921,7 +1926,7 @@ const services = [
 
 /* STICKY STACKING CARDS */
 .features-stack {
-  padding-bottom: 30vh;
+  padding-bottom: 20vh;
 }
 .stack-container {
   display: flex;
@@ -1934,7 +1939,7 @@ const services = [
 }
 .stack-card {
   position: sticky;
-  height: 85vh;
+  height: 65vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1944,7 +1949,7 @@ const services = [
 .card-inner {
   width: 100%;
   height: 100%;
-  max-height: 850px; min-height: 650px;
+  max-height: 500px;
   border-radius: 40px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
@@ -1979,7 +1984,7 @@ const services = [
   .card-inner { flex-direction: column; }
   .card-content { width: 100%; padding: 30px; height: 50%; }
   .card-image-wrap { width: 100%; height: 50%; }
-  .stack-card { height: 85vh; }
+  .stack-card { height: 65vh; }
 }
 
 
@@ -2766,10 +2771,10 @@ html, body {
 .mk-toggle-on .mk-toggle-circle { left: 21px; }
 
 /* RE-APPLY STACKING FIX FOR PREVIOUS OLD CSS */
-.features-stack { padding-bottom: 30vh; }
+.features-stack { padding-bottom: 20vh; }
 .stack-container { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1100px; margin: 40px auto 0; position: relative; }
-.stack-card { position: sticky; height: 85vh; display: flex; align-items: center; justify-content: center; transform-origin: top center; transition: transform 0.1s ease-out; }
-.card-inner { width: 100%; height: 100%; max-height: 850px; min-height: 650px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
+.stack-card { position: sticky; height: 65vh; display: flex; align-items: center; justify-content: center; transform-origin: top center; transition: transform 0.1s ease-out; }
+.card-inner { width: 100%; height: 100%; max-height: 500px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
 .card-content { width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
 .card-image-wrap { width: 55%; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); }
 
