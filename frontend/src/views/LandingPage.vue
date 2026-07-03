@@ -632,7 +632,7 @@ function initScrollReveal() {
         observer.unobserve(el.target)
       }
     })
-  }, { threshold: 0.1 })
+  }, { threshold: 0, rootMargin: '50px' })
   document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-slide-right').forEach(el => observer.observe(el))
 }
 
@@ -2475,6 +2475,12 @@ const services = [
 .landing.light-theme .stat-desc { color: #64748b !important; }
 .landing.light-theme .stat-icon { background: #f8fafc !important; }
 
+
+/* Fix IntersectionObserver and Scrolling bugs */
+html, body {
+  overflow-x: clip !important;
+}
+
 </style>
 
 <style>
@@ -3258,5 +3264,11 @@ const services = [
 .landing.light-theme .stat-val { color: #0f172a !important; background: transparent !important; }
 .landing.light-theme .stat-desc { color: #64748b !important; }
 .landing.light-theme .stat-icon { background: #f8fafc !important; }
+
+
+/* Fix IntersectionObserver and Scrolling bugs */
+html, body {
+  overflow-x: clip !important;
+}
 
 </style>
