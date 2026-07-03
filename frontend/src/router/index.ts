@@ -10,6 +10,8 @@ import Projects from '../views/Projects.vue';
 import Profile from '../views/Profile.vue';
 import Settings from '../views/Settings.vue';
 import ActivityLog from '../views/ActivityLog.vue';
+import Analytics from '../views/Analytics.vue';
+import Wiki from '../views/Wiki.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -55,6 +57,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { title: 'Danh sách công việc - SprintFlow', requiresAuth: true }
   },
   {
+    path: '/gantt',
+    name: 'GanttChart',
+    component: () => import('../views/GanttChart.vue'),
+    meta: { title: 'Tiến độ dự án - SprintFlow', requiresAuth: true }
+  },
+  {
     path: '/notifications',
     name: 'Notifications',
     component: Notifications,
@@ -83,6 +91,18 @@ const routes: Array<RouteRecordRaw> = [
     name: 'ActivityLog',
     component: ActivityLog,
     meta: { title: 'Nhật ký hoạt động - SprintFlow', requiresAuth: true }
+  },
+  {
+    path: '/analytics',
+    name: 'Analytics',
+    component: Analytics,
+    meta: { title: 'Thống kê - SprintFlow', requiresAuth: true }
+  },
+  {
+    path: '/wiki',
+    name: 'Wiki',
+    component: Wiki,
+    meta: { title: 'Tài liệu Dự án - SprintFlow', requiresAuth: true }
   },
   {
     path: '/projects-stub',

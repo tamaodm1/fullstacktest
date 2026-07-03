@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1 flex flex-col h-screen overflow-hidden pb-6">
     <!-- Header with Project Filters -->
-    <header class="bg-white border-b border-slate-100 px-8 py-4 flex items-center justify-between sticky top-0 z-10 shrink-0">
+    <header class="bg-white/40 backdrop-blur-xl border-b border-white/30 px-8 py-4 flex items-center justify-between sticky top-0 z-10 shrink-0">
       <div class="flex items-center space-x-6">
         <h1 class="text-lg font-bold text-slate-800 tracking-tight">Bảng công việc Kanban</h1>
         
@@ -10,7 +10,7 @@
           <span class="text-xs text-slate-400 font-medium">Dự án:</span>
           <select
             v-model="selectedProjectId"
-            class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-xs text-slate-700 font-bold focus:outline-none focus:border-indigo-500 focus:bg-white transition-all cursor-pointer"
+            class="px-3 py-1.5 bg-white/60 border border-white/50 rounded-xl text-xs text-slate-700 font-bold focus:outline-none focus:border-indigo-500 focus:bg-white/80 transition-all cursor-pointer shadow-sm"
           >
             <option value="all">Tất cả dự án</option>
             <option v-for="proj in taskStore.projects" :key="proj.id" :value="proj.id">
@@ -28,7 +28,7 @@
             v-model="searchQuery"
             type="text"
             placeholder="Tìm nhanh công việc..."
-            class="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-50 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+            class="w-full pl-9 pr-4 py-1.5 bg-white/50 border border-white/40 shadow-sm rounded-xl text-[11px] text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white/80 transition-all"
           />
         </div>
 
@@ -45,22 +45,22 @@
     </header>
 
     <!-- Project Stats / Progress strip -->
-    <div class="px-8 py-3 bg-white/70 backdrop-blur-md border-b border-slate-100/80 flex items-center justify-between text-xs text-slate-500 shrink-0">
+    <div class="px-8 py-3 bg-white/30 backdrop-blur-lg border-b border-white/20 flex items-center justify-between text-xs text-slate-600 shrink-0">
       <div class="flex items-center space-x-6">
         <div class="flex items-center space-x-1.5">
-          <span class="font-bold text-slate-700">Tổng số công việc:</span>
-          <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-lg font-extrabold">{{ projectTasks.length }}</span>
+          <span class="font-bold text-slate-800">Tổng số công việc:</span>
+          <span class="bg-white/60 text-slate-800 px-2 py-0.5 rounded-lg font-extrabold shadow-sm">{{ projectTasks.length }}</span>
         </div>
         <div class="flex items-center space-x-1.5">
-          <span class="font-bold text-emerald-600">Đã hoàn thành:</span>
-          <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-lg font-extrabold">{{ doneTasksCount }}</span>
+          <span class="font-bold text-emerald-700">Đã hoàn thành:</span>
+          <span class="bg-emerald-100/60 text-emerald-800 px-2 py-0.5 rounded-lg font-extrabold shadow-sm">{{ doneTasksCount }}</span>
         </div>
       </div>
       
       <!-- Progress Bar -->
       <div class="flex items-center space-x-3 w-72">
-        <span class="font-bold text-slate-700 shrink-0">Tiến độ dự án:</span>
-        <div class="flex-1 h-2 bg-slate-100/70 rounded-full overflow-hidden">
+        <span class="font-bold text-slate-800 shrink-0">Tiến độ dự án:</span>
+        <div class="flex-1 h-2 bg-white/50 rounded-full overflow-hidden shadow-inner">
           <div 
             class="h-full bg-gradient-to-r from-indigo-500 to-emerald-505 rounded-full transition-all duration-500 ease-out" 
             :style="{ width: projectProgressPercent + '%' }"
@@ -71,7 +71,7 @@
     </div>
 
     <!-- Tab navigation for smaller screens (Mobile/Tablet) -->
-    <div class="lg:hidden flex space-x-2 px-8 py-3 overflow-x-auto bg-slate-50 border-b border-slate-100 shrink-0">
+    <div class="lg:hidden flex space-x-2 px-8 py-3 overflow-x-auto bg-white/30 border-b border-white/20 shrink-0">
       <button
         v-for="col in columns"
         :key="col.status"
@@ -118,7 +118,7 @@
       <div
         v-for="col in columns"
         :key="col.status"
-        class="w-full lg:w-80 bg-white/40 backdrop-blur-md rounded-3xl p-5 flex-col max-h-[80vh] border border-slate-200/40 shadow-sm shrink-0 transition-all duration-300"
+        class="w-full lg:w-80 glass-card rounded-3xl p-5 flex-col max-h-[80vh] shrink-0 transition-all duration-300"
         @dragover.prevent
         @dragenter="onDragEnter($event, col.status)"
         @dragleave="onDragLeave($event, col.status)"
@@ -139,7 +139,7 @@
               {{ col.name }}
             </h3>
           </div>
-          <span class="bg-white text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-lg border border-slate-200/50 shadow-sm">
+          <span class="bg-white/60 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-lg border border-white/40 shadow-sm">
             {{ getTasksByStatus(col.status).length }}
           </span>
         </div>

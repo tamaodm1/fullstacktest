@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { mockStorage, type User, type Project, type Task, type Comment, type SubTask, type WorkLog, type Notification, type ActivityLog } from './mockData';
+import { mockStorage, type User, type Project, type Task, type Comment, type SubTask, type WorkLog, type Notification, type ActivityLog, type ProjectDocument } from './mockData';
 
 // Khởi tạo Axios client với cấu hình kết nối tới .NET Core Backend
 const apiClient = axios.create({
@@ -99,6 +99,60 @@ export const apiService = {
     }
     const response = await apiClient.post<Project>('/projects', project);
     return response.data;
+  },
+
+  // --- DOCUMENT API (WIKI) ---
+  async getDocuments(projectId: string): Promise<ProjectDocument[]> {
+    if (USE_MOCK) {
+      return Promise.resolve(mockStorage.getDocuments().filter(d => d.projectId === projectId));
+    }
+    const response = await apiClient.get<ProjectDocument[]>(`/projects/${projectId}/documents`);
+    return response.data;
+  },
+
+  async createDocument(projectId: string, title: string, content: string): Promise<ProjectDocument> {
+    if (USE_MOCK) {
+      const docs = mockStorage.getDocuments();
+      const newDoc: ProjectDocument = {
+        id: 'doc_' + Date.now(),
+        projectId,
+        title,
+        content,
+        authorId: mockStorage.getCurrentUser().id,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      docs.push(newDoc);
+      mockStorage.saveDocuments(docs);
+      return Promise.resolve(newDoc);
+    }
+    const response = await apiClient.post<ProjectDocument>(`/projects/${projectId}/documents`, { title, content });
+    return response.data;
+  },
+
+  async updateDocument(projectId: string, docId: string, title: string, content: string): Promise<void> {
+    if (USE_MOCK) {
+      const docs = mockStorage.getDocuments();
+      const doc = docs.find(d => d.id === docId && d.projectId === projectId);
+      if (doc) {
+        doc.title = title;
+        doc.content = content;
+        doc.updatedAt = new Date().toISOString();
+        mockStorage.saveDocuments(docs);
+      }
+      return Promise.resolve();
+    }
+    await apiClient.put(`/projects/${projectId}/documents/${docId}`, { title, content });
+  },
+
+  async deleteDocument(projectId: string, docId: string): Promise<void> {
+    if (USE_MOCK) {
+      let docs = mockStorage.getDocuments();
+      docs = docs.filter(d => !(d.id === docId && d.projectId === projectId));
+      mockStorage.saveDocuments(docs);
+      return Promise.resolve();
+    }
+    await apiClient.delete(`/projects/${projectId}/documents/${docId}`);
   },
 
   // --- TASK API (CRUD) ---

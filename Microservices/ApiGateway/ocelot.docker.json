@@ -36,6 +36,34 @@
       "DownstreamHostAndPorts": [{ "Host": "notify-service", "Port": 5003 }]
     },
     {
+      "UpstreamPathTemplate": "/api/tasks/comments/{commentId}/reactions",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/tasks/comments/{commentId}/reactions",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "notify-service", "Port": 5003 }]
+    },
+    {
+      "UpstreamPathTemplate": "/api/tasks/{taskId}/watch",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/tasks/{taskId}/watch",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "notify-service", "Port": 5003 }]
+    },
+    {
+      "UpstreamPathTemplate": "/api/tasks/{taskId}/watch/status",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/api/tasks/{taskId}/watch/status",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "notify-service", "Port": 5003 }]
+    },
+    {
+      "UpstreamPathTemplate": "/api/upload",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/upload",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "notify-service", "Port": 5003 }]
+    },
+    {
       "UpstreamPathTemplate": "/api/notifications/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ],
       "DownstreamPathTemplate": "/api/notifications/{everything}",

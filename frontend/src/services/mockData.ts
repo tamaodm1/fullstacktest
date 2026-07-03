@@ -115,6 +115,16 @@ export interface PublishedEvent {
   timestamp: string;
 }
 
+export interface ProjectDocument {
+  id: string;
+  projectId: string;
+  title: string;
+  content: string;
+  authorId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export const defaultUsers: User[] = [];
 
 export const defaultProjects: Project[] = [];
@@ -122,6 +132,8 @@ export const defaultProjects: Project[] = [];
 export const defaultTasks: Task[] = [];
 
 export const defaultNotifications: Notification[] = [];
+
+export const defaultDocuments: ProjectDocument[] = [];
 
 export const mockStorage = {
   getUsers(): User[] {
@@ -174,6 +186,16 @@ export const mockStorage = {
 
   saveNotifications(notifications: Notification[]) {
     localStorage.setItem('ph_notifications', JSON.stringify(notifications));
+  },
+
+  getDocuments(): ProjectDocument[] {
+    const data = localStorage.getItem('ph_documents');
+    if (!data) return defaultDocuments;
+    return JSON.parse(data);
+  },
+
+  saveDocuments(documents: ProjectDocument[]) {
+    localStorage.setItem('ph_documents', JSON.stringify(documents));
   },
 
   getCurrentUser(): User {

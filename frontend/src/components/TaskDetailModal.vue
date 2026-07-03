@@ -1,10 +1,10 @@
 <template>
   <Transition name="modal">
-    <div v-if="isOpen && localTask" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
-      <!-- Modal Panel -->
-      <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl overflow-hidden border border-slate-100 flex flex-col max-h-[90vh] transition-all transform duration-300">
+    <div v-if="isOpen && localTask" class="fixed inset-0 z-50 flex justify-end bg-slate-900/40 backdrop-blur-sm">
+      <!-- Drawer Panel -->
+      <div class="bg-white w-full max-w-2xl h-full shadow-[0_0_40px_rgba(0,0,0,0.1)] flex flex-col transition-all transform duration-300">
         <!-- Header -->
-        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white z-10 relative shadow-sm">
           <div class="flex items-center space-x-2">
             <span
               class="px-2.5 py-0.5 rounded-full text-xs font-semibold"
@@ -35,7 +35,7 @@
         </div>
 
         <!-- Scrollable content -->
-        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        <div class="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
           <!-- Title & Project -->
           <div class="space-y-1">
             <input
@@ -52,7 +52,7 @@
           </div>
 
           <!-- Configuration Grid -->
-          <div class="grid grid-cols-2 gap-6 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+          <div class="grid grid-cols-2 gap-6 bg-slate-50/80 p-5 rounded-3xl border border-slate-100">
             <!-- Status -->
             <div class="relative w-full">
               <select
@@ -82,7 +82,7 @@
 
             <!-- Assignee (Multi-Select) -->
             <div class="relative w-full">
-              <div class="flex flex-wrap gap-1.5 mt-2">
+              <div class="flex flex-wrap gap-1.5 mt-2 max-h-32 overflow-y-auto custom-scrollbar p-1">
                 <!-- If Viewer or Not Manager: Just show list of avatars/names -->
                 <template v-if="!isManager">
                   <span v-if="assigneesList.length === 0" class="text-xs text-slate-400 italic">Chưa phân công</span>
@@ -324,10 +324,23 @@
 
             <!-- Right: Time Tracking Work Logs -->
             <div class="space-y-4">
-              <h4 class="text-sm font-bold text-slate-800 flex items-center space-x-1.5">
-                <Clock class="w-4 h-4 text-emerald-500" />
-                <span>Log thời gian làm việc</span>
-              </h4>
+              <div class="flex items-center justify-between">
+                <h4 class="text-sm font-bold text-slate-800 flex items-center space-x-1.5">
+                  <Clock class="w-4 h-4 text-emerald-500" />
+                  <span>Log thời gian làm việc</span>
+                </h4>
+                
+                <!-- Live Timer Toggle -->
+                <button 
+                  @click="toggleTimer"
+                  class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm"
+                  :class="isTimerRunning ? 'bg-rose-100 text-rose-600 hover:bg-rose-200 animate-pulse' : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'"
+                >
+                  <Play v-if="!isTimerRunning" class="w-3.5 h-3.5" />
+                  <Square v-else class="w-3.5 h-3.5" />
+                  <span class="min-w-[45px] text-center font-mono">{{ formattedTimer }}</span>
+                </button>
+              </div>
 
               <!-- Progress bar logs vs estimation -->
               <div class="space-y-1">
@@ -603,7 +616,10 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
-import { X, MessageSquare, Send, Trash2, CheckSquare, Clock, Plus, Pencil, Check, Eye, Paperclip, Smile } from '@lucide/vue';
+import {
+  X, Clock, MessageSquare, CheckSquare, Paperclip, Plus, Send,
+  Trash2, Eye, Smile, Play, Square
+} from 'lucide-vue-next';
 import { useTaskStore } from '../stores/taskStore';
 import { apiService } from '../services/api';
 import type { Task, Comment, Reaction } from '../services/mockData';
@@ -632,6 +648,48 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void;
 }>();
+
+// Time Tracking logic
+const isTimerRunning = ref(false);
+const timerSeconds = ref(0);
+let timerInterval: number | null = null;
+
+const formattedTimer = computed(() => {
+  const h = Math.floor(timerSeconds.value / 3600);
+  const m = Math.floor((timerSeconds.value % 3600) / 60);
+  const s = timerSeconds.value % 60;
+  return `${h > 0 ? h.toString().padStart(2, '0') + ':' : ''}${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+});
+
+const toggleTimer = async () => {
+  if (isTimerRunning.value) {
+    if (timerInterval) clearInterval(timerInterval);
+    isTimerRunning.value = false;
+    
+    // Log work if > 0 seconds (for demo purposes)
+    if (timerSeconds.value > 0) {
+      // Calculate hours, round to 3 decimals
+      const hours = +(timerSeconds.value / 3600).toFixed(3);
+      if (hours > 0 && localTask.value) {
+        try {
+          const log = await apiService.addWorkLog(localTask.value.id, hours, `Logged time: ${formattedTimer.value}`);
+          if (!localTask.value.workLogs) localTask.value.workLogs = [];
+          localTask.value.workLogs.push(log);
+          localTask.value.loggedHours = (localTask.value.loggedHours || 0) + hours;
+        } catch (error) {
+          console.error("Lỗi khi lưu giờ làm việc:", error);
+        }
+      }
+    }
+    timerSeconds.value = 0;
+  } else {
+    isTimerRunning.value = true;
+    timerSeconds.value = 0;
+    timerInterval = window.setInterval(() => {
+      timerSeconds.value++;
+    }, 1000);
+  }
+};
 
 const taskStore = useTaskStore();
 const localTask = ref<Task | null>(null);
@@ -691,6 +749,12 @@ watch(
       await checkWatchStatus();
     } else {
       localTask.value = null;
+      // Clear timer when closing
+      if (isTimerRunning.value && timerInterval) {
+        clearInterval(timerInterval);
+        isTimerRunning.value = false;
+        timerSeconds.value = 0;
+      }
       isWatching.value = false;
     }
   }
@@ -965,12 +1029,12 @@ function close() {
 
 .modal-enter-active .bg-white,
 .modal-leave-active .bg-white {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .modal-enter-from .bg-white,
 .modal-leave-to .bg-white {
-  transform: scale(0.9);
+  transform: translateX(100%);
 }
 
 /* Modal details ripple styles */

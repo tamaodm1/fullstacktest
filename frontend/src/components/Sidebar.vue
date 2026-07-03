@@ -1,6 +1,6 @@
 <template>
-  <aside class="sticky top-0 flex h-screen w-72 flex-col border-r border-slate-200 bg-white">
-    <div class="border-b border-slate-100 p-6">
+  <aside class="sticky top-0 flex h-screen w-72 flex-col glass-sidebar z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+    <div class="border-b border-white/50 p-6">
       <router-link to="/" class="flex items-center gap-3">
         <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#0f766e,#2563eb_55%,#f97316)] text-white shadow-lg shadow-blue-100">
           <Workflow class="h-6 w-6" />
@@ -17,10 +17,10 @@
         v-for="item in filteredNavItems"
         :key="item.path"
         :to="item.path"
-        class="group flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-black transition"
+        class="group flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-black transition-all duration-300 premium-hover"
         :class="isActive(item.path)
-          ? 'bg-slate-950 text-white shadow-lg shadow-slate-200'
-          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-950'"
+          ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white shadow-lg shadow-slate-900/20'
+          : 'text-slate-600 hover:bg-white/60 hover:text-slate-900'"
       >
         <span class="flex items-center gap-3">
           <component
@@ -40,11 +40,11 @@
       </router-link>
     </nav>
 
-    <div class="space-y-2 border-t border-slate-100 p-4">
+    <div class="space-y-2 border-t border-white/50 p-4">
       <router-link
         to="/profile"
-        class="flex items-center gap-3 rounded-2xl px-3 py-3 transition"
-        :class="isActive('/profile') ? 'bg-teal-50' : 'hover:bg-slate-50'"
+        class="flex items-center gap-3 rounded-2xl px-3 py-3 premium-hover transition-all duration-300"
+        :class="isActive('/profile') ? 'bg-white/80 shadow-sm text-teal-700' : 'hover:bg-white/60'"
       >
         <img
           :src="taskStore.currentUser.avatarUrl || 'https://ui-avatars.com/api/?name=User&background=0f766e&color=fff'"
@@ -59,8 +59,8 @@
 
       <router-link
         to="/settings"
-        class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-black transition"
-        :class="isActive('/settings') ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-950'"
+        class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-black premium-hover transition-all duration-300"
+        :class="isActive('/settings') ? 'bg-white/80 shadow-sm text-blue-700' : 'text-slate-600 hover:bg-white/60 hover:text-slate-950'"
       >
         <Settings class="h-5 w-5" :class="isActive('/settings') ? 'text-blue-600' : 'text-slate-400'" />
         <span>Cài đặt</span>
@@ -68,7 +68,7 @@
 
       <button
         @click="logout"
-        class="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-black text-rose-600 transition hover:bg-rose-50"
+        class="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-black text-rose-600 premium-hover transition-all duration-300 hover:bg-white/60"
       >
         <LogOut class="h-5 w-5 text-rose-500" />
         <span>Đăng xuất</span>
@@ -79,6 +79,7 @@
 
 <script setup lang="ts">
 import {
+  BarChart,
   Bell,
   ClipboardList,
   FolderKanban,
@@ -89,7 +90,9 @@ import {
   Settings,
   ShieldCheck,
   User,
-  Workflow
+  Workflow,
+  FileText,
+  CalendarRange
 } from '@lucide/vue';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -137,6 +140,24 @@ const filteredNavItems = computed<NavItem[]>(() => {
       path: '/tasks',
       icon: ListTodo,
       activeIconClass: 'text-indigo-300'
+    },
+    {
+      name: 'Tiến độ (Gantt)',
+      path: '/gantt',
+      icon: CalendarRange,
+      activeIconClass: 'text-emerald-300'
+    },
+    {
+      name: 'Thống kê',
+      path: '/analytics',
+      icon: BarChart,
+      activeIconClass: 'text-purple-300'
+    },
+    {
+      name: 'Tài liệu',
+      path: '/wiki',
+      icon: FileText,
+      activeIconClass: 'text-blue-300'
     },
     {
       name: 'Thông báo',

@@ -7,6 +7,9 @@ import router from './router'
 import './style.css'
 import App from './App.vue'
 
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
+
 const app = createApp(App)
 const pinia = createPinia()
 const vuetify = createVuetify()
@@ -20,5 +23,6 @@ app.config.errorHandler = (err, _instance, info) => {
 app.use(pinia)
 app.use(vuetify)
 app.use(router)
+app.component('QuillEditor', QuillEditor)
 app.mount('#app')
 

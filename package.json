@@ -10,5 +10,8 @@
     "install-all": "npm install && npm run install:frontend && npm run install:backend",
     "seed:backend": "npm run seed --prefix backend",
     "dev": "node run-dev.js"
+  },
+  "dependencies": {
+    "puppeteer": "^25.3.0"
   }
 }

@@ -21,7 +21,7 @@ onMounted(() => {
   <router-view v-if="isLanding" />
 
   <!-- App Shell: sidebar + main content -->
-  <div v-else class="flex min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
+  <div v-else class="flex min-h-screen bg-mesh text-slate-900 font-sans antialiased">
     <!-- Sidebar Navigation -->
     <Sidebar v-if="taskStore.currentUser && taskStore.currentUser.id" />
 
