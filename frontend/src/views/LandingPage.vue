@@ -243,7 +243,7 @@
           <div class="step-v reveal-slide-right" v-for="(step, i) in steps" :key="i" :style="{ '--delay': (i * 0.2 + 0.1) + 's' }">
             <div class="step-v-icon-wrap">
               <div class="step-v-num">{{ i + 1 }}</div>
-              <div class="step-v-icon" :style="{ background: step.bg, boxShadow: `0 0 30px ${step.glow || 'rgba(99,102,241,0.3)'}` }">
+              <div class="step-v-icon" :style="{ background: step.bg, boxShadow: `0 0 30px ${(step as any).glow || 'rgba(99,102,241,0.3)'}` }">
                 <span v-html="step.icon"></span>
               </div>
             </div>
@@ -636,7 +636,7 @@ function onScroll() { isScrolled.value = window.scrollY > 50
       const stickyTop = (window.innerHeight * 0.15) + (index * 40)
       if (rect.top <= stickyTop + 5) {
         // Calculate how far the page has scrolled past this card
-        const distancePast = stickyTop - rect.top
+        // unused variable removed
         const distance = Math.max(0, -rect.top + stickyTop);
         let scale = 1 - (distance * 0.0004);
         scale = Math.max(0.85, scale);
@@ -1148,18 +1148,21 @@ const stepsVi = [
     title: 'Tạo tài khoản',
     desc: 'Đăng ký miễn phí với email và mật khẩu. Được cấp quyền Member ngay lập tức.',
     bg: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+    glow: 'rgba(99,102,241,0.4)',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
   },
   {
     title: 'Tạo dự án & mời thành viên',
     desc: 'Tạo dự án mới, mời đồng nghiệp tham gia và phân công công việc ngay trong hệ thống.',
     bg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+    glow: 'rgba(245,158,11,0.4)',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`
   },
   {
     title: 'Làm việc & theo dõi',
     desc: 'Sử dụng Kanban board, bình luận, nhận thông báo và xem báo cáo tiến độ theo thời gian thực.',
     bg: 'linear-gradient(135deg, #10b981, #0ea5e9)',
+    glow: 'rgba(16,185,129,0.4)',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`
   }
 ]
@@ -1167,20 +1170,23 @@ const stepsVi = [
 const stepsEn = [
   {
     title: 'Create Account',
-    desc: 'Register for free with email and password. Get Member access instantly.',
+    desc: 'Sign up for free with your email. Get Member access instantly.',
     bg: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+    glow: 'rgba(99,102,241,0.4)',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
   },
   {
     title: 'Create Project & Invite',
-    desc: 'Create a new project, invite colleagues, and start assigning tasks in the system.',
+    desc: 'Start a new project, invite colleagues, and assign tasks right away.',
     bg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+    glow: 'rgba(245,158,11,0.4)',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`
   },
   {
     title: 'Work & Track',
-    desc: 'Use the Kanban board, comment, receive notifications, and view progress in real-time.',
+    desc: 'Use Kanban boards, comment, get notifications, and view real-time progress.',
     bg: 'linear-gradient(135deg, #10b981, #0ea5e9)',
+    glow: 'rgba(16,185,129,0.4)',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`
   }
 ]
