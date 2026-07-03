@@ -636,29 +636,21 @@ const featuresVi = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
     items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Project Overview</div></div>
-        <div class="mk-body mk-flex">
-          <div class="mk-sidebar mk-glass">
-            <div class="mk-sb-item mk-active"></div>
-            <div class="mk-sb-item"></div>
-            <div class="mk-sb-item"></div>
+
+      <div class="mk-hud reveal-up">
+        <div class="mk-card mk-glass float-anim" style="margin-bottom: 24px; padding: 24px; display:flex; justify-content:space-between; align-items:center; width: 320px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.4);">
+          <div>
+            <div class="mk-text-sm" style="color:#a1a1aa; letter-spacing: 2px; text-transform: uppercase;">Tổng dự án</div>
+            <div class="mk-text-xl mk-gradient-text" style="font-weight:900; font-size:3rem; line-height:1">12</div>
           </div>
-          <div class="mk-content">
-            <div class="mk-card mk-glass" style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
-              <div>
-                <div class="mk-text-sm" style="color:#a1a1aa">Tổng dự án</div>
-                <div class="mk-text-xl mk-gradient-text" style="font-weight:bold; font-size:1.5rem">12</div>
-              </div>
-              <div style="width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
-            </div>
-            <div class="mk-card mk-glass">
-              <div class="mk-text-sm" style="color:#a1a1aa; margin-bottom:8px">Tiến độ Sprint</div>
-              <div class="mk-progress-bar"><div class="mk-progress-fill" style="width:85%; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div></div>
-            </div>
-          </div>
+          <div style="width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 10px 30px rgba(99,102,241,0.5);"></div>
+        </div>
+        <div class="mk-card mk-glass float-anim-delayed" style="padding: 24px; width: 360px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); margin-left: 40px;">
+          <div class="mk-text-sm" style="color:#a1a1aa; margin-bottom:12px; letter-spacing: 2px; text-transform: uppercase;">Tiến độ Sprint</div>
+          <div class="mk-progress-bar" style="height: 8px; border-radius: 8px; background: rgba(255,255,255,0.05);"><div class="mk-progress-fill" style="width:85%; border-radius: 8px; background: linear-gradient(90deg, #6366f1, #8b5cf6); box-shadow: 0 0 20px rgba(99,102,241,0.5);"></div></div>
         </div>
       </div>
+
     `
   },
   {
@@ -669,20 +661,19 @@ const featuresVi = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7m8-7v4"/></svg>`,
     items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Sprint Kanban</div></div>
-        <div class="mk-body mk-kanban">
-          <div class="mk-col">
-            <div class="mk-col-title">To Do</div>
-            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-blue">Design</div><div class="mk-task-line" style="width:80%"></div><div class="mk-task-line" style="width:50%"></div></div>
-            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-red">Bug</div><div class="mk-task-line" style="width:60%"></div></div>
-          </div>
-          <div class="mk-col">
-            <div class="mk-col-title">Doing</div>
-            <div class="mk-task-card mk-glass mk-drag"><div class="mk-badge mk-badge-purple">Feature</div><div class="mk-task-line" style="width:90%"></div><div class="mk-task-line" style="width:40%"></div></div>
-          </div>
+
+      <div class="mk-hud reveal-up" style="display: flex; gap: 20px;">
+        <div class="mk-col float-anim" style="width: 200px;">
+          <div class="mk-col-title" style="color:#a1a1aa; letter-spacing: 2px; margin-bottom: 16px;">TO DO</div>
+          <div class="mk-task-card mk-glass" style="border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);"><div class="mk-badge mk-badge-blue">Design</div><div class="mk-task-line" style="width:80%; height:6px; border-radius:3px;"></div><div class="mk-task-line" style="width:50%; height:6px; border-radius:3px;"></div></div>
+          <div class="mk-task-card mk-glass" style="border-radius: 16px; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);"><div class="mk-badge mk-badge-red">Bug</div><div class="mk-task-line" style="width:60%; height:6px; border-radius:3px;"></div></div>
+        </div>
+        <div class="mk-col float-anim-delayed" style="width: 200px; margin-top: 40px;">
+          <div class="mk-col-title" style="color:#a1a1aa; letter-spacing: 2px; margin-bottom: 16px;">DOING</div>
+          <div class="mk-task-card mk-glass mk-drag" style="border-radius: 16px; padding: 16px; box-shadow: 0 30px 60px rgba(139,92,246,0.3); transform: rotate(3deg); border: 1px solid rgba(139,92,246,0.4);"><div class="mk-badge mk-badge-purple">Feature</div><div class="mk-task-line" style="width:90%; height:6px; border-radius:3px;"></div><div class="mk-task-line" style="width:40%; height:6px; border-radius:3px;"></div></div>
         </div>
       </div>
+
     `
   },
   {
@@ -693,16 +684,15 @@ const featuresVi = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>`,
     items: ['Cập nhật trạng thái tức thì', 'Giao tiếp qua chat bong bóng', 'Nhận thông báo khi được gán', 'Lịch sử hoạt động'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Team Chat</div></div>
-        <div class="mk-body mk-chat">
-          <div class="mk-bubble mk-left mk-glass">API integration is done!</div>
-          <div class="mk-bubble mk-right mk-gradient-bg">Great, I will review the PR.</div>
-          <div class="mk-toast mk-glass">
-            <span class="mk-highlight">Minh</span> resolved a task in <span class="mk-highlight">Backend</span>
-          </div>
+
+      <div class="mk-hud reveal-up" style="display: flex; flex-direction: column; gap: 16px; width: 340px;">
+        <div class="mk-bubble mk-left mk-glass float-anim" style="padding: 16px 20px; border-radius: 24px 24px 24px 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); color: #fff;">API integration is done!</div>
+        <div class="mk-bubble mk-right mk-gradient-bg float-anim-delayed" style="padding: 16px 20px; border-radius: 24px 24px 4px 24px; box-shadow: 0 20px 40px rgba(16,185,129,0.3); margin-left: auto;">Great, I will review the PR.</div>
+        <div class="mk-toast mk-glass float-anim" style="padding: 16px 20px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); color: #fff; margin-top: 16px; border: 1px solid rgba(16,185,129,0.2);">
+          <span class="mk-highlight" style="color:#10b981">Minh</span> resolved a task in <span class="mk-highlight" style="color:#10b981">Backend</span>
         </div>
       </div>
+
     `
   },
   {
@@ -713,25 +703,24 @@ const featuresVi = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`,
     items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Security Settings</div></div>
-        <div class="mk-body mk-settings">
-          <div class="mk-setting-row mk-glass">
-            <div class="mk-setting-info">
-              <div class="mk-setting-title">Two-Factor Authentication</div>
-              <div class="mk-setting-desc">Require 2FA for all members</div>
-            </div>
-            <div class="mk-toggle mk-toggle-on"><div class="mk-toggle-circle"></div></div>
+
+      <div class="mk-hud reveal-up" style="width: 360px;">
+        <div class="mk-setting-row mk-glass float-anim" style="padding: 20px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid rgba(236,72,153,0.3);">
+          <div class="mk-setting-info">
+            <div class="mk-setting-title" style="color:#fff; font-size:1.1rem; margin-bottom:4px;">2FA Authentication</div>
+            <div class="mk-setting-desc" style="color:#a1a1aa">Require 2FA for all members</div>
           </div>
-          <div class="mk-setting-row mk-glass">
-            <div class="mk-setting-info">
-              <div class="mk-setting-title">API Gateway Access</div>
-              <div class="mk-setting-desc">Allow external integrations</div>
-            </div>
-            <div class="mk-toggle"><div class="mk-toggle-circle"></div></div>
+          <div class="mk-toggle mk-toggle-on" style="background:#ec4899; box-shadow: 0 0 15px rgba(236,72,153,0.5);"><div class="mk-toggle-circle"></div></div>
+        </div>
+        <div class="mk-setting-row mk-glass float-anim-delayed" style="padding: 20px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-left: 30px;">
+          <div class="mk-setting-info">
+            <div class="mk-setting-title" style="color:#fff; font-size:1.1rem; margin-bottom:4px;">API Gateway Access</div>
+            <div class="mk-setting-desc" style="color:#a1a1aa">Allow external integrations</div>
           </div>
+          <div class="mk-toggle"><div class="mk-toggle-circle"></div></div>
         </div>
       </div>
+
     `
   }
 ]
@@ -745,29 +734,21 @@ const featuresEn = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
     items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Project Overview</div></div>
-        <div class="mk-body mk-flex">
-          <div class="mk-sidebar mk-glass">
-            <div class="mk-sb-item mk-active"></div>
-            <div class="mk-sb-item"></div>
-            <div class="mk-sb-item"></div>
+
+      <div class="mk-hud reveal-up">
+        <div class="mk-card mk-glass float-anim" style="margin-bottom: 24px; padding: 24px; display:flex; justify-content:space-between; align-items:center; width: 320px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.4);">
+          <div>
+            <div class="mk-text-sm" style="color:#a1a1aa; letter-spacing: 2px; text-transform: uppercase;">Tổng dự án</div>
+            <div class="mk-text-xl mk-gradient-text" style="font-weight:900; font-size:3rem; line-height:1">12</div>
           </div>
-          <div class="mk-content">
-            <div class="mk-card mk-glass" style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
-              <div>
-                <div class="mk-text-sm" style="color:#a1a1aa">Tổng dự án</div>
-                <div class="mk-text-xl mk-gradient-text" style="font-weight:bold; font-size:1.5rem">12</div>
-              </div>
-              <div style="width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
-            </div>
-            <div class="mk-card mk-glass">
-              <div class="mk-text-sm" style="color:#a1a1aa; margin-bottom:8px">Tiến độ Sprint</div>
-              <div class="mk-progress-bar"><div class="mk-progress-fill" style="width:85%; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div></div>
-            </div>
-          </div>
+          <div style="width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 10px 30px rgba(99,102,241,0.5);"></div>
+        </div>
+        <div class="mk-card mk-glass float-anim-delayed" style="padding: 24px; width: 360px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); margin-left: 40px;">
+          <div class="mk-text-sm" style="color:#a1a1aa; margin-bottom:12px; letter-spacing: 2px; text-transform: uppercase;">Tiến độ Sprint</div>
+          <div class="mk-progress-bar" style="height: 8px; border-radius: 8px; background: rgba(255,255,255,0.05);"><div class="mk-progress-fill" style="width:85%; border-radius: 8px; background: linear-gradient(90deg, #6366f1, #8b5cf6); box-shadow: 0 0 20px rgba(99,102,241,0.5);"></div></div>
         </div>
       </div>
+
     `
   },
   {
@@ -778,20 +759,19 @@ const featuresEn = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7m8-7v4"/></svg>`,
     items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Sprint Kanban</div></div>
-        <div class="mk-body mk-kanban">
-          <div class="mk-col">
-            <div class="mk-col-title">To Do</div>
-            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-blue">Design</div><div class="mk-task-line" style="width:80%"></div><div class="mk-task-line" style="width:50%"></div></div>
-            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-red">Bug</div><div class="mk-task-line" style="width:60%"></div></div>
-          </div>
-          <div class="mk-col">
-            <div class="mk-col-title">Doing</div>
-            <div class="mk-task-card mk-glass mk-drag"><div class="mk-badge mk-badge-purple">Feature</div><div class="mk-task-line" style="width:90%"></div><div class="mk-task-line" style="width:40%"></div></div>
-          </div>
+
+      <div class="mk-hud reveal-up" style="display: flex; gap: 20px;">
+        <div class="mk-col float-anim" style="width: 200px;">
+          <div class="mk-col-title" style="color:#a1a1aa; letter-spacing: 2px; margin-bottom: 16px;">TO DO</div>
+          <div class="mk-task-card mk-glass" style="border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);"><div class="mk-badge mk-badge-blue">Design</div><div class="mk-task-line" style="width:80%; height:6px; border-radius:3px;"></div><div class="mk-task-line" style="width:50%; height:6px; border-radius:3px;"></div></div>
+          <div class="mk-task-card mk-glass" style="border-radius: 16px; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);"><div class="mk-badge mk-badge-red">Bug</div><div class="mk-task-line" style="width:60%; height:6px; border-radius:3px;"></div></div>
+        </div>
+        <div class="mk-col float-anim-delayed" style="width: 200px; margin-top: 40px;">
+          <div class="mk-col-title" style="color:#a1a1aa; letter-spacing: 2px; margin-bottom: 16px;">DOING</div>
+          <div class="mk-task-card mk-glass mk-drag" style="border-radius: 16px; padding: 16px; box-shadow: 0 30px 60px rgba(139,92,246,0.3); transform: rotate(3deg); border: 1px solid rgba(139,92,246,0.4);"><div class="mk-badge mk-badge-purple">Feature</div><div class="mk-task-line" style="width:90%; height:6px; border-radius:3px;"></div><div class="mk-task-line" style="width:40%; height:6px; border-radius:3px;"></div></div>
         </div>
       </div>
+
     `
   },
   {
@@ -802,16 +782,15 @@ const featuresEn = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>`,
     items: ['Cập nhật trạng thái tức thì', 'Giao tiếp qua chat bong bóng', 'Nhận thông báo khi được gán', 'Lịch sử hoạt động'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Team Chat</div></div>
-        <div class="mk-body mk-chat">
-          <div class="mk-bubble mk-left mk-glass">API integration is done!</div>
-          <div class="mk-bubble mk-right mk-gradient-bg">Great, I will review the PR.</div>
-          <div class="mk-toast mk-glass">
-            <span class="mk-highlight">Minh</span> resolved a task in <span class="mk-highlight">Backend</span>
-          </div>
+
+      <div class="mk-hud reveal-up" style="display: flex; flex-direction: column; gap: 16px; width: 340px;">
+        <div class="mk-bubble mk-left mk-glass float-anim" style="padding: 16px 20px; border-radius: 24px 24px 24px 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); color: #fff;">API integration is done!</div>
+        <div class="mk-bubble mk-right mk-gradient-bg float-anim-delayed" style="padding: 16px 20px; border-radius: 24px 24px 4px 24px; box-shadow: 0 20px 40px rgba(16,185,129,0.3); margin-left: auto;">Great, I will review the PR.</div>
+        <div class="mk-toast mk-glass float-anim" style="padding: 16px 20px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); color: #fff; margin-top: 16px; border: 1px solid rgba(16,185,129,0.2);">
+          <span class="mk-highlight" style="color:#10b981">Minh</span> resolved a task in <span class="mk-highlight" style="color:#10b981">Backend</span>
         </div>
       </div>
+
     `
   },
   {
@@ -822,25 +801,24 @@ const featuresEn = [
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`,
     items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
     mockupHtml: `
-      <div class="mk-window mk-premium">
-        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Security Settings</div></div>
-        <div class="mk-body mk-settings">
-          <div class="mk-setting-row mk-glass">
-            <div class="mk-setting-info">
-              <div class="mk-setting-title">Two-Factor Authentication</div>
-              <div class="mk-setting-desc">Require 2FA for all members</div>
-            </div>
-            <div class="mk-toggle mk-toggle-on"><div class="mk-toggle-circle"></div></div>
+
+      <div class="mk-hud reveal-up" style="width: 360px;">
+        <div class="mk-setting-row mk-glass float-anim" style="padding: 20px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid rgba(236,72,153,0.3);">
+          <div class="mk-setting-info">
+            <div class="mk-setting-title" style="color:#fff; font-size:1.1rem; margin-bottom:4px;">2FA Authentication</div>
+            <div class="mk-setting-desc" style="color:#a1a1aa">Require 2FA for all members</div>
           </div>
-          <div class="mk-setting-row mk-glass">
-            <div class="mk-setting-info">
-              <div class="mk-setting-title">API Gateway Access</div>
-              <div class="mk-setting-desc">Allow external integrations</div>
-            </div>
-            <div class="mk-toggle"><div class="mk-toggle-circle"></div></div>
+          <div class="mk-toggle mk-toggle-on" style="background:#ec4899; box-shadow: 0 0 15px rgba(236,72,153,0.5);"><div class="mk-toggle-circle"></div></div>
+        </div>
+        <div class="mk-setting-row mk-glass float-anim-delayed" style="padding: 20px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-left: 30px;">
+          <div class="mk-setting-info">
+            <div class="mk-setting-title" style="color:#fff; font-size:1.1rem; margin-bottom:4px;">API Gateway Access</div>
+            <div class="mk-setting-desc" style="color:#a1a1aa">Allow external integrations</div>
           </div>
+          <div class="mk-toggle"><div class="mk-toggle-circle"></div></div>
         </div>
       </div>
+
     `
   }
 ]
@@ -1716,9 +1694,6 @@ const services = [
 .landing.light-theme .step-title,
 .landing.light-theme .section-title,
 .landing.light-theme .svc-name,
-.landing.light-theme .fc-title,
-.landing.light-theme .pm-card-num,
-.landing.light-theme .task-text,
 .landing.light-theme .stat-val {
   color: #0f172a !important;
 }
@@ -1731,8 +1706,6 @@ const services = [
 .landing.light-theme .section-sub,
 .landing.light-theme .svc-port,
 .landing.light-theme .svc-features li,
-.landing.light-theme .fc-sub,
-.landing.light-theme .pm-card-label,
 .landing.light-theme .marquee-item,
 .landing.light-theme .stat-label {
   color: #475569 !important;
@@ -1900,6 +1873,44 @@ const services = [
 }
 .hero-mockup:hover {
   animation-play-state: paused;
+}
+
+
+/* HUD & ADVANCED ANIMATIONS (2026) */
+.mk-hud {
+  display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;
+}
+.float-anim {
+  animation: hud-float 6s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+}
+.float-anim-delayed {
+  animation: hud-float 6s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+  animation-delay: -3s;
+}
+@keyframes hud-float {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-15px); }
+}
+
+/* Fix sticky card inner clipping */
+.card-inner {
+  max-height: 85vh !important;
+  overflow: visible !important;
+}
+
+/* Light theme overrides for HUD */
+.landing.light-theme .mk-hud .mk-glass {
+  background: rgba(255,255,255,0.7) !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.05) !important;
+}
+.landing.light-theme .mk-hud .mk-setting-title,
+.landing.light-theme .mk-hud .mk-bubble.mk-left,
+.landing.light-theme .mk-hud .mk-toast {
+  color: #0f172a !important;
+}
+.landing.light-theme .mk-hud .mk-bubble.mk-right {
+  color: #ffffff !important; /* Keep gradient text white */
 }
 
 </style>
@@ -2004,9 +2015,6 @@ const services = [
 .landing.light-theme .step-title,
 .landing.light-theme .section-title,
 .landing.light-theme .svc-name,
-.landing.light-theme .fc-title,
-.landing.light-theme .pm-card-num,
-.landing.light-theme .task-text,
 .landing.light-theme .stat-val {
   color: #0f172a !important;
 }
@@ -2019,8 +2027,6 @@ const services = [
 .landing.light-theme .section-sub,
 .landing.light-theme .svc-port,
 .landing.light-theme .svc-features li,
-.landing.light-theme .fc-sub,
-.landing.light-theme .pm-card-label,
 .landing.light-theme .marquee-item,
 .landing.light-theme .stat-label {
   color: #475569 !important;
@@ -2188,6 +2194,44 @@ const services = [
 }
 .hero-mockup:hover {
   animation-play-state: paused;
+}
+
+
+/* HUD & ADVANCED ANIMATIONS (2026) */
+.mk-hud {
+  display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;
+}
+.float-anim {
+  animation: hud-float 6s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+}
+.float-anim-delayed {
+  animation: hud-float 6s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+  animation-delay: -3s;
+}
+@keyframes hud-float {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-15px); }
+}
+
+/* Fix sticky card inner clipping */
+.card-inner {
+  max-height: 85vh !important;
+  overflow: visible !important;
+}
+
+/* Light theme overrides for HUD */
+.landing.light-theme .mk-hud .mk-glass {
+  background: rgba(255,255,255,0.7) !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.05) !important;
+}
+.landing.light-theme .mk-hud .mk-setting-title,
+.landing.light-theme .mk-hud .mk-bubble.mk-left,
+.landing.light-theme .mk-hud .mk-toast {
+  color: #0f172a !important;
+}
+.landing.light-theme .mk-hud .mk-bubble.mk-right {
+  color: #ffffff !important; /* Keep gradient text white */
 }
 
 </style>
