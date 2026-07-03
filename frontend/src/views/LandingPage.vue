@@ -2796,7 +2796,7 @@ html, body {
 .stack-container { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1100px; margin: 40px auto 0; position: relative; }
 .stack-card { position: sticky; height: 65vh; display: flex; align-items: center; justify-content: center; transform-origin: top center; transition: transform 0.1s ease-out; }
 .card-inner { width: 100%; height: 100%; max-height: 500px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
-.card-content { width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+.card-content { width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .card-image-wrap { width: 55%; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); }
 
 /* SAAS EXTRAS */
