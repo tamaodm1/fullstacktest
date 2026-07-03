@@ -460,11 +460,11 @@
     <section class="cta-section">
       <div class="cta-orb cta-orb-1"></div>
       <div class="cta-orb cta-orb-2"></div>
-      <div class="cta-inner reveal-up">
+      <div class="cta-inner">
         
-        <h2 class="cta-title">Sẵn sàng bắt đầu?</h2>
-        <p class="cta-sub">Đăng ký ngay hôm nay và trải nghiệm cách quản lý dự án thông minh hơn cùng SprintFlow.</p>
-        <div class="cta-actions">
+        <h2 class="cta-title reveal-up">Sẵn sàng bắt đầu?</h2>
+        <p class="cta-sub reveal-up" style="--delay: 0.1s">Đăng ký ngay hôm nay và trải nghiệm cách quản lý dự án thông minh hơn cùng SprintFlow.</p>
+        <div class="cta-actions reveal-up" style="--delay: 0.2s">
           <router-link to="/register" class="btn-primary large">
             Tạo tài khoản miễn phí
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -480,7 +480,7 @@
     <!-- FOOTER -->
     <footer class="footer">
       <div class="footer-inner">
-        <div class="footer-logo">
+        <div class="footer-logo reveal-up">
           <div class="logo-icon small">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <rect x="3" y="3" width="8" height="8" rx="2" fill="white" opacity="0.9"/>
@@ -491,11 +491,11 @@
           </div>
           <span>SprintFlow</span>
         </div>
-        <div class="footer-links">
+        <div class="footer-links reveal-up" style="--delay: 0.1s">
           <router-link to="/login">Đăng nhập</router-link>
           <router-link to="/register">Đăng ký</router-link>
         </div>
-        <div class="footer-copy">© 2026 SprintFlow · Hệ thống quản lý dự án</div>
+        <div class="footer-copy reveal-up" style="--delay: 0.2s">© 2026 SprintFlow · Hệ thống quản lý dự án</div>
       </div>
     </footer>
   </div>
