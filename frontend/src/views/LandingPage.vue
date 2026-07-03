@@ -232,15 +232,18 @@
         <div class="section-badge reveal-up">{{ tNav.how }}</div>
         <h2 class="section-title reveal-up" style="--delay: 0.1s" v-if="currentLang === 'vi'">Bắt đầu chỉ trong<br/><span class="text-gradient">3 bước đơn giản</span></h2>
         <h2 class="section-title reveal-up" style="--delay: 0.1s" v-else>Get started in<br/><span class="text-gradient">3 simple steps</span></h2>
-        <div class="steps">
-          <div class="step reveal-up" v-for="(step, i) in steps" :key="i" :style="{ '--delay': (i * 0.15 + 0.1) + 's' }">
-            <div class="step-num">{{ i + 1 }}</div>
-            <div class="step-connector" v-if="i < steps.length - 1"></div>
-            <div class="step-icon" :style="{ background: step.bg }">
-              <span v-html="step.icon"></span>
+        <div class="steps-vertical">
+          <div class="step-v reveal-slide-right" v-for="(step, i) in steps" :key="i" :style="{ '--delay': (i * 0.2 + 0.1) + 's' }">
+            <div class="step-v-icon-wrap">
+              <div class="step-v-num">{{ i + 1 }}</div>
+              <div class="step-v-icon" :style="{ background: step.bg, boxShadow: `0 0 30px ${step.glow || 'rgba(99,102,241,0.3)'}` }">
+                <span v-html="step.icon"></span>
+              </div>
             </div>
-            <h3 class="step-title">{{ step.title }}</h3>
-            <p class="step-desc">{{ step.desc }}</p>
+            <div class="step-v-content">
+              <h3 class="step-v-title">{{ step.title }}</h3>
+              <p class="step-v-desc">{{ step.desc }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -540,7 +543,7 @@ function initScrollReveal() {
       }
     })
   }, { threshold: 0.1 })
-  document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right').forEach(el => observer.observe(el))
+  document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-slide-right').forEach(el => observer.observe(el))
 }
 
 // ── SCROLL NAV ──
@@ -1913,6 +1916,96 @@ const services = [
   color: #ffffff !important; /* Keep gradient text white */
 }
 
+
+/* VERTICAL TIMELINE DESIGN */
+.steps-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 700px;
+  margin: 40px auto 0;
+  position: relative;
+  text-align: left;
+}
+.steps-vertical::before {
+  content: '';
+  position: absolute;
+  top: 40px; bottom: 0;
+  left: 40px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(99,102,241,0.5) 0%, rgba(236,72,153,0.1) 100%);
+  z-index: 0;
+}
+
+.step-v {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.step-v-icon-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.step-v-icon {
+  width: 80px; height: 80px;
+  border-radius: 24px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.step-v-num {
+  position: absolute;
+  top: -12px; right: -12px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #ffffff; color: #0f172a;
+  font-size: 0.8rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.step-v-content {
+  padding-top: 10px;
+}
+.step-v-title {
+  font-size: 1.8rem; font-weight: 800; color: white; margin-bottom: 0.5rem;
+}
+.step-v-desc {
+  font-size: 1.1rem; color: rgba(255,255,255,0.7); line-height: 1.6;
+}
+
+/* NEW ADVANCED SLIDE-RIGHT ANIMATION */
+.reveal-slide-right {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-slide-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Light theme overrides for vertical steps */
+.landing.light-theme .step-v-title { color: #0f172a !important; }
+.landing.light-theme .step-v-desc { color: #475569 !important; }
+.landing.light-theme .step-v-num { background: #0f172a; color: #ffffff; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .steps-vertical { gap: 3rem; }
+  .steps-vertical::before { left: 30px; }
+  .step-v { gap: 1.5rem; }
+  .step-v-icon { width: 60px; height: 60px; border-radius: 16px; }
+  .step-v-title { font-size: 1.4rem; }
+  .step-v-desc { font-size: 0.95rem; }
+}
+
 </style>
 
 <style>
@@ -2232,6 +2325,96 @@ const services = [
 }
 .landing.light-theme .mk-hud .mk-bubble.mk-right {
   color: #ffffff !important; /* Keep gradient text white */
+}
+
+
+/* VERTICAL TIMELINE DESIGN */
+.steps-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 700px;
+  margin: 40px auto 0;
+  position: relative;
+  text-align: left;
+}
+.steps-vertical::before {
+  content: '';
+  position: absolute;
+  top: 40px; bottom: 0;
+  left: 40px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(99,102,241,0.5) 0%, rgba(236,72,153,0.1) 100%);
+  z-index: 0;
+}
+
+.step-v {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.step-v-icon-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.step-v-icon {
+  width: 80px; height: 80px;
+  border-radius: 24px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.step-v-num {
+  position: absolute;
+  top: -12px; right: -12px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #ffffff; color: #0f172a;
+  font-size: 0.8rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.step-v-content {
+  padding-top: 10px;
+}
+.step-v-title {
+  font-size: 1.8rem; font-weight: 800; color: white; margin-bottom: 0.5rem;
+}
+.step-v-desc {
+  font-size: 1.1rem; color: rgba(255,255,255,0.7); line-height: 1.6;
+}
+
+/* NEW ADVANCED SLIDE-RIGHT ANIMATION */
+.reveal-slide-right {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-slide-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Light theme overrides for vertical steps */
+.landing.light-theme .step-v-title { color: #0f172a !important; }
+.landing.light-theme .step-v-desc { color: #475569 !important; }
+.landing.light-theme .step-v-num { background: #0f172a; color: #ffffff; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .steps-vertical { gap: 3rem; }
+  .steps-vertical::before { left: 30px; }
+  .step-v { gap: 1.5rem; }
+  .step-v-icon { width: 60px; height: 60px; border-radius: 16px; }
+  .step-v-title { font-size: 1.4rem; }
+  .step-v-desc { font-size: 0.95rem; }
 }
 
 </style>
