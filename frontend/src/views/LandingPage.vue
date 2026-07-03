@@ -258,15 +258,22 @@
         <div class="section-badge light reveal-up">Kiến trúc hệ thống</div>
         <h2 class="section-title white reveal-up" style="--delay: 0.1s">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
         <div class="services-grid">
-          <div class="service-card reveal-up" v-for="(svc, i) in services" :key="svc.name" :style="{ '--delay': (i * 0.12 + 0.1) + 's' }">
-            <div class="svc-pulse" :style="{ background: svc.color }"></div>
-            <div class="svc-icon" :style="{ color: svc.color }">
-              <span v-html="svc.icon"></span>
+          <div class="service-card reveal-up" v-for="(svc, i) in services" :key="svc.name" :style="{ '--delay': (i * 0.15 + 0.1) + 's', '--theme-color': svc.color }">
+            <div class="svc-pulse" :style="{ background: svc.color, boxShadow: `0 0 20px ${svc.color}` }"></div>
+            <div class="svc-header" style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+              <div class="svc-icon-wrap" :style="{ background: `rgba(255,255,255,0.03)`, border: `1px solid rgba(255,255,255,0.05)`, color: svc.color, padding: '16px', borderRadius: '20px' }">
+                <span v-html="svc.icon" style="width: 36px; height: 36px; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));"></span>
+              </div>
+              <div>
+                <div class="svc-name-large">{{ svc.name }}</div>
+                <div class="svc-port-badge" :style="{ color: svc.color, background: `rgba(255,255,255,0.05)` }">Port {{ svc.port }}</div>
+              </div>
             </div>
-            <div class="svc-name">{{ svc.name }}</div>
-            <div class="svc-port">Port {{ svc.port }}</div>
-            <ul class="svc-features">
-              <li v-for="f in svc.features" :key="f">{{ f }}</li>
+            <ul class="svc-features-grid">
+              <li v-for="f in svc.features" :key="f">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" :stroke="svc.color" stroke-width="3" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>{{ f }}</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -2006,6 +2013,88 @@ const services = [
   .step-v-desc { font-size: 0.95rem; }
 }
 
+
+/* SERVICES 2x2 GRID UPGRADE */
+.services-grid {
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr) !important; 
+  gap: 2.5rem !important;
+  text-align: left; 
+  margin-top: 4rem;
+}
+
+.service-card {
+  background: rgba(255,255,255,0.02) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
+  border-radius: 32px !important;
+  padding: 2.5rem !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(255,255,255,0.04) !important;
+  border-color: var(--theme-color) !important;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+.svc-name-large {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.svc-port-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.svc-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.svc-features-grid li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.7);
+  font-size: 1.05rem;
+  transition: color 0.3s;
+}
+.service-card:hover .svc-features-grid li {
+  color: rgba(255,255,255,0.95);
+}
+
+/* Light Theme overrides for wide cards */
+.landing.light-theme .svc-name-large { color: #0f172a !important; }
+.landing.light-theme .svc-features-grid li { color: #475569 !important; }
+.landing.light-theme .service-card {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.03) !important;
+}
+.landing.light-theme .service-card:hover {
+  box-shadow: 0 40px 80px rgba(0,0,0,0.1) !important;
+}
+.landing.light-theme .svc-icon-wrap {
+  background: #f8fafc !important;
+  border-color: rgba(0,0,0,0.05) !important;
+}
+
+@media (max-width: 900px) {
+  .services-grid { grid-template-columns: 1fr !important; }
+  .svc-features-grid { grid-template-columns: 1fr; }
+}
+
 </style>
 
 <style>
@@ -2415,6 +2504,88 @@ const services = [
   .step-v-icon { width: 60px; height: 60px; border-radius: 16px; }
   .step-v-title { font-size: 1.4rem; }
   .step-v-desc { font-size: 0.95rem; }
+}
+
+
+/* SERVICES 2x2 GRID UPGRADE */
+.services-grid {
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr) !important; 
+  gap: 2.5rem !important;
+  text-align: left; 
+  margin-top: 4rem;
+}
+
+.service-card {
+  background: rgba(255,255,255,0.02) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
+  border-radius: 32px !important;
+  padding: 2.5rem !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(255,255,255,0.04) !important;
+  border-color: var(--theme-color) !important;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+.svc-name-large {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.svc-port-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.svc-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.svc-features-grid li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.7);
+  font-size: 1.05rem;
+  transition: color 0.3s;
+}
+.service-card:hover .svc-features-grid li {
+  color: rgba(255,255,255,0.95);
+}
+
+/* Light Theme overrides for wide cards */
+.landing.light-theme .svc-name-large { color: #0f172a !important; }
+.landing.light-theme .svc-features-grid li { color: #475569 !important; }
+.landing.light-theme .service-card {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.03) !important;
+}
+.landing.light-theme .service-card:hover {
+  box-shadow: 0 40px 80px rgba(0,0,0,0.1) !important;
+}
+.landing.light-theme .svc-icon-wrap {
+  background: #f8fafc !important;
+  border-color: rgba(0,0,0,0.05) !important;
+}
+
+@media (max-width: 900px) {
+  .services-grid { grid-template-columns: 1fr !important; }
+  .svc-features-grid { grid-template-columns: 1fr; }
 }
 
 </style>
