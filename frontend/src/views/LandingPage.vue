@@ -1814,6 +1814,49 @@ const services = [
 .landing.light-theme .footer-text { color: #64748b !important; }
 .landing.light-theme .stats-section { background: #f8fafc !important; }
 .landing.light-theme .service-card { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; }
+
+.landing.light-theme .btn-outline-white {
+  color: #0f172a !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+.landing.light-theme .btn-outline-white:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* BETTER ANIMATIONS */
+.cta-inner {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+}
+.cta-inner:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-primary.large {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary.large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+}
+
+.btn-outline-white {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-outline-white:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Floating animation for mockups */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.hero-mockup {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
 </style>
 
 <style>
@@ -2014,4 +2057,47 @@ const services = [
 .landing.light-theme .footer-text { color: #64748b !important; }
 .landing.light-theme .stats-section { background: #f8fafc !important; }
 .landing.light-theme .service-card { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; }
+
+.landing.light-theme .btn-outline-white {
+  color: #0f172a !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+.landing.light-theme .btn-outline-white:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* BETTER ANIMATIONS */
+.cta-inner {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+}
+.cta-inner:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-primary.large {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary.large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+}
+
+.btn-outline-white {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-outline-white:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Floating animation for mockups */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.hero-mockup {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
 </style>
