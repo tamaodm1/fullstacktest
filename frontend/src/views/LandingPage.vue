@@ -193,31 +193,28 @@
     </div>
 
     <!-- FEATURES -->
-    <section id="features" class="features">
+    <section id="features" class="features features-stack">
       <div class="section-badge reveal-up">{{ tNav.features }}</div>
       <h2 class="section-title reveal-up" style="--delay: 0.1s" v-if="currentLang === 'vi'">Mọi thứ bạn cần để<br/><span class="text-gradient">quản lý dự án hiệu quả</span></h2>
       <h2 class="section-title reveal-up" style="--delay: 0.1s" v-else>Everything you need for<br/><span class="text-gradient">efficient project management</span></h2>
-      
-      <p class="section-sub reveal-up" style="--delay: 0.2s">{{ currentLang === 'vi' ? 'SprintFlow tích hợp đầy đủ công cụ từ lập kế hoạch đến báo cáo, giúp team làm việc đồng bộ và minh bạch.' : 'SprintFlow integrates everything from planning to reporting, keeping your team synced and transparent.' }}</p>
-      
-      <div class="features-zigzag">
-        <div class="feat-row" v-for="(feat, i) in features" :key="i" :class="{ 'row-reverse': i % 2 === 1 }">
-          <div class="feat-text" :class="i % 2 === 0 ? 'reveal-left' : 'reveal-right'">
-            <div class="feat-icon" :style="{ background: feat.bg }">
-              <span v-html="feat.icon"></span>
+      <p class="section-sub reveal-up" style="--delay: 0.2s">{{ currentLang === 'vi' ? 'Trải nghiệm mượt mà với các tính năng được xếp chồng thông minh.' : 'Seamless experience with smart stacked features.' }}</p>
+
+      <div class="stack-container">
+        <div v-for="(feat, i) in features" :key="i" class="stack-card" :style="{ top: `calc(15vh + ${i * 40}px)` }" :data-index="i">
+          <div class="card-inner" :style="{ background: feat.bg, boxShadow: `0 -10px 40px ${feat.glow}` }">
+            <div class="card-content">
+              <div class="feat-icon" :style="{ background: feat.glow }">
+                <span v-html="feat.icon"></span>
+              </div>
+              <h3 class="feat-title">{{ feat.title }}</h3>
+              <p class="feat-desc">{{ feat.desc }}</p>
+              <ul class="feat-list">
+                <li v-for="item in feat.items" :key="item">{{ item }}</li>
+              </ul>
             </div>
-            <h3 class="feat-title">{{ feat.title }}</h3>
-            <p class="feat-desc">{{ feat.desc }}</p>
-            <ul class="feat-list">
-              <li v-for="item in feat.items" :key="item">
-                
-                {{ item }}
-              </li>
-            </ul>
-          </div>
-          <div class="feat-image-wrap" :class="i % 2 === 0 ? 'reveal-right' : 'reveal-left'" :style="{ '--delay': '0.2s' }">
-            <div class="feat-glow" :style="{ background: feat.glow }"></div>
-            <div class="feat-mockup-container" v-html="feat.mockupHtml"></div>
+            <div class="card-image-wrap">
+              <img :src="feat.image" alt="Feature preview" class="feat-preview-img" />
+            </div>
           </div>
         </div>
       </div>
@@ -448,7 +445,35 @@ function initScrollReveal() {
 
 // ── SCROLL NAV ──
 const isScrolled = ref(false)
-function onScroll() { isScrolled.value = window.scrollY > 50 }
+function onScroll() { isScrolled.value = window.scrollY > 50
+
+  // Sticky Stacking Cards Scale Logic
+  const stackCards = document.querySelectorAll('.stack-card')
+  if (stackCards.length > 0) {
+    stackCards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect()
+      // If card is sticky at its top position (which is 15vh + index*40px)
+      const stickyTop = (window.innerHeight * 0.15) + (index * 40)
+      if (rect.top <= stickyTop + 5) {
+        // Calculate how far the page has scrolled past this card
+        const distancePast = stickyTop - rect.top
+        // Calculate scale (shrinks very slightly as you scroll down)
+        let scale = 1 - (Math.max(0, -rect.top + stickyTop) * 0.0005)
+        // Set a minimum scale
+        scale = Math.max(0.9, scale)
+        const inner = card.querySelector('.card-inner') as HTMLElement
+        if (inner) {
+          inner.style.transform = `scale(${scale})`
+        }
+      } else {
+        const inner = card.querySelector('.card-inner') as HTMLElement
+        if (inner) {
+          inner.style.transform = `scale(1)`
+        }
+      }
+    })
+  }
+ }
 
 onMounted(() => {
   typeLoop()
@@ -1486,6 +1511,70 @@ const services = [
   .services-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; text-align: center; }
 }
+
+/* STICKY STACKING CARDS */
+.features-stack {
+  padding-bottom: 20vh;
+}
+.stack-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 40px auto 0;
+  position: relative;
+}
+.stack-card {
+  position: sticky;
+  height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: top center;
+  transition: transform 0.1s ease-out;
+}
+.card-inner {
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+}
+.card-content {
+  width: 45%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-image-wrap {
+  width: 55%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.2);
+}
+.feat-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+@media (max-width: 768px) {
+  .card-inner { flex-direction: column; }
+  .card-content { width: 100%; padding: 30px; height: 50%; }
+  .card-image-wrap { width: 100%; height: 50%; }
+  .stack-card { height: 85vh; }
+}
+
 </style>
 
 <style>
