@@ -257,24 +257,99 @@
       <div class="stats-inner">
         <div class="section-badge light reveal-up">Kiến trúc hệ thống</div>
         <h2 class="section-title white reveal-up" style="--delay: 0.1s">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
-        <div class="services-grid">
-          <div class="service-card reveal-up" v-for="(svc, i) in services" :key="svc.name" :style="{ '--delay': (i * 0.15 + 0.1) + 's', '--theme-color': svc.color }">
-            <div class="svc-pulse" :style="{ background: svc.color, boxShadow: `0 0 20px ${svc.color}` }"></div>
-            <div class="svc-header" style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
-              <div class="svc-icon-wrap" :style="{ background: `rgba(255,255,255,0.03)`, border: `1px solid rgba(255,255,255,0.05)`, color: svc.color, padding: '16px', borderRadius: '20px' }">
-                <span v-html="svc.icon" style="width: 36px; height: 36px; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));"></span>
-              </div>
-              <div>
-                <div class="svc-name-large">{{ svc.name }}</div>
-                <div class="svc-port-badge" :style="{ color: svc.color, background: `rgba(255,255,255,0.05)` }">Port {{ svc.port }}</div>
-              </div>
+        <div class="services-tabs-container reveal-up">
+          <div class="svc-tabs-list">
+            <div v-for="(svc, i) in services" :key="svc.name" 
+                 class="svc-tab-item" 
+                 :class="{ active: activeServiceTab === i }"
+                 @click="activeServiceTab = i"
+                 :style="{ '--theme-color': svc.color }">
+              <span class="svc-tab-icon" v-html="svc.icon"></span>
+              <span class="svc-tab-name">{{ svc.name }}</span>
             </div>
-            <ul class="svc-features-grid">
-              <li v-for="f in svc.features" :key="f">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" :stroke="svc.color" stroke-width="3" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>{{ f }}</span>
-              </li>
-            </ul>
+          </div>
+          <div class="svc-tabs-content">
+            <Transition name="fade-up" mode="out-in">
+              <div :key="activeServiceTab" class="svc-tab-pane" :style="{ '--theme-color': services[activeServiceTab].color }">
+                <div class="svc-pane-top">
+                  <div class="svc-pane-header">
+                    <h3 class="svc-pane-title">{{ services[activeServiceTab].name }}</h3>
+                    <div class="svc-port-badge">Port {{ services[activeServiceTab].port }}</div>
+                  </div>
+                  <ul class="svc-pane-features">
+                    <li v-for="f in services[activeServiceTab].features" :key="f">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" :stroke="services[activeServiceTab].color" stroke-width="3" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>{{ f }}</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <!-- CSS Mockups -->
+                <div class="svc-mockup-area">
+                  <!-- Tab 0: API Gateway -->
+                  <div v-if="activeServiceTab === 0" class="mockup-api">
+                    <div class="api-node client">Client</div>
+                    <div class="api-line line-1"><div class="api-dot"></div></div>
+                    <div class="api-node gateway">API Gateway</div>
+                    <div class="api-lines-out">
+                      <div class="api-line-out line-out-1"><div class="api-dot"></div></div>
+                      <div class="api-line-out line-out-2"><div class="api-dot" style="animation-delay: 0.5s"></div></div>
+                      <div class="api-line-out line-out-3"><div class="api-dot" style="animation-delay: 1s"></div></div>
+                    </div>
+                    <div class="api-services">
+                      <div class="api-node micro proj">Project</div>
+                      <div class="api-node micro task">Task</div>
+                      <div class="api-node micro noti">Notify</div>
+                    </div>
+                  </div>
+                  
+                  <!-- Tab 1: Project Service -->
+                  <div v-if="activeServiceTab === 1" class="mockup-project">
+                    <div class="pj-header">Project Dashboard</div>
+                    <div class="pj-list">
+                      <div class="pj-item">
+                        <div class="pj-info"><div class="pj-avatar" style="background:#6366f1"></div><div class="pj-name">Website Redesign</div></div>
+                        <div class="pj-progress"><div class="pj-fill" style="width: 75%; background:#f59e0b"></div></div>
+                      </div>
+                      <div class="pj-item" style="animation-delay: 0.2s">
+                        <div class="pj-info"><div class="pj-avatar" style="background:#ec4899"></div><div class="pj-name">Mobile App</div></div>
+                        <div class="pj-progress"><div class="pj-fill" style="width: 40%; background:#f59e0b"></div></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Tab 2: Task Service -->
+                  <div v-if="activeServiceTab === 2" class="mockup-task">
+                    <div class="kb-col">
+                      <div class="kb-title">TODO</div>
+                      <div class="kb-card"></div>
+                      <div class="kb-card" style="opacity:0.5; height: 30px;"></div>
+                    </div>
+                    <div class="kb-col">
+                      <div class="kb-title">DOING</div>
+                      <div class="kb-card kb-drag"></div>
+                    </div>
+                    <div class="kb-col">
+                      <div class="kb-title">DONE</div>
+                      <div class="kb-card" style="opacity:0.3"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Tab 3: Notify Service -->
+                  <div v-if="activeServiceTab === 3" class="mockup-notify">
+                    <div class="nf-bell">
+                      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--theme-color)" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                      <div class="nf-badge">3</div>
+                      <div class="nf-ring"></div>
+                    </div>
+                    <div class="nf-toast">
+                      <div class="nf-toast-icon">✓</div>
+                      <div class="nf-toast-text">Task completed successfully</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Transition>
           </div>
         </div>
       </div>
@@ -426,6 +501,7 @@ const currentLang = ref('vi');
 const langMenuOpen = ref(false);
 
 const activeFeature = ref(0);
+const activeServiceTab = ref(0);
 
 const setLang = (lang: string) => {
   currentLang.value = lang;
@@ -573,13 +649,19 @@ function onScroll() { isScrolled.value = window.scrollY > 50
       if (rect.top <= stickyTop + 5) {
         // Calculate how far the page has scrolled past this card
         const distancePast = stickyTop - rect.top
-        // Calculate scale (shrinks very slightly as you scroll down)
-        let scale = 1 - (Math.max(0, -rect.top + stickyTop) * 0.0005)
-        // Set a minimum scale
-        scale = Math.max(0.9, scale)
-        const inner = card.querySelector('.card-inner') as HTMLElement
+        const distance = Math.max(0, -rect.top + stickyTop);
+        let scale = 1 - (distance * 0.0004);
+        scale = Math.max(0.85, scale);
+        let rotateX = Math.min(10, distance * 0.015);
+        let yOffset = distance * -0.05;
+        let opacity = Math.max(0.3, 1 - (distance * 0.0015));
+        
+        const inner = card.querySelector('.card-inner') as HTMLElement;
         if (inner) {
-          inner.style.transform = `scale(${scale})`
+          inner.style.transform = `scale(${scale}) perspective(1200px) rotateX(${rotateX}deg) translateY(${yOffset}px)`;
+          inner.style.opacity = opacity.toString();
+          inner.style.transformOrigin = 'top center';
+          inner.style.transition = 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.1s ease-out';
         }
       } else {
         const inner = card.querySelector('.card-inner') as HTMLElement
@@ -2095,6 +2177,258 @@ const services = [
   .svc-features-grid { grid-template-columns: 1fr; }
 }
 
+
+/* SERVICES TABS & CSS MOCKUPS */
+.services-tabs-container {
+  display: flex; gap: 2rem;
+  margin-top: 4rem;
+  text-align: left;
+  max-width: 1100px;
+  margin-left: auto; margin-right: auto;
+}
+
+.svc-tabs-list {
+  display: flex; flex-direction: column; gap: 12px;
+  width: 300px; flex-shrink: 0;
+}
+
+.svc-tab-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: rgba(255,255,255,0.6);
+}
+
+.svc-tab-item:hover {
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+
+.svc-tab-item.active {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--theme-color);
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.svc-tab-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.3s;
+}
+
+.svc-tab-item.active .svc-tab-icon {
+  color: var(--theme-color);
+  filter: drop-shadow(0 0 8px var(--theme-color));
+}
+
+.svc-tab-name {
+  font-size: 1.1rem; font-weight: 600;
+}
+
+.svc-tabs-content {
+  flex-grow: 1;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 24px;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+.svc-pane-top {
+  margin-bottom: 3rem;
+}
+
+.svc-pane-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.svc-pane-title {
+  font-size: 2.2rem; font-weight: 800; color: white; margin: 0;
+}
+
+.svc-port-badge {
+  display: inline-block; padding: 6px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  color: var(--theme-color);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700;
+  border: 1px solid var(--theme-color);
+}
+
+.svc-pane-features {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  list-style: none; padding: 0; margin: 0;
+}
+.svc-pane-features li {
+  display: flex; align-items: center; gap: 12px;
+  color: rgba(255,255,255,0.8); font-size: 1.1rem;
+}
+
+/* Transitions */
+.fade-up-enter-active, .fade-up-leave-active {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-up-enter-from { opacity: 0; transform: translateY(20px); }
+.fade-up-leave-to { opacity: 0; transform: translateY(-20px); }
+
+/* --- CSS MOCKUPS --- */
+.svc-mockup-area {
+  height: 250px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+/* Tab 0: API Mockup */
+.mockup-api { display: flex; align-items: center; gap: 20px; }
+.api-node {
+  padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+  background: #1e1e24; border: 2px solid rgba(255,255,255,0.1); color: white;
+  position: relative; z-index: 2;
+}
+.api-node.gateway {
+  border-color: #6366f1; box-shadow: 0 0 20px rgba(99,102,241,0.4);
+  padding: 20px 30px; font-size: 1.1rem;
+}
+.api-node.proj { border-color: #f59e0b; }
+.api-node.task { border-color: #ef4444; }
+.api-node.noti { border-color: #10b981; }
+
+.api-line, .api-line-out {
+  height: 2px; background: rgba(255,255,255,0.1); position: relative;
+}
+.api-line { width: 50px; }
+.api-lines-out { display: flex; flex-direction: column; gap: 28px; justify-content: center; height: 120px; }
+.api-line-out { width: 40px; }
+
+.api-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: white;
+  position: absolute; top: -3px; left: 0;
+  box-shadow: 0 0 10px white;
+  animation: api-flow 1.5s infinite linear;
+}
+@keyframes api-flow {
+  0% { left: 0; opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+.api-services { display: flex; flex-direction: column; gap: 12px; }
+
+/* Tab 1: Project Mockup */
+.mockup-project {
+  width: 350px; background: #18181b; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+  padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  animation: float 4s ease-in-out infinite alternate;
+}
+.pj-header { font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 16px; }
+.pj-list { display: flex; flex-direction: column; gap: 12px; }
+.pj-item {
+  background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px;
+  animation: slide-right 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.pj-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.pj-avatar { width: 24px; height: 24px; border-radius: 6px; }
+.pj-name { font-size: 0.9rem; color: #e4e4e7; font-weight: 600; }
+.pj-progress { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+.pj-fill { height: 100%; animation: fill-bar 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; transform-origin: left; transform: scaleX(0); }
+@keyframes fill-bar { to { transform: scaleX(1); } }
+@keyframes slide-right { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Tab 2: Task Mockup */
+.mockup-task {
+  display: flex; gap: 16px; transform: rotateX(10deg) rotateZ(-5deg); perspective: 1000px;
+  transform-style: preserve-3d;
+}
+.kb-col {
+  width: 120px; background: rgba(255,255,255,0.02); border-radius: 12px; padding: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.kb-title { font-size: 0.7rem; font-weight: 700; color: #a1a1aa; margin-bottom: 12px; letter-spacing: 1px; }
+.kb-card {
+  height: 40px; background: #27272a; border-radius: 6px; margin-bottom: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.kb-drag {
+  border-color: #ef4444; box-shadow: 0 10px 20px rgba(239,68,68,0.3);
+  transform: translateZ(20px) rotate(-3deg);
+  animation: kb-float 3s infinite alternate;
+}
+@keyframes kb-float { to { transform: translateZ(30px) rotate(-3deg) translateY(-10px); } }
+
+/* Tab 3: Notify Mockup */
+.mockup-notify {
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+.nf-bell {
+  position: relative; animation: bell-shake 4s infinite;
+}
+.nf-badge {
+  position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; border-radius: 50%;
+  background: #ef4444; color: white; font-size: 0.7rem; font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 10px rgba(239,68,68,0.5);
+}
+.nf-ring {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid var(--theme-color); opacity: 0;
+  animation: ring-pulse 2s infinite;
+}
+.nf-toast {
+  background: #18181b; border: 1px solid rgba(16,185,129,0.3); border-radius: 12px;
+  padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  animation: toast-up 4s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nf-toast-icon {
+  width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: bold;
+}
+.nf-toast-text { color: #e4e4e7; font-size: 0.95rem; font-weight: 500; }
+
+@keyframes bell-shake {
+  0%, 80%, 100% { transform: rotate(0); }
+  85% { transform: rotate(15deg); }
+  90% { transform: rotate(-15deg); }
+  95% { transform: rotate(10deg); }
+}
+@keyframes ring-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+@keyframes toast-up {
+  0%, 10% { opacity: 0; transform: translateY(30px); }
+  20%, 80% { opacity: 1; transform: translateY(0); }
+  90%, 100% { opacity: 0; transform: translateY(-30px); }
+}
+
+/* Light Theme overrides */
+.landing.light-theme .svc-tab-item { color: #475569; border-color: rgba(0,0,0,0.05); }
+.landing.light-theme .svc-tab-item.active { background: #ffffff; color: #0f172a; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.landing.light-theme .svc-tabs-content { background: #ffffff; border-color: rgba(0,0,0,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.02); }
+.landing.light-theme .svc-pane-title { color: #0f172a; }
+.landing.light-theme .svc-pane-features li { color: #475569; }
+.landing.light-theme .svc-mockup-area { background: #f8fafc; border-color: rgba(0,0,0,0.05); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .services-tabs-container { flex-direction: column; }
+  .svc-tabs-list { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .svc-tab-item { flex: 1 1 45%; }
+  .svc-tabs-content { padding: 2rem; }
+  .svc-pane-features { grid-template-columns: 1fr; }
+  .mockup-task { transform: scale(0.8); }
+}
+
 </style>
 
 <style>
@@ -2586,6 +2920,258 @@ const services = [
 @media (max-width: 900px) {
   .services-grid { grid-template-columns: 1fr !important; }
   .svc-features-grid { grid-template-columns: 1fr; }
+}
+
+
+/* SERVICES TABS & CSS MOCKUPS */
+.services-tabs-container {
+  display: flex; gap: 2rem;
+  margin-top: 4rem;
+  text-align: left;
+  max-width: 1100px;
+  margin-left: auto; margin-right: auto;
+}
+
+.svc-tabs-list {
+  display: flex; flex-direction: column; gap: 12px;
+  width: 300px; flex-shrink: 0;
+}
+
+.svc-tab-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: rgba(255,255,255,0.6);
+}
+
+.svc-tab-item:hover {
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+
+.svc-tab-item.active {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--theme-color);
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.svc-tab-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.3s;
+}
+
+.svc-tab-item.active .svc-tab-icon {
+  color: var(--theme-color);
+  filter: drop-shadow(0 0 8px var(--theme-color));
+}
+
+.svc-tab-name {
+  font-size: 1.1rem; font-weight: 600;
+}
+
+.svc-tabs-content {
+  flex-grow: 1;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 24px;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+.svc-pane-top {
+  margin-bottom: 3rem;
+}
+
+.svc-pane-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.svc-pane-title {
+  font-size: 2.2rem; font-weight: 800; color: white; margin: 0;
+}
+
+.svc-port-badge {
+  display: inline-block; padding: 6px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  color: var(--theme-color);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700;
+  border: 1px solid var(--theme-color);
+}
+
+.svc-pane-features {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  list-style: none; padding: 0; margin: 0;
+}
+.svc-pane-features li {
+  display: flex; align-items: center; gap: 12px;
+  color: rgba(255,255,255,0.8); font-size: 1.1rem;
+}
+
+/* Transitions */
+.fade-up-enter-active, .fade-up-leave-active {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-up-enter-from { opacity: 0; transform: translateY(20px); }
+.fade-up-leave-to { opacity: 0; transform: translateY(-20px); }
+
+/* --- CSS MOCKUPS --- */
+.svc-mockup-area {
+  height: 250px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+/* Tab 0: API Mockup */
+.mockup-api { display: flex; align-items: center; gap: 20px; }
+.api-node {
+  padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+  background: #1e1e24; border: 2px solid rgba(255,255,255,0.1); color: white;
+  position: relative; z-index: 2;
+}
+.api-node.gateway {
+  border-color: #6366f1; box-shadow: 0 0 20px rgba(99,102,241,0.4);
+  padding: 20px 30px; font-size: 1.1rem;
+}
+.api-node.proj { border-color: #f59e0b; }
+.api-node.task { border-color: #ef4444; }
+.api-node.noti { border-color: #10b981; }
+
+.api-line, .api-line-out {
+  height: 2px; background: rgba(255,255,255,0.1); position: relative;
+}
+.api-line { width: 50px; }
+.api-lines-out { display: flex; flex-direction: column; gap: 28px; justify-content: center; height: 120px; }
+.api-line-out { width: 40px; }
+
+.api-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: white;
+  position: absolute; top: -3px; left: 0;
+  box-shadow: 0 0 10px white;
+  animation: api-flow 1.5s infinite linear;
+}
+@keyframes api-flow {
+  0% { left: 0; opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+.api-services { display: flex; flex-direction: column; gap: 12px; }
+
+/* Tab 1: Project Mockup */
+.mockup-project {
+  width: 350px; background: #18181b; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+  padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  animation: float 4s ease-in-out infinite alternate;
+}
+.pj-header { font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 16px; }
+.pj-list { display: flex; flex-direction: column; gap: 12px; }
+.pj-item {
+  background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px;
+  animation: slide-right 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.pj-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.pj-avatar { width: 24px; height: 24px; border-radius: 6px; }
+.pj-name { font-size: 0.9rem; color: #e4e4e7; font-weight: 600; }
+.pj-progress { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+.pj-fill { height: 100%; animation: fill-bar 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; transform-origin: left; transform: scaleX(0); }
+@keyframes fill-bar { to { transform: scaleX(1); } }
+@keyframes slide-right { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Tab 2: Task Mockup */
+.mockup-task {
+  display: flex; gap: 16px; transform: rotateX(10deg) rotateZ(-5deg); perspective: 1000px;
+  transform-style: preserve-3d;
+}
+.kb-col {
+  width: 120px; background: rgba(255,255,255,0.02); border-radius: 12px; padding: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.kb-title { font-size: 0.7rem; font-weight: 700; color: #a1a1aa; margin-bottom: 12px; letter-spacing: 1px; }
+.kb-card {
+  height: 40px; background: #27272a; border-radius: 6px; margin-bottom: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.kb-drag {
+  border-color: #ef4444; box-shadow: 0 10px 20px rgba(239,68,68,0.3);
+  transform: translateZ(20px) rotate(-3deg);
+  animation: kb-float 3s infinite alternate;
+}
+@keyframes kb-float { to { transform: translateZ(30px) rotate(-3deg) translateY(-10px); } }
+
+/* Tab 3: Notify Mockup */
+.mockup-notify {
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+.nf-bell {
+  position: relative; animation: bell-shake 4s infinite;
+}
+.nf-badge {
+  position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; border-radius: 50%;
+  background: #ef4444; color: white; font-size: 0.7rem; font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 10px rgba(239,68,68,0.5);
+}
+.nf-ring {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid var(--theme-color); opacity: 0;
+  animation: ring-pulse 2s infinite;
+}
+.nf-toast {
+  background: #18181b; border: 1px solid rgba(16,185,129,0.3); border-radius: 12px;
+  padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  animation: toast-up 4s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nf-toast-icon {
+  width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: bold;
+}
+.nf-toast-text { color: #e4e4e7; font-size: 0.95rem; font-weight: 500; }
+
+@keyframes bell-shake {
+  0%, 80%, 100% { transform: rotate(0); }
+  85% { transform: rotate(15deg); }
+  90% { transform: rotate(-15deg); }
+  95% { transform: rotate(10deg); }
+}
+@keyframes ring-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+@keyframes toast-up {
+  0%, 10% { opacity: 0; transform: translateY(30px); }
+  20%, 80% { opacity: 1; transform: translateY(0); }
+  90%, 100% { opacity: 0; transform: translateY(-30px); }
+}
+
+/* Light Theme overrides */
+.landing.light-theme .svc-tab-item { color: #475569; border-color: rgba(0,0,0,0.05); }
+.landing.light-theme .svc-tab-item.active { background: #ffffff; color: #0f172a; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.landing.light-theme .svc-tabs-content { background: #ffffff; border-color: rgba(0,0,0,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.02); }
+.landing.light-theme .svc-pane-title { color: #0f172a; }
+.landing.light-theme .svc-pane-features li { color: #475569; }
+.landing.light-theme .svc-mockup-area { background: #f8fafc; border-color: rgba(0,0,0,0.05); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .services-tabs-container { flex-direction: column; }
+  .svc-tabs-list { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .svc-tab-item { flex: 1 1 45%; }
+  .svc-tabs-content { padding: 2rem; }
+  .svc-pane-features { grid-template-columns: 1fr; }
+  .mockup-task { transform: scale(0.8); }
 }
 
 </style>
