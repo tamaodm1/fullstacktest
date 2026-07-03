@@ -86,20 +86,27 @@
             Đã có tài khoản →
           </router-link>
         </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-num">{{ counters.services }}</span>
-            <span class="stat-label">Microservices</span>
+        <div class="hero-stats-new reveal-up" style="--delay: 0.3s">
+          <div class="stat-pill">
+            <div class="stat-icon" style="color: #6366f1"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+            <div>
+              <div class="stat-val">{{ counters.services }}</div>
+              <div class="stat-desc">Microservices</div>
+            </div>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num">JWT</span>
-            <span class="stat-label">Bảo mật</span>
+          <div class="stat-pill">
+            <div class="stat-icon" style="color: #ec4899"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <div>
+              <div class="stat-val">JWT</div>
+              <div class="stat-desc">Bảo mật</div>
+            </div>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num">{{ counters.tasks }}+</span>
-            <span class="stat-label">Tính năng</span>
+          <div class="stat-pill">
+            <div class="stat-icon" style="color: #10b981"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div>
+              <div class="stat-val">{{ counters.tasks }}+</div>
+              <div class="stat-desc">Tính năng</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1347,7 +1354,7 @@ const services = [
   box-shadow: 0 8px 32px rgba(0,0,0,0.5);
 }
 .float-1 {
-  bottom: -24px; left: -40px;
+  bottom: -40px; left: -80px;
   display: flex; align-items: center; gap: 10px;
   animation: float 4s ease-in-out infinite;
 }
@@ -2429,6 +2436,45 @@ const services = [
   .mockup-task { transform: scale(0.8); }
 }
 
+
+/* NEW HERO STATS REDESIGN */
+.hero-stats-new {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 1rem;
+}
+.stat-pill {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  padding: 8px 24px 8px 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+}
+.stat-pill:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(99,102,241,0.3);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.1);
+}
+.stat-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+}
+.stat-val { font-size: 1.1rem; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
+.stat-desc { font-size: 0.7rem; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Light Theme overrides for Hero Stats */
+.landing.light-theme .stat-pill {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.03) !important;
+}
+.landing.light-theme .stat-val { color: #0f172a !important; background: transparent !important; }
+.landing.light-theme .stat-desc { color: #64748b !important; }
+.landing.light-theme .stat-icon { background: #f8fafc !important; }
+
 </style>
 
 <style>
@@ -3173,5 +3219,44 @@ const services = [
   .svc-pane-features { grid-template-columns: 1fr; }
   .mockup-task { transform: scale(0.8); }
 }
+
+
+/* NEW HERO STATS REDESIGN */
+.hero-stats-new {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 1rem;
+}
+.stat-pill {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  padding: 8px 24px 8px 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+}
+.stat-pill:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(99,102,241,0.3);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.1);
+}
+.stat-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+}
+.stat-val { font-size: 1.1rem; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
+.stat-desc { font-size: 0.7rem; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Light Theme overrides for Hero Stats */
+.landing.light-theme .stat-pill {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.03) !important;
+}
+.landing.light-theme .stat-val { color: #0f172a !important; background: transparent !important; }
+.landing.light-theme .stat-desc { color: #64748b !important; }
+.landing.light-theme .stat-icon { background: #f8fafc !important; }
 
 </style>
