@@ -1857,6 +1857,21 @@ const services = [
   animation: float-soft 6s ease-in-out infinite;
 }
 
+
+/* FOOTER AND NAV FIXES */
+.landing.light-theme .footer-logo span { color: #0f172a !important; }
+.landing.light-theme .footer-links a { color: #64748b !important; }
+.landing.light-theme .footer-links a:hover { color: #6366f1 !important; }
+.landing.light-theme .footer-copy { color: #94a3b8 !important; }
+
+.landing.light-theme .nav-lang-dropdown { border-color: rgba(0,0,0,0.1) !important; background: rgba(0,0,0,0.03) !important; }
+.landing.light-theme .nav-lang-dropdown .current-lang { color: #0f172a !important; }
+.landing.light-theme .nav-lang-dropdown svg { stroke: #0f172a !important; }
+.landing.light-theme .lang-menu { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; }
+.landing.light-theme .lang-item { color: #475569 !important; }
+.landing.light-theme .lang-item:hover { background: #f1f5f9 !important; color: #0f172a !important; }
+.landing.light-theme .lang-item.active { background: rgba(99, 102, 241, 0.1) !important; color: #6366f1 !important; }
+
 </style>
 
 <style>
@@ -2099,5 +2114,20 @@ const services = [
 .hero-mockup {
   animation: float-soft 6s ease-in-out infinite;
 }
+
+
+/* FOOTER AND NAV FIXES */
+.landing.light-theme .footer-logo span { color: #0f172a !important; }
+.landing.light-theme .footer-links a { color: #64748b !important; }
+.landing.light-theme .footer-links a:hover { color: #6366f1 !important; }
+.landing.light-theme .footer-copy { color: #94a3b8 !important; }
+
+.landing.light-theme .nav-lang-dropdown { border-color: rgba(0,0,0,0.1) !important; background: rgba(0,0,0,0.03) !important; }
+.landing.light-theme .nav-lang-dropdown .current-lang { color: #0f172a !important; }
+.landing.light-theme .nav-lang-dropdown svg { stroke: #0f172a !important; }
+.landing.light-theme .lang-menu { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; }
+.landing.light-theme .lang-item { color: #475569 !important; }
+.landing.light-theme .lang-item:hover { background: #f1f5f9 !important; color: #0f172a !important; }
+.landing.light-theme .lang-item.active { background: rgba(99, 102, 241, 0.1) !important; color: #6366f1 !important; }
 
 </style>
