@@ -815,7 +815,7 @@ const services = [
   font-family: 'Inter', sans-serif;
   background: #09090b;
   color: #e4e4e7;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ── PARTICLES ── */
