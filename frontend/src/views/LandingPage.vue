@@ -525,41 +525,30 @@ const featuresVi = [
   {
     title: 'Quản lý dự án',
     desc: 'Tạo và quản lý nhiều dự án song song với đầy đủ thông tin về tiến độ, thành viên và trạng thái.',
-    bg: 'linear-gradient(135deg, #667eea20, #764ba220)',
-    glow: 'radial-gradient(circle at top left, rgba(99,102,241,0.25), transparent 70%)',
+    bg: '#09090b',
+    glow: 'rgba(99,102,241,0.5)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
     items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Project Overview</div></div>
         <div class="mk-body mk-flex">
-          <div class="mk-sidebar">
-            <div class="mk-sb-item mk-active"></div><div class="mk-sb-item"></div><div class="mk-sb-item"></div>
+          <div class="mk-sidebar mk-glass">
+            <div class="mk-sb-item mk-active"></div>
+            <div class="mk-sb-item"></div>
+            <div class="mk-sb-item"></div>
           </div>
           <div class="mk-content">
-            <div class="mk-row">
-              <div class="mk-card mk-w40" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
-                <div style="font-size:0.7rem;color:#a1a1aa">Tổng dự án</div>
-                <div style="font-size:1.3rem;font-weight:700;color:#fff">12</div>
+            <div class="mk-card mk-glass" style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div class="mk-text-sm" style="color:#a1a1aa">Tổng dự án</div>
+                <div class="mk-text-xl mk-gradient-text" style="font-weight:bold; font-size:1.5rem">12</div>
               </div>
-              <div class="mk-card mk-w60" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
-                <div style="font-size:0.7rem;color:#a1a1aa;margin-bottom:6px">Tiến độ chung</div>
-                <div style="width:100%;height:6px;background:#3f3f46;border-radius:3px">
-                  <div style="width:75%;height:100%;background:#10b981;border-radius:3px"></div>
-                </div>
-              </div>
+              <div style="width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
             </div>
-            <div class="mk-row">
-              <div class="mk-card mk-w100" style="padding:12px;display:flex;flex-direction:column;gap:10px;height:auto">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#10b981"></span><span style="font-size:0.8rem;color:#e4e4e7">Thiết kế UI Dashboard</span></div>
-                  <span style="font-size:0.65rem;background:rgba(16,185,129,0.15);color:#10b981;padding:2px 6px;border-radius:4px">Xong</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#f59e0b"></span><span style="font-size:0.8rem;color:#e4e4e7">API Gateway Integration</span></div>
-                  <span style="font-size:0.65rem;background:rgba(245,158,11,0.15);color:#f59e0b;padding:2px 6px;border-radius:4px">Đang làm</span>
-                </div>
-              </div>
+            <div class="mk-card mk-glass">
+              <div class="mk-text-sm" style="color:#a1a1aa; margin-bottom:8px">Tiến độ Sprint</div>
+              <div class="mk-progress-bar"><div class="mk-progress-fill" style="width:85%; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div></div>
             </div>
           </div>
         </div>
@@ -567,57 +556,73 @@ const featuresVi = [
     `
   },
   {
-    title: 'Task & Kanban Board',
-    desc: 'Phân công công việc, đặt deadline, theo dõi tiến độ từng task với bảng Kanban trực quan.',
-    bg: 'linear-gradient(135deg, #f59e0b20, #ef444420)',
-    glow: 'radial-gradient(circle at top left, rgba(245,158,11,0.25), transparent 70%)',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
-    items: ['Kanban board kéo-thả', 'Subtasks & work log', 'Độ ưu tiên & deadline', 'Phân công nhân sự'],
+    title: 'Bảng Kanban',
+    desc: 'Hệ thống quản lý công việc trực quan theo phong cách Kanban. Nắm bắt tức thì ai đang làm gì, ở đâu.',
+    bg: '#09090b',
+    glow: 'rgba(139,92,246,0.5)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7m8-7v4"/></svg>`,
+    items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Sprint Kanban</div></div>
         <div class="mk-body mk-kanban">
-          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#a1a1aa">To Do</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
-          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#6366f1">In Progress</div><div class="mk-kb-card mk-kb-active"></div></div>
-          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#10b981">Done</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
+          <div class="mk-col">
+            <div class="mk-col-title">To Do</div>
+            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-blue">Design</div><div class="mk-task-line" style="width:80%"></div><div class="mk-task-line" style="width:50%"></div></div>
+            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-red">Bug</div><div class="mk-task-line" style="width:60%"></div></div>
+          </div>
+          <div class="mk-col">
+            <div class="mk-col-title">Doing</div>
+            <div class="mk-task-card mk-glass mk-drag"><div class="mk-badge mk-badge-purple">Feature</div><div class="mk-task-line" style="width:90%"></div><div class="mk-task-line" style="width:40%"></div></div>
+          </div>
         </div>
       </div>
     `
   },
   {
-    title: 'Bình luận & Thông báo',
-    desc: 'Giao tiếp trực tiếp trong task, nhận thông báo tự động khi có hoạt động mới trong dự án.',
-    bg: 'linear-gradient(135deg, #10b98120, #059f4620)',
-    glow: 'radial-gradient(circle at top left, rgba(16,185,129,0.25), transparent 70%)',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`,
-    items: ['Bình luận theo task', 'Thông báo realtime', 'Đánh dấu đã đọc', 'Nhật ký hoạt động'],
+    title: 'Thông báo Realtime',
+    desc: 'Mọi thay đổi trong dự án đều được đồng bộ và thông báo ngay lập tức tới tất cả các thành viên liên quan.',
+    bg: '#09090b',
+    glow: 'rgba(16,185,129,0.5)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>`,
+    items: ['Cập nhật trạng thái tức thì', 'Giao tiếp qua chat bong bóng', 'Nhận thông báo khi được gán', 'Lịch sử hoạt động'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Team Chat</div></div>
         <div class="mk-body mk-chat">
-          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done!</div></div>
-          <div class="mk-chat-msg mk-right"><div class="mk-bubble mk-primary">Great, I will review the PR.</div></div>
-          <div class="mk-chat-msg"><div class="mk-avatar" style="background:#10b981"></div><div class="mk-bubble">LGTM! Merging now.</div></div>
-          <div class="mk-notif"><div class="mk-notif-icon"></div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
+          <div class="mk-bubble mk-left mk-glass">API integration is done!</div>
+          <div class="mk-bubble mk-right mk-gradient-bg">Great, I will review the PR.</div>
+          <div class="mk-toast mk-glass">
+            <span class="mk-highlight">Minh</span> resolved a task in <span class="mk-highlight">Backend</span>
+          </div>
         </div>
       </div>
     `
   },
   {
     title: 'Bảo mật & Phân quyền',
-    desc: 'Hệ thống JWT authentication, phân quyền theo vai trò từ Admin đến Viewer rõ ràng và an toàn.',
-    bg: 'linear-gradient(135deg, #8b5cf620, #6366f120)',
-    glow: 'radial-gradient(circle at top left, rgba(139,92,246,0.25), transparent 70%)',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-    items: ['JWT Authentication', 'Phân quyền Admin/Manager/Member/Viewer', 'Đăng ký & quản lý tài khoản', 'Bảo mật API Gateway'],
+    desc: 'Bảo vệ dữ liệu tuyệt đối với hệ thống mã hóa JWT và cơ chế phân quyền RBAC chi tiết.',
+    bg: '#09090b',
+    glow: 'rgba(236,72,153,0.5)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`,
+    items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
-        <div class="mk-body mk-security">
-          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">Two-Factor Authentication</div><div class="mk-sec-desc">Require 2FA for all members</div></div><div class="mk-toggle mk-active"></div></div>
-          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">API Gateway Access</div><div class="mk-sec-desc">Allow external integrations</div></div><div class="mk-toggle"></div></div>
-          <div class="mk-sec-roles">
-            <span class="mk-role mk-admin">Admin</span><span class="mk-role mk-manager">Manager</span><span class="mk-role mk-viewer">Viewer</span>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Security Settings</div></div>
+        <div class="mk-body mk-settings">
+          <div class="mk-setting-row mk-glass">
+            <div class="mk-setting-info">
+              <div class="mk-setting-title">Two-Factor Authentication</div>
+              <div class="mk-setting-desc">Require 2FA for all members</div>
+            </div>
+            <div class="mk-toggle mk-toggle-on"><div class="mk-toggle-circle"></div></div>
+          </div>
+          <div class="mk-setting-row mk-glass">
+            <div class="mk-setting-info">
+              <div class="mk-setting-title">API Gateway Access</div>
+              <div class="mk-setting-desc">Allow external integrations</div>
+            </div>
+            <div class="mk-toggle"><div class="mk-toggle-circle"></div></div>
           </div>
         </div>
       </div>
@@ -627,43 +632,32 @@ const featuresVi = [
 
 const featuresEn = [
   {
-    title: 'Project Management',
-    desc: 'Create and manage multiple projects concurrently with full details on progress, members, and status.',
-    bg: 'linear-gradient(135deg, #667eea20, #764ba220)',
-    glow: 'radial-gradient(circle at top left, rgba(99,102,241,0.25), transparent 70%)',
+    title: 'Quản lý dự án',
+    desc: 'Tạo và quản lý nhiều dự án song song với đầy đủ thông tin về tiến độ, thành viên và trạng thái.',
+    bg: '#09090b',
+    glow: 'rgba(99,102,241,0.5)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
-    items: ['Create projects with colors & desc', 'Manage project members', 'Realtime progress tracking', 'Fast filter & search'],
+    items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Project Overview</div></div>
         <div class="mk-body mk-flex">
-          <div class="mk-sidebar">
-            <div class="mk-sb-item mk-active"></div><div class="mk-sb-item"></div><div class="mk-sb-item"></div>
+          <div class="mk-sidebar mk-glass">
+            <div class="mk-sb-item mk-active"></div>
+            <div class="mk-sb-item"></div>
+            <div class="mk-sb-item"></div>
           </div>
           <div class="mk-content">
-            <div class="mk-row">
-              <div class="mk-card mk-w40" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
-                <div style="font-size:0.7rem;color:#a1a1aa">Projects</div>
-                <div style="font-size:1.3rem;font-weight:700;color:#fff">12</div>
+            <div class="mk-card mk-glass" style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div class="mk-text-sm" style="color:#a1a1aa">Tổng dự án</div>
+                <div class="mk-text-xl mk-gradient-text" style="font-weight:bold; font-size:1.5rem">12</div>
               </div>
-              <div class="mk-card mk-w60" style="padding:10px;display:flex;flex-direction:column;justify-content:center">
-                <div style="font-size:0.7rem;color:#a1a1aa;margin-bottom:6px">Progress</div>
-                <div style="width:100%;height:6px;background:#3f3f46;border-radius:3px">
-                  <div style="width:75%;height:100%;background:#10b981;border-radius:3px"></div>
-                </div>
-              </div>
+              <div style="width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
             </div>
-            <div class="mk-row">
-              <div class="mk-card mk-w100" style="padding:12px;display:flex;flex-direction:column;gap:10px;height:auto">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#10b981"></span><span style="font-size:0.8rem;color:#e4e4e7">Dashboard UI Design</span></div>
-                  <span style="font-size:0.65rem;background:rgba(16,185,129,0.15);color:#10b981;padding:2px 6px;border-radius:4px">Done</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <div style="display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#f59e0b"></span><span style="font-size:0.8rem;color:#e4e4e7">API Gateway Integration</span></div>
-                  <span style="font-size:0.65rem;background:rgba(245,158,11,0.15);color:#f59e0b;padding:2px 6px;border-radius:4px">Doing</span>
-                </div>
-              </div>
+            <div class="mk-card mk-glass">
+              <div class="mk-text-sm" style="color:#a1a1aa; margin-bottom:8px">Tiến độ Sprint</div>
+              <div class="mk-progress-bar"><div class="mk-progress-fill" style="width:85%; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div></div>
             </div>
           </div>
         </div>
@@ -671,57 +665,73 @@ const featuresEn = [
     `
   },
   {
-    title: 'Task & Kanban Board',
-    desc: 'Assign tasks, set deadlines, and track individual task progress using an intuitive Kanban board.',
-    bg: 'linear-gradient(135deg, #f59e0b20, #ef444420)',
-    glow: 'radial-gradient(circle at top left, rgba(245,158,11,0.25), transparent 70%)',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
-    items: ['Drag & drop Kanban board', 'Subtasks & work log', 'Priority & deadlines', 'Assign team members'],
+    title: 'Bảng Kanban',
+    desc: 'Hệ thống quản lý công việc trực quan theo phong cách Kanban. Nắm bắt tức thì ai đang làm gì, ở đâu.',
+    bg: '#09090b',
+    glow: 'rgba(139,92,246,0.5)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7m8-7v4"/></svg>`,
+    items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Sprint Kanban</div></div>
         <div class="mk-body mk-kanban">
-          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#a1a1aa">To Do</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
-          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#6366f1">In Progress</div><div class="mk-kb-card mk-kb-active"></div></div>
-          <div class="mk-kb-col"><div class="mk-kb-title" style="color:#10b981">Done</div><div class="mk-kb-card"></div><div class="mk-kb-card"></div><div class="mk-kb-card"></div></div>
+          <div class="mk-col">
+            <div class="mk-col-title">To Do</div>
+            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-blue">Design</div><div class="mk-task-line" style="width:80%"></div><div class="mk-task-line" style="width:50%"></div></div>
+            <div class="mk-task-card mk-glass"><div class="mk-badge mk-badge-red">Bug</div><div class="mk-task-line" style="width:60%"></div></div>
+          </div>
+          <div class="mk-col">
+            <div class="mk-col-title">Doing</div>
+            <div class="mk-task-card mk-glass mk-drag"><div class="mk-badge mk-badge-purple">Feature</div><div class="mk-task-line" style="width:90%"></div><div class="mk-task-line" style="width:40%"></div></div>
+          </div>
         </div>
       </div>
     `
   },
   {
-    title: 'Comments & Notifications',
-    desc: 'Communicate directly within tasks, and receive automatic notifications for new project activities.',
-    bg: 'linear-gradient(135deg, #10b98120, #059f4620)',
-    glow: 'radial-gradient(circle at top left, rgba(16,185,129,0.25), transparent 70%)',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`,
-    items: ['Task-based comments', 'Realtime notifications', 'Mark as read', 'Activity log'],
+    title: 'Thông báo Realtime',
+    desc: 'Mọi thay đổi trong dự án đều được đồng bộ và thông báo ngay lập tức tới tất cả các thành viên liên quan.',
+    bg: '#09090b',
+    glow: 'rgba(16,185,129,0.5)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>`,
+    items: ['Cập nhật trạng thái tức thì', 'Giao tiếp qua chat bong bóng', 'Nhận thông báo khi được gán', 'Lịch sử hoạt động'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Team Chat</div></div>
         <div class="mk-body mk-chat">
-          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done!</div></div>
-          <div class="mk-chat-msg mk-right"><div class="mk-bubble mk-primary">Great, I will review the PR.</div></div>
-          <div class="mk-chat-msg"><div class="mk-avatar" style="background:#10b981"></div><div class="mk-bubble">LGTM! Merging now.</div></div>
-          <div class="mk-notif"><div class="mk-notif-icon"></div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
+          <div class="mk-bubble mk-left mk-glass">API integration is done!</div>
+          <div class="mk-bubble mk-right mk-gradient-bg">Great, I will review the PR.</div>
+          <div class="mk-toast mk-glass">
+            <span class="mk-highlight">Minh</span> resolved a task in <span class="mk-highlight">Backend</span>
+          </div>
         </div>
       </div>
     `
   },
   {
-    title: 'Security & Roles',
-    desc: 'JWT authentication system and robust role-based access control from Admin to Viewer.',
-    bg: 'linear-gradient(135deg, #8b5cf620, #6366f120)',
-    glow: 'radial-gradient(circle at top left, rgba(139,92,246,0.25), transparent 70%)',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-    items: ['JWT Authentication', 'Admin/Manager/Member/Viewer roles', 'Account management', 'API Gateway Security'],
+    title: 'Bảo mật & Phân quyền',
+    desc: 'Bảo vệ dữ liệu tuyệt đối với hệ thống mã hóa JWT và cơ chế phân quyền RBAC chi tiết.',
+    bg: '#09090b',
+    glow: 'rgba(236,72,153,0.5)',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`,
+    items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
     mockupHtml: `
-      <div class="mk-window">
-        <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
-        <div class="mk-body mk-security">
-          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">Two-Factor Authentication</div><div class="mk-sec-desc">Require 2FA for all members</div></div><div class="mk-toggle mk-active"></div></div>
-          <div class="mk-sec-row"><div class="mk-sec-info"><div class="mk-sec-title">API Gateway Access</div><div class="mk-sec-desc">Allow external integrations</div></div><div class="mk-toggle"></div></div>
-          <div class="mk-sec-roles">
-            <span class="mk-role mk-admin">Admin</span><span class="mk-role mk-manager">Manager</span><span class="mk-role mk-viewer">Viewer</span>
+      <div class="mk-window mk-premium">
+        <div class="mk-header"><div class="mk-dots"><span class="mk-dot-r"></span><span class="mk-dot-y"></span><span class="mk-dot-g"></span></div><div class="mk-title">Security Settings</div></div>
+        <div class="mk-body mk-settings">
+          <div class="mk-setting-row mk-glass">
+            <div class="mk-setting-info">
+              <div class="mk-setting-title">Two-Factor Authentication</div>
+              <div class="mk-setting-desc">Require 2FA for all members</div>
+            </div>
+            <div class="mk-toggle mk-toggle-on"><div class="mk-toggle-circle"></div></div>
+          </div>
+          <div class="mk-setting-row mk-glass">
+            <div class="mk-setting-info">
+              <div class="mk-setting-title">API Gateway Access</div>
+              <div class="mk-setting-desc">Allow external integrations</div>
+            </div>
+            <div class="mk-toggle"><div class="mk-toggle-circle"></div></div>
           </div>
         </div>
       </div>
@@ -1579,61 +1589,77 @@ const services = [
 
 <style>
 /* ── MOCKUP UI CSS ── */
-.mk-window {
-  width: 100%; max-width: 500px; background: #121214;
-  border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+
+/* PREMIUM CSS MOCKUPS 2026 */
+.mk-premium {
+  width: 100%; max-width: 420px; background: rgba(20,20,25,0.4);
+  border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);
   overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .mk-header {
-  height: 36px; background: #1a1a1e; border-bottom: 1px solid rgba(255,255,255,0.05);
-  display: flex; align-items: center; padding: 0 16px;
+  padding: 12px 16px; background: rgba(0,0,0,0.3);
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.mk-dots { display: flex; gap: 8px; }
-.mk-dots span { width: 12px; height: 12px; border-radius: 50%; opacity: 0.8; }
-.mk-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+.mk-dots { display: flex; gap: 6px; }
+.mk-dots span { width: 10px; height: 10px; border-radius: 50%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.3); }
+.mk-dot-r { background: #ff5f56; } .mk-dot-y { background: #ffbd2e; } .mk-dot-g { background: #27c93f; }
+.mk-title { font-size: 0.75rem; color: #a1a1aa; font-weight: 500; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
 
-/* Dashboard Mockup */
-.mk-flex { display: flex; flex-direction: row; gap: 20px; padding: 16px; }
-.mk-sidebar { width: 60px; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid rgba(255,255,255,0.05); padding-right: 16px; }
-.mk-sb-item { height: 24px; border-radius: 6px; background: rgba(255,255,255,0.05); }
-.mk-sb-item.mk-active { background: rgba(99,102,241,0.2); }
-.mk-content { flex: 1; display: flex; flex-direction: column; gap: 12px; }
-.mk-row { display: flex; gap: 12px; }
-.mk-card { height: 60px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
-.mk-w30 { flex: 0.33; } .mk-w40 { flex: 0.4; } .mk-w60 { flex: 0.6; } .mk-w100 { flex: 1; height: 100px; }
+.mk-body { padding: 16px; }
+.mk-flex { display: flex; gap: 16px; }
+.mk-glass {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.mk-sidebar { width: 30%; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.mk-sb-item { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.1); width: 100%; transition: 0.3s; }
+.mk-sb-item.mk-active { background: linear-gradient(90deg, #6366f1, #8b5cf6); box-shadow: 0 0 10px rgba(99,102,241,0.5); }
+.mk-content { width: 70%; display: flex; flex-direction: column; }
+.mk-card { padding: 16px; }
+.mk-gradient-text { background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.mk-progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+.mk-progress-fill { height: 100%; border-radius: 4px; box-shadow: 0 0 10px rgba(99,102,241,0.5); }
 
-/* Kanban Mockup */
-.mk-kanban { flex-direction: row; gap: 16px; }
-.mk-kb-col { flex: 1; display: flex; flex-direction: column; gap: 10px; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; }
-.mk-kb-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-.mk-kb-card { height: 50px; background: rgba(255,255,255,0.06); border-radius: 6px; }
-.mk-kb-card.mk-kb-active { border: 1px solid rgba(99,102,241,0.5); box-shadow: 0 4px 12px rgba(99,102,241,0.2); }
+.mk-kanban { display: flex; gap: 12px; }
+.mk-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.mk-col-title { font-size: 0.75rem; color: #a1a1aa; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.mk-task-card { padding: 12px; display: flex; flex-direction: column; gap: 8px; cursor: grab; transition: transform 0.2s, box-shadow 0.2s; }
+.mk-task-card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+.mk-drag { transform: scale(1.05) rotate(2deg); box-shadow: 0 15px 30px rgba(139,92,246,0.3); border-color: rgba(139,92,246,0.5); }
+.mk-badge { font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: 600; display: inline-block; width: fit-content; text-transform: uppercase; }
+.mk-badge-blue { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); }
+.mk-badge-red { background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.4); }
+.mk-badge-purple { background: rgba(139,92,246,0.2); color: #a78bfa; border: 1px solid rgba(139,92,246,0.4); }
+.mk-task-line { height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; }
 
-/* Chat Mockup */
-.mk-chat { gap: 16px; }
-.mk-chat-msg { display: flex; gap: 12px; align-items: flex-end; }
-.mk-chat-msg.mk-right { flex-direction: row-reverse; }
-.mk-avatar { width: 32px; height: 32px; border-radius: 50%; background: #6366f1; flex-shrink: 0; }
-.mk-bubble { background: rgba(255,255,255,0.08); padding: 10px 14px; border-radius: 12px; border-bottom-left-radius: 2px; font-size: 0.85rem; color: #d4d4d8; }
-.mk-right .mk-bubble { border-bottom-left-radius: 12px; border-bottom-right-radius: 2px; }
-.mk-bubble.mk-primary { background: #6366f1; color: #fff; }
-.mk-notif { margin-top: auto; display: flex; gap: 12px; align-items: center; background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(245,158,11,0.2); }
-.mk-notif-icon { font-size: 1.2rem; }
-.mk-notif-text { font-size: 0.85rem; color: #fcd34d; }
+.mk-chat { display: flex; flex-direction: column; gap: 12px; position: relative; }
+.mk-bubble { padding: 10px 14px; border-radius: 18px; font-size: 0.8rem; max-width: 80%; line-height: 1.4; color: #e4e4e7; font-family: 'Inter', sans-serif; }
+.mk-left { align-self: flex-start; border-bottom-left-radius: 4px; }
+.mk-right { align-self: flex-end; border-bottom-right-radius: 4px; }
+.mk-gradient-bg { background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4); border: none; }
+.mk-toast { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%) translateY(50%); padding: 10px 16px; border-radius: 30px; font-size: 0.75rem; white-space: nowrap; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,189,46,0.3); background: rgba(30,25,10,0.8); }
+.mk-highlight { color: #ffbd2e; font-weight: 600; }
 
-/* Security Mockup */
-.mk-security { gap: 20px; }
-.mk-sec-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.mk-sec-title { font-size: 0.95rem; color: #fff; font-weight: 500; margin-bottom: 4px; }
-.mk-sec-desc { font-size: 0.8rem; color: #71717a; }
-.mk-toggle { width: 40px; height: 22px; background: rgba(255,255,255,0.1); border-radius: 11px; position: relative; }
-.mk-toggle::after { content:''; position: absolute; top:2px; left:2px; width:18px; height:18px; background:#fff; border-radius:50%; transition: 0.2s; }
-.mk-toggle.mk-active { background: #10b981; }
-.mk-toggle.mk-active::after { transform: translateX(18px); }
-.mk-sec-roles { display: flex; gap: 8px; margin-top: 8px; }
-.mk-role { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: 600; }
-.mk-role.mk-admin { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-.mk-role.mk-manager { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
-.mk-role.mk-viewer { background: rgba(255,255,255,0.1); color: #a1a1aa; border: 1px solid rgba(255,255,255,0.1); }
+.mk-settings { display: flex; flex-direction: column; gap: 12px; }
+.mk-setting-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; }
+.mk-setting-title { font-size: 0.85rem; color: #fff; font-weight: 500; margin-bottom: 2px; font-family: 'Inter', sans-serif; }
+.mk-setting-desc { font-size: 0.7rem; color: #a1a1aa; font-family: 'Inter', sans-serif; }
+.mk-toggle { width: 44px; height: 24px; background: rgba(255,255,255,0.1); border-radius: 12px; position: relative; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05); }
+.mk-toggle-circle { width: 18px; height: 18px; background: #fff; border-radius: 50%; position: absolute; top: 2px; left: 3px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+.mk-toggle-on { background: #10b981; border-color: #10b981; box-shadow: 0 0 10px rgba(16,185,129,0.4); }
+.mk-toggle-on .mk-toggle-circle { left: 21px; }
+
+/* RE-APPLY STACKING FIX FOR PREVIOUS OLD CSS */
+.features-stack { padding-bottom: 20vh; }
+.stack-container { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1100px; margin: 40px auto 0; position: relative; }
+.stack-card { position: sticky; height: 75vh; display: flex; align-items: center; justify-content: center; transform-origin: top center; transition: transform 0.1s ease-out; }
+.card-inner { width: 100%; height: 100%; max-height: 600px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
+.card-content { width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+.card-image-wrap { width: 55%; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); }
 </style>
