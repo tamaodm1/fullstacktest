@@ -213,7 +213,7 @@
               </ul>
             </div>
             <div class="card-image-wrap">
-              <img :src="feat.image" alt="Feature preview" class="feat-preview-img" />
+              <div class="feat-preview-html" v-html="feat.mockupHtml" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
             </div>
           </div>
         </div>
