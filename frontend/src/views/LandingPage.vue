@@ -1807,7 +1807,7 @@ const services = [
 .landing.light-theme .pricing-section { background: #f8fafc !important; border-top-color: rgba(0,0,0,0.05) !important; }
 .landing.light-theme .testimonials-section { border-top-color: rgba(0,0,0,0.05) !important; }
 .landing.light-theme .cta-section { background: #f8fafc !important; }
-.landing.light-theme .cta-inner { background: #ffffff !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.05) !important; }
+/* Removed ugly cta-inner box */
 .landing.light-theme .cta-title { color: #0f172a !important; }
 .landing.light-theme .cta-sub { color: #475569 !important; }
 .landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05) !important; }
@@ -1871,6 +1871,36 @@ const services = [
 .landing.light-theme .lang-item { color: #475569 !important; }
 .landing.light-theme .lang-item:hover { background: #f1f5f9 !important; color: #0f172a !important; }
 .landing.light-theme .lang-item.active { background: rgba(99, 102, 241, 0.1) !important; color: #6366f1 !important; }
+
+
+/* ENHANCED CONTINUOUS ANIMATIONS */
+@keyframes continuous-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes continuous-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.cta-inner {
+  animation: continuous-float 6s ease-in-out infinite;
+}
+.cta-inner:hover {
+  animation-play-state: paused;
+}
+
+.cta-orb-1, .cta-orb-2 {
+  animation: continuous-pulse 8s ease-in-out infinite alternate !important;
+}
+
+.hero-mockup {
+  animation: continuous-float 7s ease-in-out infinite;
+}
+.hero-mockup:hover {
+  animation-play-state: paused;
+}
 
 </style>
 
@@ -2065,7 +2095,7 @@ const services = [
 .landing.light-theme .pricing-section { background: #f8fafc !important; border-top-color: rgba(0,0,0,0.05) !important; }
 .landing.light-theme .testimonials-section { border-top-color: rgba(0,0,0,0.05) !important; }
 .landing.light-theme .cta-section { background: #f8fafc !important; }
-.landing.light-theme .cta-inner { background: #ffffff !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.05) !important; }
+/* Removed ugly cta-inner box */
 .landing.light-theme .cta-title { color: #0f172a !important; }
 .landing.light-theme .cta-sub { color: #475569 !important; }
 .landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05) !important; }
@@ -2129,5 +2159,35 @@ const services = [
 .landing.light-theme .lang-item { color: #475569 !important; }
 .landing.light-theme .lang-item:hover { background: #f1f5f9 !important; color: #0f172a !important; }
 .landing.light-theme .lang-item.active { background: rgba(99, 102, 241, 0.1) !important; color: #6366f1 !important; }
+
+
+/* ENHANCED CONTINUOUS ANIMATIONS */
+@keyframes continuous-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes continuous-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.cta-inner {
+  animation: continuous-float 6s ease-in-out infinite;
+}
+.cta-inner:hover {
+  animation-play-state: paused;
+}
+
+.cta-orb-1, .cta-orb-2 {
+  animation: continuous-pulse 8s ease-in-out infinite alternate !important;
+}
+
+.hero-mockup {
+  animation: continuous-float 7s ease-in-out infinite;
+}
+.hero-mockup:hover {
+  animation-play-state: paused;
+}
 
 </style>
