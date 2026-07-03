@@ -1719,7 +1719,7 @@ const services = [
 .feat-icon {
   width: 54px; height: 54px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.5rem; position: relative; z-index: 2;
+  margin-bottom: 1rem; position: relative; z-index: 2;
   border: 1px solid rgba(255,255,255,0.05);
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1732,40 +1732,35 @@ const services = [
 }
 .feat-desc {
   font-size: 1.05rem; color: #a1a1aa; line-height: 1.7;
-  margin-bottom: 2rem; position: relative; z-index: 2;
+  margin-bottom: 1rem; position: relative; z-index: 2;
 }
 /* BEAUTIFUL CENTERED FEAT LIST */
 .feat-list {
-  list-style: none; padding: 0; margin: 30px auto 0;
-  display: flex; flex-direction: column; gap: 12px;
+  list-style: none; padding: 0; margin: 10px auto 0;
+  display: flex; flex-direction: column; gap: 8px;
   align-items: center;
   position: relative; z-index: 2;
   width: 100%;
 }
 .feat-list li {
-  font-size: 0.95rem; color: #e4e4e7; font-weight: 500;
-  display: flex; align-items: center; justify-content: flex-start; gap: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 14px 24px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-size: 0.9rem; color: #e4e4e7; font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: 100%;
-  max-width: 340px;
-}
-.feat-list li::before {
-  content: '✦';
-  color: #8b5cf6;
-  font-size: 1.2rem;
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+  max-width: 320px;
+  text-align: center;
 }
 .feat-list li:hover {
-  transform: translateY(-3px) scale(1.02);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(139, 92, 246, 0.4);
+  transform: scale(1.03);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(139, 92, 246, 0.3);
   color: #fff;
-  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
 }
 .feat-list svg { color: #8b5cf6; flex-shrink: 0; }
 
@@ -1970,7 +1965,7 @@ const services = [
 .card-inner {
   width: 100%;
   height: 100%;
-  max-height: 500px;
+  max-height: 550px;
   border-radius: 40px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
@@ -2795,8 +2790,8 @@ html, body {
 .features-stack { padding-bottom: 20vh; }
 .stack-container { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1100px; margin: 40px auto 0; position: relative; }
 .stack-card { position: sticky; height: 65vh; display: flex; align-items: center; justify-content: center; transform-origin: top center; transition: transform 0.1s ease-out; }
-.card-inner { width: 100%; height: 100%; max-height: 500px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
-.card-content { width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.card-inner { width: 100%; height: 100%; max-height: 550px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
+.card-content { width: 45%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .card-image-wrap { width: 55%; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); }
 
 /* SAAS EXTRAS */
