@@ -210,7 +210,7 @@
             <p class="feat-desc">{{ feat.desc }}</p>
             <ul class="feat-list">
               <li v-for="item in feat.items" :key="item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                
                 {{ item }}
               </li>
             </ul>
@@ -272,7 +272,7 @@
       <div class="cta-orb cta-orb-1"></div>
       <div class="cta-orb cta-orb-2"></div>
       <div class="cta-inner reveal-up">
-        <div class="cta-emoji">🚀</div>
+        
         <h2 class="cta-title">Sẵn sàng bắt đầu?</h2>
         <p class="cta-sub">Đăng ký ngay hôm nay và trải nghiệm cách quản lý dự án thông minh hơn cùng SprintFlow.</p>
         <div class="cta-actions">
@@ -570,10 +570,10 @@ const featuresVi = [
       <div class="mk-window">
         <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
         <div class="mk-body mk-chat">
-          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done! 🚀</div></div>
+          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done!</div></div>
           <div class="mk-chat-msg mk-right"><div class="mk-bubble mk-primary">Great, I will review the PR.</div></div>
           <div class="mk-chat-msg"><div class="mk-avatar" style="background:#10b981"></div><div class="mk-bubble">LGTM! Merging now.</div></div>
-          <div class="mk-notif"><div class="mk-notif-icon">🔔</div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
+          <div class="mk-notif"><div class="mk-notif-icon"></div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
         </div>
       </div>
     `
@@ -674,10 +674,10 @@ const featuresEn = [
       <div class="mk-window">
         <div class="mk-header"><div class="mk-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span></div></div>
         <div class="mk-body mk-chat">
-          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done! 🚀</div></div>
+          <div class="mk-chat-msg"><div class="mk-avatar"></div><div class="mk-bubble">API integration is done!</div></div>
           <div class="mk-chat-msg mk-right"><div class="mk-bubble mk-primary">Great, I will review the PR.</div></div>
           <div class="mk-chat-msg"><div class="mk-avatar" style="background:#10b981"></div><div class="mk-bubble">LGTM! Merging now.</div></div>
-          <div class="mk-notif"><div class="mk-notif-icon">🔔</div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
+          <div class="mk-notif"><div class="mk-notif-icon"></div><div class="mk-notif-text"><strong>Minh</strong> resolved a task in <strong>Backend</strong></div></div>
         </div>
       </div>
     `
