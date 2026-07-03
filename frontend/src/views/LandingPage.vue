@@ -1,5 +1,5 @@
 <template>
-  <div class="landing">
+  <div class="landing" :class="{ 'light-theme': isLightMode }">
     <!-- PARTICLES BACKGROUND -->
     <canvas ref="particleCanvas" class="particle-canvas"></canvas>
 
@@ -35,7 +35,13 @@
             </transition>
           </div>
 
+          
+          <div class="theme-toggle" @click="toggleTheme" style="cursor:pointer; display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); margin-right:10px;">
+            <svg v-if="!isLightMode" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </div>
           <router-link to="/login" class="btn-nav-login">{{ tNav.login }}</router-link>
+
           <router-link to="/register" class="btn-nav-register">
             {{ tNav.register }}
             <span class="btn-shimmer"></span>
@@ -264,6 +270,100 @@
       </div>
     </section>
 
+    
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section py-24 relative overflow-hidden" style="border-top: 1px solid rgba(255,255,255,0.05);">
+      <div class="text-center max-w-3xl mx-auto mb-16 px-6">
+        <h2 class="text-4xl font-black mb-4 title-text">Loved by Teams Worldwide</h2>
+        <p class="text-lg sub-text">Thousands of forward-thinking teams use SprintFlow.</p>
+      </div>
+      <div class="marquee-container" style="display:flex; gap:24px; overflow:hidden; width:100%;">
+        <div class="marquee-content" style="display:flex; gap:24px; animation: marquee 30s linear infinite;">
+          <div class="testimonial-card" style="min-width:350px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:20px; padding:24px;">
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://i.pravatar.cc/150?u=1" class="w-10 h-10 rounded-full" />
+              <div><div class="font-bold title-text">Sarah Jenkins</div><div class="text-xs sub-text">Product Manager @ Acme</div></div>
+            </div>
+            <p class="text-sm title-text opacity-80 leading-relaxed">"SprintFlow completely transformed how we ship features. The real-time chat integrated right into tasks is a game changer."</p>
+          </div>
+          <div class="testimonial-card" style="min-width:350px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:20px; padding:24px;">
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://i.pravatar.cc/150?u=2" class="w-10 h-10 rounded-full" />
+              <div><div class="font-bold title-text">David Chen</div><div class="text-xs sub-text">CTO @ StartupX</div></div>
+            </div>
+            <p class="text-sm title-text opacity-80 leading-relaxed">"The role-based access control and JWT security give us peace of mind when working with enterprise clients."</p>
+          </div>
+          <div class="testimonial-card" style="min-width:350px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:20px; padding:24px;">
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://i.pravatar.cc/150?u=3" class="w-10 h-10 rounded-full" />
+              <div><div class="font-bold title-text">Emily Rodriguez</div><div class="text-xs sub-text">Lead Designer</div></div>
+            </div>
+            <p class="text-sm title-text opacity-80 leading-relaxed">"Absolutely gorgeous UI. Working in SprintFlow doesn't feel like a chore; it feels like stepping into the future."</p>
+          </div>
+          <!-- Repeat for smooth scroll -->
+          <div class="testimonial-card" style="min-width:350px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:20px; padding:24px;">
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://i.pravatar.cc/150?u=1" class="w-10 h-10 rounded-full" />
+              <div><div class="font-bold title-text">Sarah Jenkins</div><div class="text-xs sub-text">Product Manager @ Acme</div></div>
+            </div>
+            <p class="text-sm title-text opacity-80 leading-relaxed">"SprintFlow completely transformed how we ship features. The real-time chat integrated right into tasks is a game changer."</p>
+          </div>
+          <div class="testimonial-card" style="min-width:350px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:20px; padding:24px;">
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://i.pravatar.cc/150?u=2" class="w-10 h-10 rounded-full" />
+              <div><div class="font-bold title-text">David Chen</div><div class="text-xs sub-text">CTO @ StartupX</div></div>
+            </div>
+            <p class="text-sm title-text opacity-80 leading-relaxed">"The role-based access control and JWT security give us peace of mind when working with enterprise clients."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing-section py-24" style="background:rgba(255,255,255,0.01); border-top: 1px solid rgba(255,255,255,0.05);">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+          <h2 class="text-4xl md:text-5xl font-black mb-6 title-text">Simple, transparent pricing</h2>
+          <p class="text-lg sub-text">Start for free, upgrade when your team grows.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <div class="p-card" style="background:var(--card-inner-bg, #0c0c0c); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:40px;">
+            <h3 class="text-xl font-bold mb-2 title-text">Hobby</h3>
+            <p class="text-sm sub-text mb-6">For individuals & small teams</p>
+            <div class="text-4xl font-black mb-6 title-text">Free<span class="text-lg font-normal sub-text">/forever</span></div>
+            <ul class="flex flex-col gap-3 mb-8 title-text text-sm">
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> Up to 3 projects</li>
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> Basic Kanban board</li>
+            </ul>
+            <a href="#" class="btn-outline" style="display:block; text-align:center; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">Get Started</a>
+          </div>
+          <div class="p-card p-pro" style="background:var(--card-inner-bg, #0c0c0c); border:1px solid #8b5cf6; box-shadow:0 10px 40px rgba(139,92,246,0.15); border-radius:24px; padding:40px; position:relative; transform:translateY(-16px);">
+            <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:linear-gradient(90deg,#6366f1,#8b5cf6); color:white; font-size:10px; font-weight:bold; padding:4px 12px; border-radius:12px;">RECOMMENDED</div>
+            <h3 class="text-xl font-bold mb-2 title-text">Pro Team</h3>
+            <p class="text-sm sub-text mb-6">For professional teams</p>
+            <div class="text-4xl font-black mb-6 title-text">$12<span class="text-lg font-normal sub-text">/user/mo</span></div>
+            <ul class="flex flex-col gap-3 mb-8 title-text text-sm">
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> Unlimited projects</li>
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> Real-time Chat</li>
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> Role-based access</li>
+            </ul>
+            <a href="#" class="btn-primary" style="display:block; text-align:center; padding:12px; border-radius:8px; background:linear-gradient(90deg,#6366f1,#8b5cf6); color:white;">Try for 14 days</a>
+          </div>
+          <div class="p-card" style="background:var(--card-inner-bg, #0c0c0c); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:40px;">
+            <h3 class="text-xl font-bold mb-2 title-text">Enterprise</h3>
+            <p class="text-sm sub-text mb-6">For large organizations</p>
+            <div class="text-4xl font-black mb-6 title-text">Custom</div>
+            <ul class="flex flex-col gap-3 mb-8 title-text text-sm">
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> All Pro features</li>
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> SSO Integration</li>
+              <li class="flex items-center gap-2"><svg width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg> 24/7 Support</li>
+            </ul>
+            <a href="#" class="btn-outline" style="display:block; text-align:center; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">Contact Sales</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta-section">
       <div class="cta-orb cta-orb-1"></div>
@@ -444,6 +544,12 @@ function initScrollReveal() {
 }
 
 // ── SCROLL NAV ──
+
+const isLightMode = ref(false)
+const toggleTheme = () => {
+  isLightMode.value = !isLightMode.value
+}
+
 const isScrolled = ref(false)
 function onScroll() { isScrolled.value = window.scrollY > 50
 
@@ -1585,6 +1691,99 @@ const services = [
   .stack-card { height: 85vh; }
 }
 
+
+/* SAAS EXTRAS */
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+.title-text { color: #e4e4e7; }
+.sub-text { color: #a1a1aa; }
+
+/* LIGHT THEME OVERRIDES */
+.landing.light-theme {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.landing.light-theme .nav {
+  background: rgba(248, 250, 252, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .logo-text,
+.landing.light-theme .nav-link,
+.landing.light-theme .btn-nav-login,
+.landing.light-theme .hero-title,
+.landing.light-theme .title-text,
+.landing.light-theme .features-title,
+.landing.light-theme .stat-val {
+  color: #0f172a;
+}
+.landing.light-theme .hero-desc,
+.landing.light-theme .sub-text,
+.landing.light-theme .features-desc,
+.landing.light-theme .stat-label {
+  color: #475569;
+}
+.landing.light-theme .theme-toggle {
+  background: rgba(0,0,0,0.05) !important;
+  color: #0f172a !important;
+}
+.landing.light-theme .hero-mockup {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .hm-sidebar { background: #f1f5f9; border-right-color: rgba(0,0,0,0.05); }
+.landing.light-theme .card-inner {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
+}
+.landing.light-theme .card-image-wrap {
+  background: #f8fafc;
+}
+.landing.light-theme .mk-premium {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .mk-header { background: #f1f5f9; border-bottom-color: rgba(0,0,0,0.05); }
+.landing.light-theme .mk-glass {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .mk-title,
+.landing.light-theme .mk-text-sm,
+.landing.light-theme .mk-col-title,
+.landing.light-theme .mk-setting-desc {
+  color: #64748b !important;
+}
+.landing.light-theme .mk-bubble.mk-left { color: #0f172a; }
+.landing.light-theme .mk-toast {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.landing.light-theme .mk-setting-title { color: #0f172a; }
+.landing.light-theme .mk-toggle { border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.05); }
+.landing.light-theme .mk-task-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.landing.light-theme .testimonial-card,
+.landing.light-theme .p-card {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.landing.light-theme .p-card .btn-outline {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  color: #0f172a !important;
+}
+.landing.light-theme .pricing-section { background: #f8fafc !important; border-top-color: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .testimonials-section { border-top-color: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .cta-section { background: #f8fafc; }
+.landing.light-theme .cta-inner { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+.landing.light-theme .cta-title { color: #0f172a; }
+.landing.light-theme .cta-sub { color: #475569; }
+.landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05); }
+.landing.light-theme .footer-text { color: #64748b; }
+
 </style>
 
 <style>
@@ -1662,4 +1861,97 @@ const services = [
 .card-inner { width: 100%; height: 100%; max-height: 600px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
 .card-content { width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
 .card-image-wrap { width: 55%; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); }
+
+/* SAAS EXTRAS */
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+.title-text { color: #e4e4e7; }
+.sub-text { color: #a1a1aa; }
+
+/* LIGHT THEME OVERRIDES */
+.landing.light-theme {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.landing.light-theme .nav {
+  background: rgba(248, 250, 252, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .logo-text,
+.landing.light-theme .nav-link,
+.landing.light-theme .btn-nav-login,
+.landing.light-theme .hero-title,
+.landing.light-theme .title-text,
+.landing.light-theme .features-title,
+.landing.light-theme .stat-val {
+  color: #0f172a;
+}
+.landing.light-theme .hero-desc,
+.landing.light-theme .sub-text,
+.landing.light-theme .features-desc,
+.landing.light-theme .stat-label {
+  color: #475569;
+}
+.landing.light-theme .theme-toggle {
+  background: rgba(0,0,0,0.05) !important;
+  color: #0f172a !important;
+}
+.landing.light-theme .hero-mockup {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .hm-sidebar { background: #f1f5f9; border-right-color: rgba(0,0,0,0.05); }
+.landing.light-theme .card-inner {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
+}
+.landing.light-theme .card-image-wrap {
+  background: #f8fafc;
+}
+.landing.light-theme .mk-premium {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .mk-header { background: #f1f5f9; border-bottom-color: rgba(0,0,0,0.05); }
+.landing.light-theme .mk-glass {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+.landing.light-theme .mk-title,
+.landing.light-theme .mk-text-sm,
+.landing.light-theme .mk-col-title,
+.landing.light-theme .mk-setting-desc {
+  color: #64748b !important;
+}
+.landing.light-theme .mk-bubble.mk-left { color: #0f172a; }
+.landing.light-theme .mk-toast {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.landing.light-theme .mk-setting-title { color: #0f172a; }
+.landing.light-theme .mk-toggle { border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.05); }
+.landing.light-theme .mk-task-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.landing.light-theme .testimonial-card,
+.landing.light-theme .p-card {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.landing.light-theme .p-card .btn-outline {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  color: #0f172a !important;
+}
+.landing.light-theme .pricing-section { background: #f8fafc !important; border-top-color: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .testimonials-section { border-top-color: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .cta-section { background: #f8fafc; }
+.landing.light-theme .cta-inner { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+.landing.light-theme .cta-title { color: #0f172a; }
+.landing.light-theme .cta-sub { color: #475569; }
+.landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05); }
+.landing.light-theme .footer-text { color: #64748b; }
+
 </style>
