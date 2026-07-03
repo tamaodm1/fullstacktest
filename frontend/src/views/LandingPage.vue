@@ -1697,6 +1697,7 @@ const services = [
 .title-text { color: #e4e4e7; }
 .sub-text { color: #a1a1aa; }
 
+
 /* LIGHT THEME OVERRIDES */
 .landing.light-theme {
   background: #f8fafc;
@@ -1711,16 +1712,42 @@ const services = [
 .landing.light-theme .btn-nav-login,
 .landing.light-theme .hero-title,
 .landing.light-theme .title-text,
-.landing.light-theme .features-title,
+.landing.light-theme .feat-title,
+.landing.light-theme .step-title,
+.landing.light-theme .section-title,
+.landing.light-theme .svc-name,
+.landing.light-theme .fc-title,
+.landing.light-theme .pm-card-num,
+.landing.light-theme .task-text,
 .landing.light-theme .stat-val {
-  color: #0f172a;
+  color: #0f172a !important;
 }
+
 .landing.light-theme .hero-desc,
 .landing.light-theme .sub-text,
-.landing.light-theme .features-desc,
+.landing.light-theme .feat-desc,
+.landing.light-theme .feat-list li,
+.landing.light-theme .step-desc,
+.landing.light-theme .section-sub,
+.landing.light-theme .svc-port,
+.landing.light-theme .svc-features li,
+.landing.light-theme .fc-sub,
+.landing.light-theme .pm-card-label,
+.landing.light-theme .marquee-item,
 .landing.light-theme .stat-label {
-  color: #475569;
+  color: #475569 !important;
 }
+
+.landing.light-theme .section-badge {
+  background: rgba(0,0,0,0.05) !important;
+  color: #475569 !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+.landing.light-theme .step-num {
+  color: rgba(0,0,0,0.05) !important;
+}
+
 .landing.light-theme .theme-toggle {
   background: rgba(0,0,0,0.05) !important;
   color: #0f172a !important;
@@ -1732,12 +1759,12 @@ const services = [
 }
 .landing.light-theme .hm-sidebar { background: #f1f5f9; border-right-color: rgba(0,0,0,0.05); }
 .landing.light-theme .card-inner {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
 }
 .landing.light-theme .card-image-wrap {
-  background: #f8fafc;
+  background: #f8fafc !important;
 }
 .landing.light-theme .mk-premium {
   background: #ffffff;
@@ -1746,9 +1773,9 @@ const services = [
 }
 .landing.light-theme .mk-header { background: #f1f5f9; border-bottom-color: rgba(0,0,0,0.05); }
 .landing.light-theme .mk-glass {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
 }
 .landing.light-theme .mk-title,
 .landing.light-theme .mk-text-sm,
@@ -1756,16 +1783,18 @@ const services = [
 .landing.light-theme .mk-setting-desc {
   color: #64748b !important;
 }
-.landing.light-theme .mk-bubble.mk-left { color: #0f172a; }
+.landing.light-theme .mk-bubble.mk-left { color: #0f172a !important; }
+.landing.light-theme .mk-bubble.mk-right { color: white !important; }
 .landing.light-theme .mk-toast {
-  background: #ffffff;
-  color: #0f172a;
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
 }
-.landing.light-theme .mk-setting-title { color: #0f172a; }
-.landing.light-theme .mk-toggle { border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.05); }
-.landing.light-theme .mk-task-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.landing.light-theme .mk-setting-title { color: #0f172a !important; }
+.landing.light-theme .mk-toggle { border-color: rgba(0,0,0,0.1) !important; background: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .mk-task-card { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important; }
+
 .landing.light-theme .testimonial-card,
 .landing.light-theme .p-card {
   background: #ffffff !important;
@@ -1777,13 +1806,14 @@ const services = [
 }
 .landing.light-theme .pricing-section { background: #f8fafc !important; border-top-color: rgba(0,0,0,0.05) !important; }
 .landing.light-theme .testimonials-section { border-top-color: rgba(0,0,0,0.05) !important; }
-.landing.light-theme .cta-section { background: #f8fafc; }
-.landing.light-theme .cta-inner { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-.landing.light-theme .cta-title { color: #0f172a; }
-.landing.light-theme .cta-sub { color: #475569; }
-.landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05); }
-.landing.light-theme .footer-text { color: #64748b; }
-
+.landing.light-theme .cta-section { background: #f8fafc !important; }
+.landing.light-theme .cta-inner { background: #ffffff !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.05) !important; }
+.landing.light-theme .cta-title { color: #0f172a !important; }
+.landing.light-theme .cta-sub { color: #475569 !important; }
+.landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .footer-text { color: #64748b !important; }
+.landing.light-theme .stats-section { background: #f8fafc !important; }
+.landing.light-theme .service-card { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; }
 </style>
 
 <style>
@@ -1867,6 +1897,7 @@ const services = [
 .title-text { color: #e4e4e7; }
 .sub-text { color: #a1a1aa; }
 
+
 /* LIGHT THEME OVERRIDES */
 .landing.light-theme {
   background: #f8fafc;
@@ -1881,16 +1912,42 @@ const services = [
 .landing.light-theme .btn-nav-login,
 .landing.light-theme .hero-title,
 .landing.light-theme .title-text,
-.landing.light-theme .features-title,
+.landing.light-theme .feat-title,
+.landing.light-theme .step-title,
+.landing.light-theme .section-title,
+.landing.light-theme .svc-name,
+.landing.light-theme .fc-title,
+.landing.light-theme .pm-card-num,
+.landing.light-theme .task-text,
 .landing.light-theme .stat-val {
-  color: #0f172a;
+  color: #0f172a !important;
 }
+
 .landing.light-theme .hero-desc,
 .landing.light-theme .sub-text,
-.landing.light-theme .features-desc,
+.landing.light-theme .feat-desc,
+.landing.light-theme .feat-list li,
+.landing.light-theme .step-desc,
+.landing.light-theme .section-sub,
+.landing.light-theme .svc-port,
+.landing.light-theme .svc-features li,
+.landing.light-theme .fc-sub,
+.landing.light-theme .pm-card-label,
+.landing.light-theme .marquee-item,
 .landing.light-theme .stat-label {
-  color: #475569;
+  color: #475569 !important;
 }
+
+.landing.light-theme .section-badge {
+  background: rgba(0,0,0,0.05) !important;
+  color: #475569 !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+.landing.light-theme .step-num {
+  color: rgba(0,0,0,0.05) !important;
+}
+
 .landing.light-theme .theme-toggle {
   background: rgba(0,0,0,0.05) !important;
   color: #0f172a !important;
@@ -1902,12 +1959,12 @@ const services = [
 }
 .landing.light-theme .hm-sidebar { background: #f1f5f9; border-right-color: rgba(0,0,0,0.05); }
 .landing.light-theme .card-inner {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
 }
 .landing.light-theme .card-image-wrap {
-  background: #f8fafc;
+  background: #f8fafc !important;
 }
 .landing.light-theme .mk-premium {
   background: #ffffff;
@@ -1916,9 +1973,9 @@ const services = [
 }
 .landing.light-theme .mk-header { background: #f1f5f9; border-bottom-color: rgba(0,0,0,0.05); }
 .landing.light-theme .mk-glass {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
 }
 .landing.light-theme .mk-title,
 .landing.light-theme .mk-text-sm,
@@ -1926,16 +1983,18 @@ const services = [
 .landing.light-theme .mk-setting-desc {
   color: #64748b !important;
 }
-.landing.light-theme .mk-bubble.mk-left { color: #0f172a; }
+.landing.light-theme .mk-bubble.mk-left { color: #0f172a !important; }
+.landing.light-theme .mk-bubble.mk-right { color: white !important; }
 .landing.light-theme .mk-toast {
-  background: #ffffff;
-  color: #0f172a;
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
 }
-.landing.light-theme .mk-setting-title { color: #0f172a; }
-.landing.light-theme .mk-toggle { border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.05); }
-.landing.light-theme .mk-task-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.landing.light-theme .mk-setting-title { color: #0f172a !important; }
+.landing.light-theme .mk-toggle { border-color: rgba(0,0,0,0.1) !important; background: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .mk-task-card { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important; }
+
 .landing.light-theme .testimonial-card,
 .landing.light-theme .p-card {
   background: #ffffff !important;
@@ -1947,11 +2006,12 @@ const services = [
 }
 .landing.light-theme .pricing-section { background: #f8fafc !important; border-top-color: rgba(0,0,0,0.05) !important; }
 .landing.light-theme .testimonials-section { border-top-color: rgba(0,0,0,0.05) !important; }
-.landing.light-theme .cta-section { background: #f8fafc; }
-.landing.light-theme .cta-inner { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-.landing.light-theme .cta-title { color: #0f172a; }
-.landing.light-theme .cta-sub { color: #475569; }
-.landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05); }
-.landing.light-theme .footer-text { color: #64748b; }
-
+.landing.light-theme .cta-section { background: #f8fafc !important; }
+.landing.light-theme .cta-inner { background: #ffffff !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.05) !important; }
+.landing.light-theme .cta-title { color: #0f172a !important; }
+.landing.light-theme .cta-sub { color: #475569 !important; }
+.landing.light-theme .footer { border-top-color: rgba(0,0,0,0.05) !important; }
+.landing.light-theme .footer-text { color: #64748b !important; }
+.landing.light-theme .stats-section { background: #f8fafc !important; }
+.landing.light-theme .service-card { background: #ffffff !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; }
 </style>
