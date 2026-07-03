@@ -1734,19 +1734,40 @@ const services = [
   font-size: 1.05rem; color: #a1a1aa; line-height: 1.7;
   margin-bottom: 2rem; position: relative; z-index: 2;
 }
+/* BEAUTIFUL CENTERED FEAT LIST */
 .feat-list {
-  list-style: none; padding: 0; margin: 0;
-  display: flex; flex-direction: column; gap: 1rem;
+  list-style: none; padding: 0; margin: 30px auto 0;
+  display: flex; flex-direction: column; gap: 12px;
+  align-items: center;
   position: relative; z-index: 2;
+  width: 100%;
 }
 .feat-list li {
-  font-size: 0.95rem; color: #d4d4d8;
-  display: flex; align-items: center; gap: 12px;
-  transition: color 0.2s, transform 0.2s;
+  font-size: 0.95rem; color: #e4e4e7; font-weight: 500;
+  display: flex; align-items: center; justify-content: flex-start; gap: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  max-width: 340px;
 }
-.feat-row:hover .feat-list li { color: #fff; }
-.feat-list li:hover { transform: translateX(6px); color: #818cf8; }
-.feat-list svg { color: #6366f1; flex-shrink: 0; }
+.feat-list li::before {
+  content: '✦';
+  color: #8b5cf6;
+  font-size: 1.2rem;
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+}
+.feat-list li:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+}
+.feat-list svg { color: #8b5cf6; flex-shrink: 0; }
 
 @media (max-width: 900px) {
   .feat-row, .feat-row.row-reverse { flex-direction: column; gap: 3rem; min-height: auto; padding: 4rem 0; }
