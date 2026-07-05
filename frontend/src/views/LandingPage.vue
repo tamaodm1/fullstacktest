@@ -233,28 +233,93 @@
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section id="how" class="how">
-      <div class="how-inner">
-        <div class="section-badge reveal-up">{{ tNav.how }}</div>
-        <h2 class="section-title reveal-up" style="--delay: 0.1s" v-if="currentLang === 'vi'">Bắt đầu chỉ trong<br/><span class="text-gradient">3 bước đơn giản</span></h2>
-        <h2 class="section-title reveal-up" style="--delay: 0.1s" v-else>Get started in<br/><span class="text-gradient">3 simple steps</span></h2>
-        <div class="steps-vertical">
-          <div class="step-v reveal-slide-right" v-for="(step, i) in steps" :key="i" :style="{ '--delay': (i * 0.2 + 0.1) + 's' }">
-            <div class="step-v-icon-wrap">
-              <div class="step-v-num">{{ i + 1 }}</div>
-              <div class="step-v-icon" :style="{ background: step.bg, boxShadow: `0 0 30px ${(step as any).glow || 'rgba(99,102,241,0.3)'}` }">
-                <span v-html="step.icon"></span>
+    
+    <!-- HOW IT WORKS - SCROLL ANIMATION -->
+    <section id="how" class="how-scroll-wrapper">
+      <div class="how-sticky-container">
+        <div class="how-sticky-title">
+          <div class="section-badge light">Hướng dẫn</div>
+          <h2 class="section-title white" v-if="currentLang === 'vi'">Bắt đầu chỉ trong<br/><span class="text-gradient-light">3 bước đơn giản</span></h2>
+          <h2 class="section-title white" v-else>Get started in<br/><span class="text-gradient-light">3 simple steps</span></h2>
+        </div>
+        
+        <div class="how-split">
+          <div class="how-left">
+            <div class="how-step-card" v-for="(step, i) in steps" :key="i">
+              <div class="step-v-icon-wrap">
+                <div class="step-v-num">{{ i + 1 }}</div>
+                <div class="step-v-icon" :style="{ background: step.bg, boxShadow: `0 0 30px ${(step as any).glow || 'rgba(99,102,241,0.3)'}` }">
+                  <span v-html="step.icon"></span>
+                </div>
+              </div>
+              <div class="step-v-content">
+                <h3 class="step-v-title">{{ step.title }}</h3>
+                <p class="step-v-desc">{{ step.desc }}</p>
               </div>
             </div>
-            <div class="step-v-content">
-              <h3 class="step-v-title">{{ step.title }}</h3>
-              <p class="step-v-desc">{{ step.desc }}</p>
+          </div>
+          
+          <div class="how-right">
+            <!-- Step 1 Graphic -->
+            <div class="how-graphic-item hg-1">
+              <div class="mockup-window glass-panel">
+                <div class="mockup-header">
+                  <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                  <div class="mockup-title">Register.vue</div>
+                </div>
+                <div class="mockup-body align-center">
+                  <div class="fake-input">Email address</div>
+                  <div class="fake-input">Password</div>
+                  <div class="fake-btn" style="background: #6366f1;">Create Account</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Step 2 Graphic -->
+            <div class="how-graphic-item hg-2">
+               <div class="mockup-window glass-panel" style="border-color: rgba(245,158,11,0.3);">
+                <div class="mockup-header">
+                  <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                  <div class="mockup-title">ProjectBoard.vue</div>
+                </div>
+                <div class="mockup-body">
+                  <div class="fake-project-card">
+                    <div class="fpc-title">Website Redesign</div>
+                    <div class="fpc-avatars">
+                      <div class="fpc-avatar" style="background:#f59e0b"></div>
+                      <div class="fpc-avatar" style="background:#10b981"></div>
+                    </div>
+                  </div>
+                  <div class="fake-btn" style="background: rgba(255,255,255,0.1); border: 1px dashed #fff;">+ Invite Member</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Step 3 Graphic -->
+            <div class="how-graphic-item hg-3">
+               <div class="mockup-window glass-panel" style="border-color: rgba(16,185,129,0.3);">
+                <div class="mockup-header">
+                  <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                  <div class="mockup-title">Kanban.vue</div>
+                </div>
+                <div class="mockup-body row-layout">
+                  <div class="kanban-col">
+                     <div class="k-title">TODO</div>
+                     <div class="k-card"></div>
+                     <div class="k-card"></div>
+                  </div>
+                  <div class="kanban-col">
+                     <div class="k-title">DOING</div>
+                     <div class="k-card" style="border-left: 3px solid #10b981;"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
 
     <!-- STATS/SERVICES -->
     <section id="stats" class="stats-section">
@@ -741,6 +806,75 @@ function onScroll() {
     })
   }
 }
+
+
+  // 3. How It Works - 3 Step Scroll Logic
+  const howWrapper = document.querySelector('.how-scroll-wrapper')
+  if (howWrapper && window.innerWidth > 768) {
+    const rect = howWrapper.getBoundingClientRect()
+    const height = rect.height - window.innerHeight
+    let progress = 0
+    if (rect.top <= 0) {
+      progress = -rect.top / height
+    }
+    progress = Math.max(0, Math.min(1, progress))
+    
+    const stepCards = document.querySelectorAll('.how-step-card')
+    const graphics = document.querySelectorAll('.how-graphic-item')
+    
+    stepCards.forEach((card, i) => {
+       const target = i * 0.4 // 0, 0.4, 0.8
+       const dist = progress - target
+       
+       let opacity = 1 - Math.min(1, Math.abs(dist) * 3.5)
+       let translateY = dist * -150 
+       let scale = 1 - Math.min(0.2, Math.abs(dist) * 0.5)
+       let blur = Math.min(10, Math.abs(dist) * 20)
+       
+       const el = card as HTMLElement
+       el.style.opacity = opacity.toString()
+       el.style.transform = `translateY(${translateY}px) scale(${scale})`
+       el.style.filter = `blur(${blur}px)`
+    })
+    
+    graphics.forEach((g, i) => {
+       const target = i * 0.4
+       const dist = progress - target
+       
+       let opacity = 1 - Math.min(1, Math.abs(dist) * 4)
+       
+       let scale = 1;
+       let rotateY = 0;
+       let rotateX = 0;
+       let translateY = 0;
+       let translateX = 0;
+       
+       if (i === 0) {
+          // Slide from Right & Zoom
+          translateX = dist * -300
+          scale = 1 - Math.abs(dist)
+       } else if (i === 1) {
+          // Flip from bottom
+          translateY = dist * -200
+          rotateX = dist * -90
+       } else {
+          // 3D Spin
+          rotateY = dist * 180
+          scale = 1 + Math.abs(dist)
+       }
+       
+       const el = g as HTMLElement
+       el.style.opacity = opacity.toString()
+       el.style.transform = `translateY(${translateY}px) translateX(${translateX}px) scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+    })
+  } else if (howWrapper && window.innerWidth <= 768) {
+     // Mobile fallback: just show all or show first
+     const stepCards = document.querySelectorAll('.how-step-card')
+     const graphics = document.querySelectorAll('.how-graphic-item')
+     stepCards.forEach(c => c.classList.add('active-mobile'))
+     graphics.forEach(g => g.classList.add('active-mobile'))
+  }
+
 
 onMounted(() => {
   typeLoop()
@@ -2213,6 +2347,124 @@ const services = [
   max-width: 900px;
 }
 
+
+/* HOW IT WORKS SCROLL ANIMATION */
+.how-scroll-wrapper {
+  height: 400vh; /* 3 steps = 300vh + 100vh base */
+  position: relative;
+  background: #0f172a;
+}
+.how-sticky-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10vh;
+}
+.how-sticky-title {
+  text-align: center;
+  margin-bottom: 5vh;
+}
+.how-split {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+.how-left {
+  flex: 1;
+  position: relative;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
+}
+.how-step-card {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  right: 40px;
+  margin-top: -80px; /* half height approx */
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  will-change: transform, opacity, filter;
+  opacity: 0;
+}
+.how-step-card .step-v-title { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+.how-step-card .step-v-desc { color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+.how-right {
+  flex: 1;
+  position: relative;
+  height: 60vh;
+  perspective: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.how-graphic-item {
+  position: absolute;
+  width: 80%;
+  max-width: 400px;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+.glass-panel {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+.mockup-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.mockup-title { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 10px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.red { background: #ef4444; } .dot.yellow { background: #f59e0b; } .dot.green { background: #10b981; }
+.mockup-body { padding: 30px; display: flex; flex-direction: column; gap: 15px; }
+.mockup-body.align-center { align-items: center; }
+.mockup-body.row-layout { flex-direction: row; align-items: stretch; gap: 15px; }
+
+.fake-input { width: 100%; height: 40px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); display: flex; align-items: center; padding: 0 15px; font-size: 14px; }
+.fake-btn { width: 100%; height: 40px; border-radius: 8px; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; cursor: pointer; }
+.fake-project-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+.fpc-title { color: #fff; font-weight: 600; }
+.fpc-avatars { display: flex; gap: 5px; }
+.fpc-avatar { width: 24px; height: 24px; border-radius: 50%; }
+
+.kanban-col { flex: 1; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+.k-title { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: bold; }
+.k-card { height: 60px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+
+@media (max-width: 768px) {
+  .how-split { flex-direction: column; }
+  .how-left, .how-right { height: 40vh; padding: 0 20px; width: 100%; }
+  .how-step-card { position: static; margin-top: 0; opacity: 1; transform: none !important; filter: none !important; display: none; }
+  .how-step-card.active-mobile { display: flex; } /* fallback for mobile */
+  .how-scroll-wrapper { height: auto; padding-bottom: 50px; }
+  .how-sticky-container { position: static; height: auto; overflow: visible; }
+  .how-graphic-item { position: relative; opacity: 1; transform: none !important; width: 100%; display: none; }
+  .how-graphic-item.active-mobile { display: block; }
+}
+
 /* APPLE-STYLE HORIZONTAL SCROLL */
 .horizontal-scroll-section {
   height: 400vh; /* 4 panels */
@@ -3300,6 +3552,124 @@ html, body {
 .svc-pane-content {
   will-change: transform, opacity, filter;
   max-width: 900px;
+}
+
+
+/* HOW IT WORKS SCROLL ANIMATION */
+.how-scroll-wrapper {
+  height: 400vh; /* 3 steps = 300vh + 100vh base */
+  position: relative;
+  background: #0f172a;
+}
+.how-sticky-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10vh;
+}
+.how-sticky-title {
+  text-align: center;
+  margin-bottom: 5vh;
+}
+.how-split {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+.how-left {
+  flex: 1;
+  position: relative;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
+}
+.how-step-card {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  right: 40px;
+  margin-top: -80px; /* half height approx */
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  will-change: transform, opacity, filter;
+  opacity: 0;
+}
+.how-step-card .step-v-title { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+.how-step-card .step-v-desc { color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+.how-right {
+  flex: 1;
+  position: relative;
+  height: 60vh;
+  perspective: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.how-graphic-item {
+  position: absolute;
+  width: 80%;
+  max-width: 400px;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+.glass-panel {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+.mockup-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.mockup-title { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 10px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.red { background: #ef4444; } .dot.yellow { background: #f59e0b; } .dot.green { background: #10b981; }
+.mockup-body { padding: 30px; display: flex; flex-direction: column; gap: 15px; }
+.mockup-body.align-center { align-items: center; }
+.mockup-body.row-layout { flex-direction: row; align-items: stretch; gap: 15px; }
+
+.fake-input { width: 100%; height: 40px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); display: flex; align-items: center; padding: 0 15px; font-size: 14px; }
+.fake-btn { width: 100%; height: 40px; border-radius: 8px; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; cursor: pointer; }
+.fake-project-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+.fpc-title { color: #fff; font-weight: 600; }
+.fpc-avatars { display: flex; gap: 5px; }
+.fpc-avatar { width: 24px; height: 24px; border-radius: 50%; }
+
+.kanban-col { flex: 1; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+.k-title { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: bold; }
+.k-card { height: 60px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+
+@media (max-width: 768px) {
+  .how-split { flex-direction: column; }
+  .how-left, .how-right { height: 40vh; padding: 0 20px; width: 100%; }
+  .how-step-card { position: static; margin-top: 0; opacity: 1; transform: none !important; filter: none !important; display: none; }
+  .how-step-card.active-mobile { display: flex; } /* fallback for mobile */
+  .how-scroll-wrapper { height: auto; padding-bottom: 50px; }
+  .how-sticky-container { position: static; height: auto; overflow: visible; }
+  .how-graphic-item { position: relative; opacity: 1; transform: none !important; width: 100%; display: none; }
+  .how-graphic-item.active-mobile { display: block; }
 }
 
 /* APPLE-STYLE HORIZONTAL SCROLL */
