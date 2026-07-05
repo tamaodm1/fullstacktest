@@ -215,17 +215,24 @@
       <div class="stack-container">
         <div v-for="(feat, i) in features" :key="i" class="stack-card" :style="{ top: `calc(15vh + ${i * 40}px)` }" :data-index="i">
           <div class="card-inner" :style="{ background: feat.bg, boxShadow: `0 -10px 40px ${feat.glow}` }">
-            <div class="card-content">
-              <div class="feat-icon" :style="{ background: feat.glow }">
-                <span v-html="feat.icon"></span>
+          <div class="card-content">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px; width: 100%;">
+              <div style="width: 56px; height: 56px; background: rgba(0,0,0,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.05);" v-html="feat.icon"></div>
+              <div style="text-align: left;">
+                <h3 style="margin: 0; font-size: 1.6rem; color: #fff; font-weight: 600;">{{ feat.title }}</h3>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 4px;">{{ feat.items.length }} tính năng chính</div>
               </div>
-              <h3 class="feat-title">{{ feat.title }}</h3>
-              <p class="feat-desc">{{ feat.desc }}</p>
-              <ul class="feat-list">
-                <li v-for="item in feat.items" :key="item">{{ item }}</li>
-              </ul>
             </div>
-            <div class="card-image-wrap">
+            <p style="text-align: left; color: #a1a1aa; line-height: 1.6; margin-bottom: 24px; width: 100%; font-size: 1rem;">{{ feat.desc }}</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%;">
+              <div v-for="(item, idx) in feat.items" :key="idx" style="background: #18181b; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;">
+                <div style="color: #60a5fa;" v-html="item.icon || `<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'></polyline></svg>`"></div>
+                <div style="font-weight: 600; font-size: 0.95rem; color: #f4f4f5; text-align: left; line-height: 1.4;">{{ item.text || item }}</div>
+              </div>
+            </div>
+          </div>
+
+            <div class=\"card-image-wrap\">
               <div class="feat-preview-html" v-html="feat.mockupHtml" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
             </div>
           </div>
@@ -982,7 +989,7 @@ const featuresVi = [
     bg: '#09090b',
     glow: 'rgba(99,102,241,0.5)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
-    items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
+    items: [{ text: 'Màu sắc và mô tả', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#60a5fa' stroke-width='2'><circle cx='13.5' cy='6.5' r='.5'/><circle cx='17.5' cy='10.5' r='.5'/><circle cx='8.5' cy='7.5' r='.5'/><circle cx='6.5' cy='12.5' r='.5'/><path d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z'/></svg>` }, { text: 'Thành viên dự án', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#8b5cf6' stroke-width='2'><path d='M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 00-3-3.87'/><path d='M16 3.13a4 4 0 010 7.75'/></svg>` }, { text: 'Tiến độ realtime', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#10b981' stroke-width='2'><polyline points='22 12 18 12 15 21 9 3 6 12 2 12'/></svg>` }, { text: 'Lọc và tìm kiếm', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#3b82f6' stroke-width='2'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>` }],
     mockupHtml: `
 
       <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 0 !important; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
@@ -1140,7 +1147,7 @@ const featuresVi = [
     bg: '#09090b',
     glow: 'rgba(236,72,153,0.5)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`,
-    items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
+    items: [{ text: 'Xác thực JWT', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#60a5fa' stroke-width='2'><path d='M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4'/></svg>` }, { text: 'Role-Based Access', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#8b5cf6' stroke-width='2'><rect x='3' y='11' width='18' height='11' rx='2' ry='2'/><path d='M7 11V7a5 5 0 0110 0v4'/></svg>` }, { text: 'Admin / Member', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#10b981' stroke-width='2'><path d='M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 00-3-3.87'/><path d='M16 3.13a4 4 0 010 7.75'/></svg>` }, { text: 'Xác minh 2FA', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#f59e0b' stroke-width='2'><rect x='5' y='2' width='14' height='20' rx='2' ry='2'/><line x1='12' y1='18' x2='12.01' y2='18'/></svg>` }],
     mockupHtml: `
 
       <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: sans-serif;">
@@ -1199,7 +1206,7 @@ const featuresEn = [
     bg: '#09090b',
     glow: 'rgba(99,102,241,0.5)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>`,
-    items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
+    items: [{ text: 'Màu sắc và mô tả', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#60a5fa' stroke-width='2'><circle cx='13.5' cy='6.5' r='.5'/><circle cx='17.5' cy='10.5' r='.5'/><circle cx='8.5' cy='7.5' r='.5'/><circle cx='6.5' cy='12.5' r='.5'/><path d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z'/></svg>` }, { text: 'Thành viên dự án', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#8b5cf6' stroke-width='2'><path d='M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 00-3-3.87'/><path d='M16 3.13a4 4 0 010 7.75'/></svg>` }, { text: 'Tiến độ realtime', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#10b981' stroke-width='2'><polyline points='22 12 18 12 15 21 9 3 6 12 2 12'/></svg>` }, { text: 'Lọc và tìm kiếm', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#3b82f6' stroke-width='2'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>` }],
     mockupHtml: `
 
       <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 0 !important; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
@@ -1357,7 +1364,7 @@ const featuresEn = [
     bg: '#09090b',
     glow: 'rgba(236,72,153,0.5)',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`,
-    items: ['Xác thực JWT an toàn', 'Quản lý Role-Based Access', 'Phân quyền Admin / Member', 'Bật/tắt 2FA'],
+    items: [{ text: 'Xác thực JWT', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#60a5fa' stroke-width='2'><path d='M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4'/></svg>` }, { text: 'Role-Based Access', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#8b5cf6' stroke-width='2'><rect x='3' y='11' width='18' height='11' rx='2' ry='2'/><path d='M7 11V7a5 5 0 0110 0v4'/></svg>` }, { text: 'Admin / Member', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#10b981' stroke-width='2'><path d='M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 00-3-3.87'/><path d='M16 3.13a4 4 0 010 7.75'/></svg>` }, { text: 'Xác minh 2FA', icon: `<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#f59e0b' stroke-width='2'><rect x='5' y='2' width='14' height='20' rx='2' ry='2'/><line x1='12' y1='18' x2='12.01' y2='18'/></svg>` }],
     mockupHtml: `
 
       <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: sans-serif;">
