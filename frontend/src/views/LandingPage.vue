@@ -685,7 +685,6 @@ function onScroll() { isScrolled.value = window.scrollY > 50
           inner.style.filter = `blur(0px)`
         }
       }
-      }
     })
   }
  }
