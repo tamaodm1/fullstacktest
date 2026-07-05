@@ -805,7 +805,8 @@ function onScroll() {
       }
     })
   }
-}
+
+
 
 
   // 3. How It Works - 3 Step Scroll Logic
@@ -874,8 +875,7 @@ function onScroll() {
      stepCards.forEach(c => c.classList.add('active-mobile'))
      graphics.forEach(g => g.classList.add('active-mobile'))
   }
-
-
+}
 onMounted(() => {
   typeLoop()
   setTimeout(() => animateCounter('services', 4, 1200), 500)
