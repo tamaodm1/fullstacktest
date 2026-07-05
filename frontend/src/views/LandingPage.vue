@@ -261,97 +261,121 @@
       <div class="stats-bg">
         <div class="stats-orb"></div>
       </div>
-      <div class="stats-inner" style="padding-bottom: 0;">
-        <div class="horizontal-scroll-section">
-          <div class="sticky-wrapper">
-            <div class="horizontal-header">
-              <div class="section-badge light">Kiến trúc hệ thống</div>
-              <h2 class="section-title white">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
-            </div>
-            <div class="horizontal-track">
-              <div v-for="(svc, i) in services" :key="svc.name" class="horizontal-panel" :style="{ '--theme-color': svc.color }">
-                <div class="svc-pane-content" style="width: 100%; max-width: 1200px;">
-                  <div class="svc-pane-text">
-                    <div class="svc-pane-icon" v-html="svc.icon"></div>
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                      <h3 class="svc-pane-title" style="margin-bottom: 0;">{{ svc.name }}</h3>
-                      <div class="svc-port-badge">Port {{ svc.port }}</div>
+      <div class="ms-section">
+        <div class="ms-header">
+          <div class="section-badge light reveal-up">Kiến trúc hệ thống</div>
+          <h2 class="section-title white reveal-up" style="--delay: 0.1s">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
+        </div>
+        
+        <div class="ms-horizontal-container">
+          <div v-for="(svc, i) in services" :key="svc.name" class="ms-panel" :style="{ '--theme-color': svc.color }">
+            <div class="svc-pane-content">
+              <div class="svc-pane-text">
+                <div class="svc-pane-icon" v-html="svc.icon"></div>
+                <div class="svc-title-row">
+                  <h3 class="svc-pane-title">{{ svc.name }}</h3>
+                  <div class="svc-port-badge">Port {{ svc.port }}</div>
+                </div>
+                <ul class="svc-pane-features">
+                  <li v-for="feat in svc.features" :key="feat">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    {{ feat }}
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="svc-pane-visual">
+                <!-- PREMIUM CSS MOCKUPS -->
+                <div class="svc-mockup-area">
+                  
+                  <!-- Tab 0: API Gateway -->
+                  <div v-if="i === 0" class="ms-mockup-api">
+                    <div class="ms-client-box">Client App</div>
+                    <div class="ms-api-beams">
+                      <div class="ms-beam"></div>
+                      <div class="ms-beam delay-1"></div>
+                      <div class="ms-beam delay-2"></div>
                     </div>
-                    <ul class="svc-pane-features">
-                      <li v-for="feat in svc.features" :key="feat">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        {{ feat }}
-                      </li>
-                    </ul>
+                    <div class="ms-gateway-box">
+                      <div class="ms-shield-icon">🛡️</div>
+                      <span>Ocelot API Gateway</span>
+                      <div class="ms-jwt-badge">JWT Verified</div>
+                    </div>
+                    <div class="ms-microservices-grid">
+                      <div class="ms-micro-box" style="--c: #6366f1">Project</div>
+                      <div class="ms-micro-box" style="--c: #ef4444">Task</div>
+                      <div class="ms-micro-box" style="--c: #10b981">Notify</div>
+                    </div>
                   </div>
                   
-                  <div class="svc-pane-visual">
-                    <div class="svc-mockup-area">
-                      <!-- Tab 0: API Gateway -->
-                      <div v-if="i === 0" class="mockup-api">
-                        <div class="api-node client">Client</div>
-                        <div class="api-line line-1"><div class="api-dot"></div></div>
-                        <div class="api-node gateway">API Gateway</div>
-                        <div class="api-lines-out">
-                          <div class="api-line-out line-out-1"><div class="api-dot"></div></div>
-                          <div class="api-line-out line-out-2"><div class="api-dot" style="animation-delay: 0.5s"></div></div>
-                          <div class="api-line-out line-out-3"><div class="api-dot" style="animation-delay: 1s"></div></div>
-                        </div>
-                        <div class="api-services">
-                          <div class="api-node micro proj">Project</div>
-                          <div class="api-node micro task">Task</div>
-                          <div class="api-node micro noti">Notify</div>
-                        </div>
+                  <!-- Tab 1: Project Service -->
+                  <div v-if="i === 1" class="ms-mockup-project">
+                    <div class="ms-window">
+                      <div class="ms-win-header">
+                        <div class="ms-win-dots"><span/><span/><span/></div>
+                        <div class="ms-win-title">Projects Dashboard</div>
                       </div>
-                      
-                      <!-- Tab 1: Project Service -->
-                      <div v-if="i === 1" class="mockup-project">
-                        <div class="pj-header">Project Dashboard</div>
-                        <div class="pj-list">
-                          <div class="pj-item">
-                            <div class="pj-info"><div class="pj-avatar" style="background:#6366f1"></div><div class="pj-name">Website Redesign</div></div>
-                            <div class="pj-progress"><div class="pj-fill" style="width: 75%; background:#f59e0b"></div></div>
+                      <div class="ms-win-body">
+                        <div class="ms-proj-card">
+                          <div class="ms-proj-top">
+                            <div class="ms-proj-icon" style="background:#6366f1">W</div>
+                            <div class="ms-proj-name">Website Redesign</div>
+                            <div class="ms-proj-badge">Active</div>
                           </div>
-                          <div class="pj-item" style="animation-delay: 0.2s">
-                            <div class="pj-info"><div class="pj-avatar" style="background:#ec4899"></div><div class="pj-name">Mobile App</div></div>
-                            <div class="pj-progress"><div class="pj-fill" style="width: 40%; background:#f59e0b"></div></div>
+                          <div class="ms-proj-bar"><div class="ms-proj-fill" style="width: 80%; background:#6366f1"></div></div>
+                        </div>
+                        <div class="ms-proj-card delay-1">
+                          <div class="ms-proj-top">
+                            <div class="ms-proj-icon" style="background:#ec4899">M</div>
+                            <div class="ms-proj-name">Mobile App v2.0</div>
+                            <div class="ms-proj-badge" style="color:#ec4899; background:rgba(236,72,153,0.1)">Planning</div>
                           </div>
-                        </div>
-                      </div>
-                      
-                      <!-- Tab 2: Task Service -->
-                      <div v-if="i === 2" class="mockup-task">
-                        <div class="kb-col">
-                          <div class="kb-title">TODO</div>
-                          <div class="kb-card"></div>
-                          <div class="kb-card" style="opacity:0.5; height: 30px;"></div>
-                        </div>
-                        <div class="kb-col">
-                          <div class="kb-title">DOING</div>
-                          <div class="kb-card kb-drag"></div>
-                        </div>
-                        <div class="kb-col">
-                          <div class="kb-title">DONE</div>
-                          <div class="kb-card" style="opacity:0.3"></div>
-                        </div>
-                      </div>
-                      
-                      <!-- Tab 3: Notify Service -->
-                      <div v-if="i === 3" class="mockup-notify">
-                        <div class="nf-bell">
-                          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--theme-color)" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-                          <div class="nf-badge">3</div>
-                          <div class="nf-ring"></div>
-                        </div>
-                        <div class="nf-toast">
-                          <div class="nf-toast-icon">✓</div>
-                          <div class="nf-toast-text">Task completed successfully</div>
+                          <div class="ms-proj-bar"><div class="ms-proj-fill" style="width: 30%; background:#ec4899"></div></div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  
+                  <!-- Tab 2: Task Service -->
+                  <div v-if="i === 2" class="ms-mockup-task">
+                    <div class="ms-kanban">
+                      <div class="ms-kb-col">
+                        <div class="ms-kb-title">TODO <span>2</span></div>
+                        <div class="ms-kb-card kb-anim-1"></div>
+                        <div class="ms-kb-card kb-anim-2"></div>
+                      </div>
+                      <div class="ms-kb-col">
+                        <div class="ms-kb-title">DOING <span>1</span></div>
+                        <div class="ms-kb-card kb-anim-drag"></div>
+                      </div>
+                      <div class="ms-kb-col">
+                        <div class="ms-kb-title">DONE <span>3</span></div>
+                        <div class="ms-kb-card done"></div>
+                        <div class="ms-kb-card done"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Tab 3: Notify Service -->
+                  <div v-if="i === 3" class="ms-mockup-notify">
+                    <div class="ms-bell-container">
+                      <div class="ms-bell-ring"></div>
+                      <div class="ms-bell-ring delay-1"></div>
+                      <svg class="ms-bell-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                      <div class="ms-bell-badge">3</div>
+                    </div>
+                    <div class="ms-toast-popup">
+                      <div class="ms-toast-icon">✓</div>
+                      <div class="ms-toast-text">
+                        <strong>Trường Đỗ</strong> đã giao việc cho bạn.
+                        <span>Vài giây trước</span>
+                      </div>
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
+              
             </div>
           </div>
         </div>
@@ -547,7 +571,39 @@ function animateCounter(key: 'services' | 'tasks', target: number, duration = 15
 // ── PARTICLES ──
 const particleCanvas = ref<HTMLCanvasElement | null>(null)
 let animFrame = 0
-function initParticles() {
+function initParticles()
+
+  // Horizontal Scroll Snap (1 lướt 1 cái)
+  const msContainer = document.querySelector('.ms-horizontal-container');
+  if (msContainer) {
+    let isScrolling = false;
+    msContainer.addEventListener('wheel', (e) => {
+      const panels = msContainer.querySelectorAll('.ms-panel');
+      if (panels.length === 0) return;
+      
+      // Calculate current panel index based on scrollLeft
+      const panelWidth = panels[0].clientWidth;
+      let currentIndex = Math.round(msContainer.scrollLeft / panelWidth);
+      
+      if (e.deltaY > 0 && currentIndex < panels.length - 1) {
+        currentIndex++;
+      } else if (e.deltaY < 0 && currentIndex > 0) {
+        currentIndex--;
+      } else {
+        // At the boundaries, let the page scroll vertically
+        return; 
+      }
+      
+      e.preventDefault(); // Stop vertical scroll
+      if (isScrolling) return;
+      
+      isScrolling = true;
+      panels[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      
+      setTimeout(() => { isScrolling = false; }, 600); // Cooldown for 1 scroll
+    }, { passive: false });
+  }
+ {
   if (!particleCanvas.value) return
   const canvas: HTMLCanvasElement = particleCanvas.value
   const ctx = canvas.getContext('2d')!
@@ -624,21 +680,7 @@ function onScroll() { isScrolled.value = window.scrollY > 50
 
   // Sticky Stacking Cards Scale Logic
   
-  // Horizontal Scroll Logic
-  const hSection = document.querySelector('.horizontal-scroll-section')
-  const hTrack = document.querySelector('.horizontal-track')
-  if (hSection && hTrack) {
-    const rect = hSection.getBoundingClientRect()
-    const height = rect.height - window.innerHeight
-    let progress = 0
-    if (rect.top <= 0) {
-      progress = -rect.top / height
-    }
-    progress = Math.max(0, Math.min(1, progress))
-    // 4 panels = 300% translation to see the last one.
-    // 300 / 400 width = 75% translation.
-    hTrack.style.transform = `translateX(-${progress * 75}%)`
-  }
+  
 
   const stackCards = document.querySelectorAll('.stack-card')
   if (stackCards.length > 0) {
@@ -653,21 +695,28 @@ function onScroll() { isScrolled.value = window.scrollY > 50
         let scale = 1 - (distance * 0.0004);
         scale = Math.max(0.85, scale);
         let rotateX = Math.min(10, distance * 0.015);
-        let yOffset = distance * -0.05;
+        let yOffset = distance * -0.15; // Shift Up significantly
+        let translateX = distance * -0.3; // Shift Left significantly to create Top-Left diagonal stack
+        
         let opacity = Math.max(0.3, 1 - (distance * 0.0015));
+        let blur = Math.min(15, distance * 0.025); // Stronger Blur effect
         
         const inner = card.querySelector('.card-inner') as HTMLElement;
         if (inner) {
-          inner.style.transform = `scale(${scale}) perspective(1200px) rotateX(${rotateX}deg) translateY(${yOffset}px)`;
+          inner.style.transform = `scale(${scale}) perspective(1200px) rotateX(${rotateX}deg) translate(${translateX}px, ${yOffset}px)`;
           inner.style.opacity = opacity.toString();
+          inner.style.filter = `blur(${blur}px)`;
           inner.style.transformOrigin = 'top center';
-          inner.style.transition = 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.1s ease-out';
+          // Smoother transition for blur and transform
+          inner.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease, opacity 0.4s ease';
         }
       } else {
         const inner = card.querySelector('.card-inner') as HTMLElement
         if (inner) {
           inner.style.transform = `scale(1)`
+          inner.style.filter = `blur(0px)`
         }
+      }
       }
     })
   }
@@ -678,6 +727,38 @@ onMounted(() => {
   setTimeout(() => animateCounter('services', 4, 1200), 500)
   setTimeout(() => animateCounter('tasks', 20, 1500), 700)
   initParticles()
+
+  // Horizontal Scroll Snap (1 lướt 1 cái)
+  const msContainer = document.querySelector('.ms-horizontal-container');
+  if (msContainer) {
+    let isScrolling = false;
+    msContainer.addEventListener('wheel', (e) => {
+      const panels = msContainer.querySelectorAll('.ms-panel');
+      if (panels.length === 0) return;
+      
+      // Calculate current panel index based on scrollLeft
+      const panelWidth = panels[0].clientWidth;
+      let currentIndex = Math.round(msContainer.scrollLeft / panelWidth);
+      
+      if (e.deltaY > 0 && currentIndex < panels.length - 1) {
+        currentIndex++;
+      } else if (e.deltaY < 0 && currentIndex > 0) {
+        currentIndex--;
+      } else {
+        // At the boundaries, let the page scroll vertically
+        return; 
+      }
+      
+      e.preventDefault(); // Stop vertical scroll
+      if (isScrolling) return;
+      
+      isScrolling = true;
+      panels[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      
+      setTimeout(() => { isScrolling = false; }, 600); // Cooldown for 1 scroll
+    }, { passive: false });
+  }
+
   setTimeout(initScrollReveal, 100)
   window.addEventListener('scroll', onScroll)
   window.addEventListener('resize', () => {
@@ -2108,6 +2189,147 @@ const services = [
 
 /* END HORIZONTAL SCROLL SECTION */
 
+
+/* TRANSITION FOR STACKING CARDS */
+.card-inner {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+/* MICROSERVICES HORIZONTAL SNAP SCROLL */
+.ms-section {
+  width: 100%;
+  padding: 100px 0;
+  position: relative;
+  z-index: 10;
+}
+.ms-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.ms-horizontal-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 40px;
+  padding: 0 5vw 50px 5vw;
+  scrollbar-width: none; /* Firefox */
+}
+.ms-horizontal-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+.ms-panel {
+  flex: 0 0 90vw;
+  max-width: 1100px;
+  scroll-snap-align: center;
+  display: flex;
+  justify-content: center;
+}
+.svc-pane-content {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 40px;
+  padding: 50px;
+  display: flex;
+  gap: 50px;
+  width: 100%;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.svc-pane-content::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+  background: var(--theme-color);
+  box-shadow: 0 0 20px var(--theme-color);
+}
+.svc-title-row {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+}
+.svc-pane-title { margin: 0; font-size: 2.2rem; font-weight: 800; color: #fff; }
+.svc-port-badge {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  padding: 4px 12px; border-radius: 100px; font-size: 0.85rem; font-family: monospace; color: var(--theme-color);
+}
+
+/* PREMIUM MOCKUPS */
+.svc-mockup-area {
+  background: #09090b;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 30px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* API Mockup */
+.ms-mockup-api { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.ms-client-box { background: #1e293b; padding: 12px 24px; border-radius: 12px; border: 1px solid #334155; font-weight: bold; }
+.ms-api-beams { display: flex; gap: 40px; height: 60px; position: relative; width: 200px; justify-content: center;}
+.ms-beam { width: 2px; height: 100%; background: linear-gradient(to bottom, transparent, var(--theme-color), transparent); animation: beamSlide 1.5s infinite linear; opacity: 0; }
+.ms-beam.delay-1 { animation-delay: 0.5s; }
+.ms-beam.delay-2 { animation-delay: 1s; }
+@keyframes beamSlide { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(100%); opacity: 0; } }
+.ms-gateway-box { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border: 1px solid rgba(99,102,241,0.5); padding: 20px 40px; border-radius: 16px; text-align: center; position: relative; box-shadow: 0 0 30px rgba(99,102,241,0.2); }
+.ms-shield-icon { font-size: 24px; margin-bottom: 8px; }
+.ms-jwt-badge { position: absolute; top: -12px; right: -20px; background: #10b981; color: #000; font-size: 0.7rem; padding: 4px 8px; border-radius: 100px; font-weight: bold; animation: pulseBadge 2s infinite; }
+@keyframes pulseBadge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 15px #10b981; } }
+.ms-microservices-grid { display: flex; gap: 20px; margin-top: 20px; }
+.ms-micro-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-top: 3px solid var(--c); padding: 15px 20px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; color: #cbd5e1; }
+
+/* Project Mockup */
+.ms-mockup-project { width: 100%; }
+.ms-window { background: #0f172a; border-radius: 16px; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+.ms-win-header { background: #1e293b; padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
+.ms-win-dots span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ef4444; margin-right: 6px; }
+.ms-win-dots span:nth-child(2) { background: #f59e0b; }
+.ms-win-dots span:nth-child(3) { background: #10b981; margin: 0; }
+.ms-win-title { font-size: 0.85rem; color: #94a3b8; font-family: monospace; }
+.ms-win-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.ms-proj-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; transition: 0.3s; }
+.ms-proj-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.1); }
+.ms-proj-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.ms-proj-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff; font-size: 0.9rem; }
+.ms-proj-name { flex: 1; font-weight: 600; color: #e2e8f0; }
+.ms-proj-badge { background: rgba(99,102,241,0.1); color: #818cf8; font-size: 0.75rem; padding: 4px 10px; border-radius: 100px; font-weight: 600; }
+.ms-proj-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 100px; overflow: hidden; }
+.ms-proj-fill { height: 100%; border-radius: 100px; animation: loadBar 1.5s ease-out forwards; transform-origin: left; }
+@keyframes loadBar { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+
+/* Task Mockup */
+.ms-mockup-task { width: 100%; height: 100%; }
+.ms-kanban { display: flex; gap: 16px; height: 100%; }
+.ms-kb-col { flex: 1; background: rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; border: 1px dashed rgba(255,255,255,0.05); }
+.ms-kb-title { font-size: 0.85rem; font-weight: 700; color: #94a3b8; display: flex; justify-content: space-between; margin-bottom: 10px; }
+.ms-kb-title span { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 100px; }
+.ms-kb-card { background: #1e293b; height: 60px; border-radius: 8px; border: 1px solid #334155; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.ms-kb-card.done { opacity: 0.5; height: 40px; }
+.kb-anim-drag { animation: kbDrag 4s infinite cubic-bezier(0.25, 1, 0.5, 1); position: relative; z-index: 10; border-color: #ef4444; box-shadow: 0 10px 20px rgba(239,68,68,0.2); }
+@keyframes kbDrag { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-150px, -20px) rotate(-5deg); } }
+
+/* Notify Mockup */
+.ms-mockup-notify { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+.ms-bell-container { position: relative; }
+.ms-bell-icon { animation: bellShake 3s infinite; transform-origin: top center; }
+.ms-bell-badge { position: absolute; top: 0; right: 0; background: #ef4444; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border: 2px solid #09090b; }
+.ms-bell-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; border: 2px solid #10b981; animation: ringPulse 2s infinite cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+.ms-bell-ring.delay-1 { animation-delay: 1s; }
+@keyframes bellShake { 0%, 10%, 100% { transform: rotate(0); } 2% { transform: rotate(15deg); } 4% { transform: rotate(-15deg); } 6% { transform: rotate(10deg); } 8% { transform: rotate(-10deg); } }
+@keyframes ringPulse { 0% { width: 64px; height: 64px; opacity: 1; } 100% { width: 150px; height: 150px; opacity: 0; } }
+.ms-toast-popup { background: #1e293b; border-left: 4px solid #10b981; padding: 16px 20px; border-radius: 8px; display: flex; align-items: center; gap: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: toastSlide 4s infinite cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(20px); }
+.ms-toast-icon { width: 30px; height: 30px; background: rgba(16,185,129,0.2); color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.ms-toast-text { color: #e2e8f0; font-size: 0.95rem; }
+.ms-toast-text span { display: block; font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+@keyframes toastSlide { 0%, 100% { opacity: 0; transform: translateY(20px); } 15%, 85% { opacity: 1; transform: translateY(0); } }
+
+/* REMOVE OLD BUGGY CSS IF IT EXISTS */
+.horizontal-scroll-section { display: none !important; } /* We use ms-section now */
+
 /* SAAS EXTRAS */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 .title-text { color: #e4e4e7; }
@@ -2983,6 +3205,147 @@ html, body {
 }
 
 /* END HORIZONTAL SCROLL SECTION */
+
+
+/* TRANSITION FOR STACKING CARDS */
+.card-inner {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+/* MICROSERVICES HORIZONTAL SNAP SCROLL */
+.ms-section {
+  width: 100%;
+  padding: 100px 0;
+  position: relative;
+  z-index: 10;
+}
+.ms-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.ms-horizontal-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 40px;
+  padding: 0 5vw 50px 5vw;
+  scrollbar-width: none; /* Firefox */
+}
+.ms-horizontal-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+.ms-panel {
+  flex: 0 0 90vw;
+  max-width: 1100px;
+  scroll-snap-align: center;
+  display: flex;
+  justify-content: center;
+}
+.svc-pane-content {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 40px;
+  padding: 50px;
+  display: flex;
+  gap: 50px;
+  width: 100%;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.svc-pane-content::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+  background: var(--theme-color);
+  box-shadow: 0 0 20px var(--theme-color);
+}
+.svc-title-row {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+}
+.svc-pane-title { margin: 0; font-size: 2.2rem; font-weight: 800; color: #fff; }
+.svc-port-badge {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  padding: 4px 12px; border-radius: 100px; font-size: 0.85rem; font-family: monospace; color: var(--theme-color);
+}
+
+/* PREMIUM MOCKUPS */
+.svc-mockup-area {
+  background: #09090b;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 30px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* API Mockup */
+.ms-mockup-api { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.ms-client-box { background: #1e293b; padding: 12px 24px; border-radius: 12px; border: 1px solid #334155; font-weight: bold; }
+.ms-api-beams { display: flex; gap: 40px; height: 60px; position: relative; width: 200px; justify-content: center;}
+.ms-beam { width: 2px; height: 100%; background: linear-gradient(to bottom, transparent, var(--theme-color), transparent); animation: beamSlide 1.5s infinite linear; opacity: 0; }
+.ms-beam.delay-1 { animation-delay: 0.5s; }
+.ms-beam.delay-2 { animation-delay: 1s; }
+@keyframes beamSlide { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(100%); opacity: 0; } }
+.ms-gateway-box { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border: 1px solid rgba(99,102,241,0.5); padding: 20px 40px; border-radius: 16px; text-align: center; position: relative; box-shadow: 0 0 30px rgba(99,102,241,0.2); }
+.ms-shield-icon { font-size: 24px; margin-bottom: 8px; }
+.ms-jwt-badge { position: absolute; top: -12px; right: -20px; background: #10b981; color: #000; font-size: 0.7rem; padding: 4px 8px; border-radius: 100px; font-weight: bold; animation: pulseBadge 2s infinite; }
+@keyframes pulseBadge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 15px #10b981; } }
+.ms-microservices-grid { display: flex; gap: 20px; margin-top: 20px; }
+.ms-micro-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-top: 3px solid var(--c); padding: 15px 20px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; color: #cbd5e1; }
+
+/* Project Mockup */
+.ms-mockup-project { width: 100%; }
+.ms-window { background: #0f172a; border-radius: 16px; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+.ms-win-header { background: #1e293b; padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
+.ms-win-dots span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ef4444; margin-right: 6px; }
+.ms-win-dots span:nth-child(2) { background: #f59e0b; }
+.ms-win-dots span:nth-child(3) { background: #10b981; margin: 0; }
+.ms-win-title { font-size: 0.85rem; color: #94a3b8; font-family: monospace; }
+.ms-win-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.ms-proj-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; transition: 0.3s; }
+.ms-proj-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.1); }
+.ms-proj-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.ms-proj-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff; font-size: 0.9rem; }
+.ms-proj-name { flex: 1; font-weight: 600; color: #e2e8f0; }
+.ms-proj-badge { background: rgba(99,102,241,0.1); color: #818cf8; font-size: 0.75rem; padding: 4px 10px; border-radius: 100px; font-weight: 600; }
+.ms-proj-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 100px; overflow: hidden; }
+.ms-proj-fill { height: 100%; border-radius: 100px; animation: loadBar 1.5s ease-out forwards; transform-origin: left; }
+@keyframes loadBar { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+
+/* Task Mockup */
+.ms-mockup-task { width: 100%; height: 100%; }
+.ms-kanban { display: flex; gap: 16px; height: 100%; }
+.ms-kb-col { flex: 1; background: rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; border: 1px dashed rgba(255,255,255,0.05); }
+.ms-kb-title { font-size: 0.85rem; font-weight: 700; color: #94a3b8; display: flex; justify-content: space-between; margin-bottom: 10px; }
+.ms-kb-title span { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 100px; }
+.ms-kb-card { background: #1e293b; height: 60px; border-radius: 8px; border: 1px solid #334155; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.ms-kb-card.done { opacity: 0.5; height: 40px; }
+.kb-anim-drag { animation: kbDrag 4s infinite cubic-bezier(0.25, 1, 0.5, 1); position: relative; z-index: 10; border-color: #ef4444; box-shadow: 0 10px 20px rgba(239,68,68,0.2); }
+@keyframes kbDrag { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-150px, -20px) rotate(-5deg); } }
+
+/* Notify Mockup */
+.ms-mockup-notify { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+.ms-bell-container { position: relative; }
+.ms-bell-icon { animation: bellShake 3s infinite; transform-origin: top center; }
+.ms-bell-badge { position: absolute; top: 0; right: 0; background: #ef4444; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border: 2px solid #09090b; }
+.ms-bell-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; border: 2px solid #10b981; animation: ringPulse 2s infinite cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+.ms-bell-ring.delay-1 { animation-delay: 1s; }
+@keyframes bellShake { 0%, 10%, 100% { transform: rotate(0); } 2% { transform: rotate(15deg); } 4% { transform: rotate(-15deg); } 6% { transform: rotate(10deg); } 8% { transform: rotate(-10deg); } }
+@keyframes ringPulse { 0% { width: 64px; height: 64px; opacity: 1; } 100% { width: 150px; height: 150px; opacity: 0; } }
+.ms-toast-popup { background: #1e293b; border-left: 4px solid #10b981; padding: 16px 20px; border-radius: 8px; display: flex; align-items: center; gap: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: toastSlide 4s infinite cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(20px); }
+.ms-toast-icon { width: 30px; height: 30px; background: rgba(16,185,129,0.2); color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.ms-toast-text { color: #e2e8f0; font-size: 0.95rem; }
+.ms-toast-text span { display: block; font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+@keyframes toastSlide { 0%, 100% { opacity: 0; transform: translateY(20px); } 15%, 85% { opacity: 1; transform: translateY(0); } }
+
+/* REMOVE OLD BUGGY CSS IF IT EXISTS */
+.horizontal-scroll-section { display: none !important; } /* We use ms-section now */
 
 /* SAAS EXTRAS */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
