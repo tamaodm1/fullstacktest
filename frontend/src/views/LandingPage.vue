@@ -604,8 +604,12 @@
 </template>
 
 <script setup lang="ts">
+import Lenis from 'lenis'
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 
+
+let lenis: any;
+let rafId: number;
 const currentLang = ref('vi');
 const langMenuOpen = ref(false);
 
@@ -911,6 +915,14 @@ function onScroll() {
   }
 }
 onMounted(() => {
+
+  lenis = new Lenis()
+  function raf(time: number) {
+    lenis.raf(time)
+    rafId = requestAnimationFrame(raf)
+  }
+  rafId = requestAnimationFrame(raf)
+
   typeLoop()
   setTimeout(() => animateCounter('services', 4, 1200), 500)
   setTimeout(() => animateCounter('tasks', 20, 1500), 700)
@@ -947,6 +959,10 @@ onMounted(() => {
 let featObserver: IntersectionObserver | null = null
 
 onUnmounted(() => {
+
+  if (rafId) cancelAnimationFrame(rafId)
+  if (lenis) lenis.destroy()
+
   cancelAnimationFrame(animFrame)
   observer?.disconnect()
   featObserver?.disconnect()
@@ -969,7 +985,7 @@ const featuresVi = [
     items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 0 !important; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
         <!-- Sidebar -->
         <div style="width: 25%; background: #18181b; padding: 20px 15px; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 12px;">
           <div style="width: 80%; height: 16px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 16px;"></div>
@@ -1035,7 +1051,7 @@ const featuresVi = [
     items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; padding: 24px; background: #121214; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); font-family: sans-serif;">
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; padding: 24px; background: #121214; border-radius: 0 !important; border: 1px solid rgba(255,255,255,0.05); font-family: sans-serif;">
         <div style="font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 20px; display: flex; justify-content: space-between;">
           <span>Sprint 14 Board</span>
           <div style="display: flex; gap: -5px;">
@@ -1186,7 +1202,7 @@ const featuresEn = [
     items: ['Tạo dự án với màu sắc & mô tả', 'Quản lý thành viên dự án', 'Theo dõi tiến độ realtime', 'Lọc & tìm kiếm nhanh'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; display: flex; background: #0f0f13; border-radius: 0 !important; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: sans-serif;">
         <!-- Sidebar -->
         <div style="width: 25%; background: #18181b; padding: 20px 15px; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 12px;">
           <div style="width: 80%; height: 16px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 16px;"></div>
@@ -1252,7 +1268,7 @@ const featuresEn = [
     items: ['Kéo thả linh hoạt', 'Tùy chỉnh cột trạng thái', 'Gán thành viên, deadline', 'Đính kèm file & comment'],
     mockupHtml: `
 
-      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; padding: 24px; background: #121214; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); font-family: sans-serif;">
+      <div class="mk-hud reveal-up" style="width: 100%; height: 100%; padding: 24px; background: #121214; border-radius: 0 !important; border: 1px solid rgba(255,255,255,0.05); font-family: sans-serif;">
         <div style="font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 20px; display: flex; justify-content: space-between;">
           <span>Sprint 14 Board</span>
           <div style="display: flex; gap: -5px;">
@@ -1731,7 +1747,7 @@ const services = [
 .preview-card {
   background: #141416;
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px; overflow: hidden;
+  border-radius: 0 !important; overflow: hidden;
   box-shadow: 0 24px 80px rgba(0,0,0,0.6);
   transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -2057,7 +2073,7 @@ const services = [
   to { border-color: rgba(99,102,241,0.5); }
 }
 .step-icon {
-  width: 64px; height: 64px; border-radius: 16px;
+  width: 64px; height: 64px; border-radius: 0 !important;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 1rem;
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
@@ -2092,7 +2108,7 @@ const services = [
   position: relative; overflow: hidden;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 16px; padding: 1.5rem;
+  border-radius: 0 !important; padding: 1.5rem;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .svc-pulse {
@@ -2224,7 +2240,7 @@ const services = [
   width: 100%;
   height: 100%;
   max-height: 550px;
-  border-radius: 40px;
+  border-radius: 0 !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: row;
@@ -2311,7 +2327,7 @@ const services = [
 .svc-pane-content {
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 40px;
+  border-radius: 0 !important;
   padding: 50px;
   display: flex;
   gap: 50px;
@@ -2608,7 +2624,7 @@ const services = [
 .svc-pane-content {
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 40px;
+  border-radius: 0 !important;
   padding: 50px;
   display: flex;
   gap: 50px;
@@ -2657,7 +2673,7 @@ const services = [
 .ms-beam.delay-1 { animation-delay: 0.5s; }
 .ms-beam.delay-2 { animation-delay: 1s; }
 @keyframes beamSlide { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(100%); opacity: 0; } }
-.ms-gateway-box { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border: 1px solid rgba(99,102,241,0.5); padding: 20px 40px; border-radius: 16px; text-align: center; position: relative; box-shadow: 0 0 30px rgba(99,102,241,0.2); }
+.ms-gateway-box { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border: 1px solid rgba(99,102,241,0.5); padding: 20px 40px; border-radius: 0 !important; text-align: center; position: relative; box-shadow: 0 0 30px rgba(99,102,241,0.2); }
 .ms-shield-icon { font-size: 24px; margin-bottom: 8px; }
 .ms-jwt-badge { position: absolute; top: -12px; right: -20px; background: #10b981; color: #000; font-size: 0.7rem; padding: 4px 8px; border-radius: 100px; font-weight: bold; animation: pulseBadge 2s infinite; }
 @keyframes pulseBadge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 15px #10b981; } }
@@ -2666,7 +2682,7 @@ const services = [
 
 /* Project Mockup */
 .ms-mockup-project { width: 100%; }
-.ms-window { background: #0f172a; border-radius: 16px; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+.ms-window { background: #0f172a; border-radius: 0 !important; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
 .ms-win-header { background: #1e293b; padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
 .ms-win-dots span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ef4444; margin-right: 6px; }
 .ms-win-dots span:nth-child(2) { background: #f59e0b; }
@@ -3040,7 +3056,7 @@ const services = [
   .steps-vertical { gap: 3rem; }
   .steps-vertical::before { left: 30px; }
   .step-v { gap: 1.5rem; }
-  .step-v-icon { width: 60px; height: 60px; border-radius: 16px; }
+  .step-v-icon { width: 60px; height: 60px; border-radius: 0 !important; }
   .step-v-title { font-size: 1.4rem; }
   .step-v-desc { font-size: 0.95rem; }
 }
@@ -3145,7 +3161,7 @@ const services = [
 .svc-tab-item {
   display: flex; align-items: center; gap: 16px;
   padding: 20px 24px;
-  border-radius: 16px;
+  border-radius: 0 !important;
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.05);
   cursor: pointer;
@@ -3233,7 +3249,7 @@ const services = [
 .svc-mockup-area {
   height: 250px;
   background: rgba(0,0,0,0.2);
-  border-radius: 16px;
+  border-radius: 0 !important;
   border: 1px solid rgba(255,255,255,0.05);
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
@@ -3276,7 +3292,7 @@ const services = [
 
 /* Tab 1: Project Mockup */
 .mockup-project {
-  width: 350px; background: #18181b; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+  width: 350px; background: #18181b; border-radius: 0 !important; border: 1px solid rgba(255,255,255,0.05);
   padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
   animation: float 4s ease-in-out infinite alternate;
 }
@@ -3434,7 +3450,7 @@ html, body {
 /* PREMIUM CSS MOCKUPS 2026 */
 .mk-premium {
   width: 100%; max-width: 420px; background: rgba(20,20,25,0.4);
-  border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0 !important; border: 1px solid rgba(255,255,255,0.08);
   overflow: hidden; display: flex; flex-direction: column;
   box-shadow: 0 24px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
   backdrop-filter: blur(20px);
@@ -3500,7 +3516,7 @@ html, body {
 .features-stack { padding-bottom: 20vh; }
 .stack-container { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1100px; margin: 40px auto 0; position: relative; }
 .stack-card { position: sticky; height: 65vh; display: flex; align-items: center; justify-content: center; transform-origin: top center; transition: transform 0.1s ease-out; }
-.card-inner { width: 100%; height: 100%; max-height: 550px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
+.card-inner { width: 100%; height: 100%; max-height: 550px; border-radius: 0 !important; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
 .card-content { width: 45%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .card-image-wrap { width: 55%; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); }
 
@@ -3845,7 +3861,7 @@ html, body {
 .svc-pane-content {
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 40px;
+  border-radius: 0 !important;
   padding: 50px;
   display: flex;
   gap: 50px;
@@ -3894,7 +3910,7 @@ html, body {
 .ms-beam.delay-1 { animation-delay: 0.5s; }
 .ms-beam.delay-2 { animation-delay: 1s; }
 @keyframes beamSlide { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(100%); opacity: 0; } }
-.ms-gateway-box { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border: 1px solid rgba(99,102,241,0.5); padding: 20px 40px; border-radius: 16px; text-align: center; position: relative; box-shadow: 0 0 30px rgba(99,102,241,0.2); }
+.ms-gateway-box { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2)); border: 1px solid rgba(99,102,241,0.5); padding: 20px 40px; border-radius: 0 !important; text-align: center; position: relative; box-shadow: 0 0 30px rgba(99,102,241,0.2); }
 .ms-shield-icon { font-size: 24px; margin-bottom: 8px; }
 .ms-jwt-badge { position: absolute; top: -12px; right: -20px; background: #10b981; color: #000; font-size: 0.7rem; padding: 4px 8px; border-radius: 100px; font-weight: bold; animation: pulseBadge 2s infinite; }
 @keyframes pulseBadge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 15px #10b981; } }
@@ -3903,7 +3919,7 @@ html, body {
 
 /* Project Mockup */
 .ms-mockup-project { width: 100%; }
-.ms-window { background: #0f172a; border-radius: 16px; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+.ms-window { background: #0f172a; border-radius: 0 !important; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
 .ms-win-header { background: #1e293b; padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
 .ms-win-dots span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ef4444; margin-right: 6px; }
 .ms-win-dots span:nth-child(2) { background: #f59e0b; }
@@ -4277,7 +4293,7 @@ html, body {
   .steps-vertical { gap: 3rem; }
   .steps-vertical::before { left: 30px; }
   .step-v { gap: 1.5rem; }
-  .step-v-icon { width: 60px; height: 60px; border-radius: 16px; }
+  .step-v-icon { width: 60px; height: 60px; border-radius: 0 !important; }
   .step-v-title { font-size: 1.4rem; }
   .step-v-desc { font-size: 0.95rem; }
 }
@@ -4382,7 +4398,7 @@ html, body {
 .svc-tab-item {
   display: flex; align-items: center; gap: 16px;
   padding: 20px 24px;
-  border-radius: 16px;
+  border-radius: 0 !important;
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.05);
   cursor: pointer;
@@ -4470,7 +4486,7 @@ html, body {
 .svc-mockup-area {
   height: 250px;
   background: rgba(0,0,0,0.2);
-  border-radius: 16px;
+  border-radius: 0 !important;
   border: 1px solid rgba(255,255,255,0.05);
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
@@ -4513,7 +4529,7 @@ html, body {
 
 /* Tab 1: Project Mockup */
 .mockup-project {
-  width: 350px; background: #18181b; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+  width: 350px; background: #18181b; border-radius: 0 !important; border: 1px solid rgba(255,255,255,0.05);
   padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
   animation: float 4s ease-in-out infinite alternate;
 }
