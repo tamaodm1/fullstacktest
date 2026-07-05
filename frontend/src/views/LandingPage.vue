@@ -655,19 +655,23 @@ function onScroll() { isScrolled.value = window.scrollY > 50
 
   
   // Apple-style Horizontal Scroll Logic
-  const hSection = document.querySelector('.horizontal-scroll-section')
-  const hTrack = document.querySelector('.horizontal-track')
-  if (hSection && hTrack) {
-    const rect = hSection.getBoundingClientRect()
-    const height = rect.height - window.innerHeight
-    let progress = 0
-    if (rect.top <= 0) {
-      progress = -rect.top / height
+  
+    // Apple-style Horizontal Scroll Logic
+    const hSection = document.querySelector('.horizontal-scroll-section')
+    const hTrack = document.querySelector('.horizontal-track')
+    if (hSection && hTrack) {
+      const rect = hSection.getBoundingClientRect()
+      const height = rect.height - window.innerHeight
+      let progress = 0
+      if (rect.top <= 0) {
+        progress = -rect.top / height
+      }
+      progress = Math.max(0, Math.min(1, progress))
+      // Track width minus viewport width gives max translation
+      const maxTranslate = hTrack.scrollWidth - window.innerWidth
+      hTrack.style.transform = `translateX(-${progress * maxTranslate}px)`
     }
-    progress = Math.max(0, Math.min(1, progress))
-    // 4 panels = 300% translation to see the last one.
-    // 300 / 400 width = 75% translation.
-    hTrack.style.transform = `translateX(-${progress * 75}%)`
+
   }
 
   const stackCards = document.querySelectorAll('.stack-card')
@@ -2088,20 +2092,25 @@ const services = [
   z-index: 10;
   pointer-events: none;
 }
+
 .horizontal-track {
   display: flex;
-  width: 400vw;
+  width: max-content; /* Instead of 400vw */
   height: 100%;
   will-change: transform;
   align-items: center;
+  margin-top: 20vh; /* space for header */
+  gap: 3vw;
+  padding: 0 10vw; /* padding at start and end */
 }
 .horizontal-panel {
-  width: 100vw;
+  width: 80vw;
+  max-width: 1000px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 5vw;
 }
+
 .svc-pane-content {
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.05);
@@ -2173,7 +2182,7 @@ const services = [
 .ms-header {
   text-align: center;
   position: absolute;
-  top: 10vh;
+  top: 12vh;
   left: 0;
   width: 100%;
   z-index: 10;
@@ -2184,7 +2193,7 @@ const services = [
   height: 100%;
   will-change: transform;
   align-items: center;
-  margin-top: 10vh; /* space for header */
+  margin-top: 25vh; /* space for header */
 }
 .horizontal-panel {
   width: 100vw;
@@ -3241,7 +3250,7 @@ html, body {
 .ms-header {
   text-align: center;
   position: absolute;
-  top: 10vh;
+  top: 12vh;
   left: 0;
   width: 100%;
   z-index: 10;
@@ -3252,7 +3261,7 @@ html, body {
   height: 100%;
   will-change: transform;
   align-items: center;
-  margin-top: 10vh; /* space for header */
+  margin-top: 25vh; /* space for header */
 }
 .horizontal-panel {
   width: 100vw;
