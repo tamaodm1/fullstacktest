@@ -664,7 +664,39 @@ function onScroll() {
     // Track width minus viewport width gives max translation
     const maxTranslate = hTrack.scrollWidth - window.innerWidth
     hTrack.style.transform = `translateX(-${progress * maxTranslate}px)`
-  }
+  
+
+    // Animate each panel based on distance from center
+    const panels = document.querySelectorAll('.horizontal-panel')
+    panels.forEach(panel => {
+      const rect = panel.getBoundingClientRect()
+      const panelCenter = rect.left + rect.width / 2
+      const viewportCenter = window.innerWidth / 2
+      
+      const distFromCenter = panelCenter - viewportCenter
+      // Max distance is roughly the width of the screen
+      const maxDist = window.innerWidth * 0.8
+      let ratio = Math.abs(distFromCenter) / maxDist
+      ratio = Math.max(0, Math.min(1, ratio))
+      
+      // As it moves away from center, shrink to 0.7, fade to 0.1, blur to 10px
+      const scale = 1 - (ratio * 0.3)
+      const opacity = 1 - (ratio * 0.9)
+      const blur = ratio * 10
+      
+      // If distFromCenter < 0, it means it's the PREVIOUS card moving Left.
+      // We can make it also translate slightly left-down to look like it's dropping away
+      let translateY = ratio * 50 // moves down 50px
+      let rotateY = (distFromCenter / maxDist) * 15 // rotate slightly
+      
+      const paneContent = panel.querySelector('.svc-pane-content') as HTMLElement
+      if (paneContent) {
+        paneContent.style.transform = `scale(${scale}) translateY(${translateY}px) rotateY(${rotateY}deg)`
+        paneContent.style.opacity = opacity.toString()
+        paneContent.style.filter = `blur(${blur}px)`
+      }
+    })
+}
 
   // 2. Stacking Cards Logic
   const stackCards = document.querySelectorAll('.stack-card')
@@ -2160,6 +2192,25 @@ const services = [
 }
 
 
+
+/* TWEAKS FOR SPACING AND SIZE */
+.ms-header {
+  top: 5vh !important; /* Move title higher */
+}
+.horizontal-track {
+  margin-top: 15vh !important; 
+  align-items: flex-start !important; /* Align to top so they don't hit bottom */
+}
+.horizontal-panel {
+  /* Cards default slightly smaller */
+  padding-top: 5vh;
+}
+.svc-pane-content {
+  will-change: transform, opacity, filter;
+  /* Reduced base size to prevent overlap */
+  max-width: 900px;
+}
+
 /* APPLE-STYLE HORIZONTAL SCROLL */
 .horizontal-scroll-section {
   height: 400vh; /* 4 panels */
@@ -3227,6 +3278,25 @@ html, body {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
+
+
+/* TWEAKS FOR SPACING AND SIZE */
+.ms-header {
+  top: 5vh !important; /* Move title higher */
+}
+.horizontal-track {
+  margin-top: 15vh !important; 
+  align-items: flex-start !important; /* Align to top so they don't hit bottom */
+}
+.horizontal-panel {
+  /* Cards default slightly smaller */
+  padding-top: 5vh;
+}
+.svc-pane-content {
+  will-change: transform, opacity, filter;
+  /* Reduced base size to prevent overlap */
+  max-width: 900px;
+}
 
 /* APPLE-STYLE HORIZONTAL SCROLL */
 .horizontal-scroll-section {
