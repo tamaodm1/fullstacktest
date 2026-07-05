@@ -261,123 +261,126 @@
       <div class="stats-bg">
         <div class="stats-orb"></div>
       </div>
-      <div class="ms-section">
-        <div class="ms-header">
-          <div class="section-badge light reveal-up">Kiến trúc hệ thống</div>
-          <h2 class="section-title white reveal-up" style="--delay: 0.1s">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
-        </div>
-        
-        <div class="ms-horizontal-container">
-          <div v-for="(svc, i) in services" :key="svc.name" class="ms-panel" :style="{ '--theme-color': svc.color }">
-            <div class="svc-pane-content">
-              <div class="svc-pane-text">
-                <div class="svc-pane-icon" v-html="svc.icon"></div>
-                <div class="svc-title-row">
-                  <h3 class="svc-pane-title">{{ svc.name }}</h3>
-                  <div class="svc-port-badge">Port {{ svc.port }}</div>
+      <div class="horizontal-scroll-section">
+        <div class="sticky-wrapper">
+          
+          <div class="ms-header">
+            <div class="section-badge light">Kiến trúc hệ thống</div>
+            <h2 class="section-title white" style="margin-bottom: 0;">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
+          </div>
+          
+          <div class="horizontal-track">
+            <div v-for="(svc, i) in services" :key="svc.name" class="horizontal-panel" :style="{ '--theme-color': svc.color }">
+              <div class="svc-pane-content">
+                <div class="svc-pane-text">
+                  <div class="svc-pane-icon" v-html="svc.icon"></div>
+                  <div class="svc-title-row">
+                    <h3 class="svc-pane-title">{{ svc.name }}</h3>
+                    <div class="svc-port-badge">Port {{ svc.port }}</div>
+                  </div>
+                  <ul class="svc-pane-features">
+                    <li v-for="feat in svc.features" :key="feat">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      {{ feat }}
+                    </li>
+                  </ul>
                 </div>
-                <ul class="svc-pane-features">
-                  <li v-for="feat in svc.features" :key="feat">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                    {{ feat }}
-                  </li>
-                </ul>
-              </div>
-              
-              <div class="svc-pane-visual">
-                <!-- PREMIUM CSS MOCKUPS -->
-                <div class="svc-mockup-area">
-                  
-                  <!-- Tab 0: API Gateway -->
-                  <div v-if="i === 0" class="ms-mockup-api">
-                    <div class="ms-client-box">Client App</div>
-                    <div class="ms-api-beams">
-                      <div class="ms-beam"></div>
-                      <div class="ms-beam delay-1"></div>
-                      <div class="ms-beam delay-2"></div>
-                    </div>
-                    <div class="ms-gateway-box">
-                      <div class="ms-shield-icon">🛡️</div>
-                      <span>Ocelot API Gateway</span>
-                      <div class="ms-jwt-badge">JWT Verified</div>
-                    </div>
-                    <div class="ms-microservices-grid">
-                      <div class="ms-micro-box" style="--c: #6366f1">Project</div>
-                      <div class="ms-micro-box" style="--c: #ef4444">Task</div>
-                      <div class="ms-micro-box" style="--c: #10b981">Notify</div>
-                    </div>
-                  </div>
-                  
-                  <!-- Tab 1: Project Service -->
-                  <div v-if="i === 1" class="ms-mockup-project">
-                    <div class="ms-window">
-                      <div class="ms-win-header">
-                        <div class="ms-win-dots"><span/><span/><span/></div>
-                        <div class="ms-win-title">Projects Dashboard</div>
+                
+                <div class="svc-pane-visual">
+                  <div class="svc-mockup-area">
+                    
+                    <!-- Tab 0: API Gateway -->
+                    <div v-if="i === 0" class="ms-mockup-api">
+                      <div class="ms-client-box">Client App</div>
+                      <div class="ms-api-beams">
+                        <div class="ms-beam"></div>
+                        <div class="ms-beam delay-1"></div>
+                        <div class="ms-beam delay-2"></div>
                       </div>
-                      <div class="ms-win-body">
-                        <div class="ms-proj-card">
-                          <div class="ms-proj-top">
-                            <div class="ms-proj-icon" style="background:#6366f1">W</div>
-                            <div class="ms-proj-name">Website Redesign</div>
-                            <div class="ms-proj-badge">Active</div>
-                          </div>
-                          <div class="ms-proj-bar"><div class="ms-proj-fill" style="width: 80%; background:#6366f1"></div></div>
+                      <div class="ms-gateway-box">
+                        <div class="ms-shield-icon">🛡️</div>
+                        <span>Ocelot API Gateway</span>
+                        <div class="ms-jwt-badge">JWT Verified</div>
+                      </div>
+                      <div class="ms-microservices-grid">
+                        <div class="ms-micro-box" style="--c: #6366f1">Project</div>
+                        <div class="ms-micro-box" style="--c: #ef4444">Task</div>
+                        <div class="ms-micro-box" style="--c: #10b981">Notify</div>
+                      </div>
+                    </div>
+                    
+                    <!-- Tab 1: Project Service -->
+                    <div v-if="i === 1" class="ms-mockup-project">
+                      <div class="ms-window">
+                        <div class="ms-win-header">
+                          <div class="ms-win-dots"><span/><span/><span/></div>
+                          <div class="ms-win-title">Projects Dashboard</div>
                         </div>
-                        <div class="ms-proj-card delay-1">
-                          <div class="ms-proj-top">
-                            <div class="ms-proj-icon" style="background:#ec4899">M</div>
-                            <div class="ms-proj-name">Mobile App v2.0</div>
-                            <div class="ms-proj-badge" style="color:#ec4899; background:rgba(236,72,153,0.1)">Planning</div>
+                        <div class="ms-win-body">
+                          <div class="ms-proj-card">
+                            <div class="ms-proj-top">
+                              <div class="ms-proj-icon" style="background:#6366f1">W</div>
+                              <div class="ms-proj-name">Website Redesign</div>
+                              <div class="ms-proj-badge">Active</div>
+                            </div>
+                            <div class="ms-proj-bar"><div class="ms-proj-fill" style="width: 80%; background:#6366f1"></div></div>
                           </div>
-                          <div class="ms-proj-bar"><div class="ms-proj-fill" style="width: 30%; background:#ec4899"></div></div>
+                          <div class="ms-proj-card delay-1">
+                            <div class="ms-proj-top">
+                              <div class="ms-proj-icon" style="background:#ec4899">M</div>
+                              <div class="ms-proj-name">Mobile App v2.0</div>
+                              <div class="ms-proj-badge" style="color:#ec4899; background:rgba(236,72,153,0.1)">Planning</div>
+                            </div>
+                            <div class="ms-proj-bar"><div class="ms-proj-fill" style="width: 30%; background:#ec4899"></div></div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  
-                  <!-- Tab 2: Task Service -->
-                  <div v-if="i === 2" class="ms-mockup-task">
-                    <div class="ms-kanban">
-                      <div class="ms-kb-col">
-                        <div class="ms-kb-title">TODO <span>2</span></div>
-                        <div class="ms-kb-card kb-anim-1"></div>
-                        <div class="ms-kb-card kb-anim-2"></div>
-                      </div>
-                      <div class="ms-kb-col">
-                        <div class="ms-kb-title">DOING <span>1</span></div>
-                        <div class="ms-kb-card kb-anim-drag"></div>
-                      </div>
-                      <div class="ms-kb-col">
-                        <div class="ms-kb-title">DONE <span>3</span></div>
-                        <div class="ms-kb-card done"></div>
-                        <div class="ms-kb-card done"></div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Tab 3: Notify Service -->
-                  <div v-if="i === 3" class="ms-mockup-notify">
-                    <div class="ms-bell-container">
-                      <div class="ms-bell-ring"></div>
-                      <div class="ms-bell-ring delay-1"></div>
-                      <svg class="ms-bell-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-                      <div class="ms-bell-badge">3</div>
-                    </div>
-                    <div class="ms-toast-popup">
-                      <div class="ms-toast-icon">✓</div>
-                      <div class="ms-toast-text">
-                        <strong>Trường Đỗ</strong> đã giao việc cho bạn.
-                        <span>Vài giây trước</span>
+                    
+                    <!-- Tab 2: Task Service -->
+                    <div v-if="i === 2" class="ms-mockup-task">
+                      <div class="ms-kanban">
+                        <div class="ms-kb-col">
+                          <div class="ms-kb-title">TODO <span>2</span></div>
+                          <div class="ms-kb-card kb-anim-1"></div>
+                          <div class="ms-kb-card kb-anim-2"></div>
+                        </div>
+                        <div class="ms-kb-col">
+                          <div class="ms-kb-title">DOING <span>1</span></div>
+                          <div class="ms-kb-card kb-anim-drag"></div>
+                        </div>
+                        <div class="ms-kb-col">
+                          <div class="ms-kb-title">DONE <span>3</span></div>
+                          <div class="ms-kb-card done"></div>
+                          <div class="ms-kb-card done"></div>
+                        </div>
                       </div>
                     </div>
+                    
+                    <!-- Tab 3: Notify Service -->
+                    <div v-if="i === 3" class="ms-mockup-notify">
+                      <div class="ms-bell-container">
+                        <div class="ms-bell-ring"></div>
+                        <div class="ms-bell-ring delay-1"></div>
+                        <svg class="ms-bell-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                        <div class="ms-bell-badge">3</div>
+                      </div>
+                      <div class="ms-toast-popup">
+                        <div class="ms-toast-icon">✓</div>
+                        <div class="ms-toast-text">
+                          <strong>Trường Đỗ</strong> đã giao việc cho bạn.
+                          <span>Vài giây trước</span>
+                        </div>
+                      </div>
+                    </div>
+                    
                   </div>
-                  
                 </div>
+                
               </div>
-              
             </div>
           </div>
+          
         </div>
       </div>
     </section>
@@ -650,6 +653,23 @@ function onScroll() { isScrolled.value = window.scrollY > 50
   
   
 
+  
+  // Apple-style Horizontal Scroll Logic
+  const hSection = document.querySelector('.horizontal-scroll-section')
+  const hTrack = document.querySelector('.horizontal-track')
+  if (hSection && hTrack) {
+    const rect = hSection.getBoundingClientRect()
+    const height = rect.height - window.innerHeight
+    let progress = 0
+    if (rect.top <= 0) {
+      progress = -rect.top / height
+    }
+    progress = Math.max(0, Math.min(1, progress))
+    // 4 panels = 300% translation to see the last one.
+    // 300 / 400 width = 75% translation.
+    hTrack.style.transform = `translateX(-${progress * 75}%)`
+  }
+
   const stackCards = document.querySelectorAll('.stack-card')
   if (stackCards.length > 0) {
     stackCards.forEach((card, index) => {
@@ -676,7 +696,7 @@ function onScroll() { isScrolled.value = window.scrollY > 50
           inner.style.filter = `blur(${blur}px)`;
           inner.style.transformOrigin = 'top center';
           // Smoother transition for blur and transform
-          inner.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease, opacity 0.4s ease';
+          
         }
       } else {
         const inner = card.querySelector('.card-inner') as HTMLElement
@@ -695,36 +715,7 @@ onMounted(() => {
   setTimeout(() => animateCounter('tasks', 20, 1500), 700)
   initParticles()
 
-  // Horizontal Scroll Snap (1 lướt 1 cái)
-  const msContainer = document.querySelector('.ms-horizontal-container');
-  if (msContainer) {
-    let isScrolling = false;
-    msContainer.addEventListener('wheel', (e) => {
-      const panels = msContainer.querySelectorAll('.ms-panel');
-      if (panels.length === 0) return;
-      
-      // Calculate current panel index based on scrollLeft
-      const panelWidth = panels[0].clientWidth;
-      let currentIndex = Math.round(msContainer.scrollLeft / panelWidth);
-      
-      if (e.deltaY > 0 && currentIndex < panels.length - 1) {
-        currentIndex++;
-      } else if (e.deltaY < 0 && currentIndex > 0) {
-        currentIndex--;
-      } else {
-        // At the boundaries, let the page scroll vertically
-        return; 
-      }
-      
-      e.preventDefault(); // Stop vertical scroll
-      if (isScrolling) return;
-      
-      isScrolling = true;
-      panels[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      
-      setTimeout(() => { isScrolling = false; }, 600); // Cooldown for 1 scroll
-    }, { passive: false });
-  }
+  
 
   setTimeout(initScrollReveal, 100)
   window.addEventListener('scroll', onScroll)
@@ -2162,8 +2153,59 @@ const services = [
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
+
+/* APPLE-STYLE HORIZONTAL SCROLL */
+.horizontal-scroll-section {
+  height: 400vh; /* 4 panels */
+  position: relative;
+  width: 100%;
+}
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.ms-header {
+  text-align: center;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+.horizontal-track {
+  display: flex;
+  width: 400vw;
+  height: 100%;
+  will-change: transform;
+  align-items: center;
+  margin-top: 10vh; /* space for header */
+}
+.horizontal-panel {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5vw;
+}
+
+@media (max-width: 900px) {
+  .horizontal-track { margin-top: 20vh; }
+}
+
+/* Fix missing card-inner transition for non-scroll states */
+.card-inner {
+  will-change: transform, filter, opacity;
+  /* Removed CSS transition because it fights with scroll-based instant updates */
+}
+
 /* MICROSERVICES HORIZONTAL SNAP SCROLL */
-.ms-section {
+.ms-section { display: none;
   width: 100%;
   padding: 100px 0;
   position: relative;
@@ -2173,7 +2215,7 @@ const services = [
   text-align: center;
   margin-bottom: 60px;
 }
-.ms-horizontal-container {
+.ms-horizontal-container { display: none;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -3179,8 +3221,59 @@ html, body {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
+
+/* APPLE-STYLE HORIZONTAL SCROLL */
+.horizontal-scroll-section {
+  height: 400vh; /* 4 panels */
+  position: relative;
+  width: 100%;
+}
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.ms-header {
+  text-align: center;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+.horizontal-track {
+  display: flex;
+  width: 400vw;
+  height: 100%;
+  will-change: transform;
+  align-items: center;
+  margin-top: 10vh; /* space for header */
+}
+.horizontal-panel {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5vw;
+}
+
+@media (max-width: 900px) {
+  .horizontal-track { margin-top: 20vh; }
+}
+
+/* Fix missing card-inner transition for non-scroll states */
+.card-inner {
+  will-change: transform, filter, opacity;
+  /* Removed CSS transition because it fights with scroll-based instant updates */
+}
+
 /* MICROSERVICES HORIZONTAL SNAP SCROLL */
-.ms-section {
+.ms-section { display: none;
   width: 100%;
   padding: 100px 0;
   position: relative;
@@ -3190,7 +3283,7 @@ html, body {
   text-align: center;
   margin-bottom: 60px;
 }
-.ms-horizontal-container {
+.ms-horizontal-container { display: none;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
