@@ -2193,21 +2193,23 @@ const services = [
 
 
 
+
 /* TWEAKS FOR SPACING AND SIZE */
+.sticky-wrapper {
+  justify-content: flex-start !important;
+  padding-top: 12vh !important;
+}
 .ms-header {
-  top: 5vh !important; /* Move title higher */
+  position: static !important;
+  margin-bottom: 8vh !important;
 }
 .horizontal-track {
-  margin-top: 15vh !important; 
-  align-items: flex-start !important; /* Align to top so they don't hit bottom */
+  margin-top: 0 !important;
+  align-items: center !important;
 }
-.horizontal-panel {
-  /* Cards default slightly smaller */
-  padding-top: 5vh;
-}
+
 .svc-pane-content {
   will-change: transform, opacity, filter;
-  /* Reduced base size to prevent overlap */
   max-width: 900px;
 }
 
@@ -3280,21 +3282,23 @@ html, body {
 
 
 
+
 /* TWEAKS FOR SPACING AND SIZE */
+.sticky-wrapper {
+  justify-content: flex-start !important;
+  padding-top: 12vh !important;
+}
 .ms-header {
-  top: 5vh !important; /* Move title higher */
+  position: static !important;
+  margin-bottom: 8vh !important;
 }
 .horizontal-track {
-  margin-top: 15vh !important; 
-  align-items: flex-start !important; /* Align to top so they don't hit bottom */
+  margin-top: 0 !important;
+  align-items: center !important;
 }
-.horizontal-panel {
-  /* Cards default slightly smaller */
-  padding-top: 5vh;
-}
+
 .svc-pane-content {
   will-change: transform, opacity, filter;
-  /* Reduced base size to prevent overlap */
   max-width: 900px;
 }
 
