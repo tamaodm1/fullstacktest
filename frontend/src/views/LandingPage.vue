@@ -261,108 +261,103 @@
       <div class="stats-bg">
         <div class="stats-orb"></div>
       </div>
-      <div class="stats-inner">
-        <div class="section-badge light reveal-up">Kiến trúc hệ thống</div>
-        <h2 class="section-title white reveal-up" style="--delay: 0.1s">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
-        <div class="services-tabs-container reveal-up">
-          <div class="svc-tabs-list">
-            <div v-for="(svc, i) in services" :key="svc.name" 
-                 class="svc-tab-item" 
-                 :class="{ active: activeServiceTab === i }"
-                 @click="activeServiceTab = i"
-                 :style="{ '--theme-color': svc.color }">
-              <span class="svc-tab-icon" v-html="svc.icon"></span>
-              <span class="svc-tab-name">{{ svc.name }}</span>
+      <div class="stats-inner" style="padding-bottom: 0;">
+        <div class="horizontal-scroll-section">
+          <div class="sticky-wrapper">
+            <div class="horizontal-header">
+              <div class="section-badge light">Kiến trúc hệ thống</div>
+              <h2 class="section-title white">Xây dựng trên nền tảng<br/><span class="text-gradient-light">Microservices hiện đại</span></h2>
             </div>
-          </div>
-          <div class="svc-tabs-content">
-            <Transition name="fade-up" mode="out-in">
-              <div :key="activeServiceTab" class="svc-tab-pane" :style="{ '--theme-color': services[activeServiceTab].color }">
-                <div class="svc-pane-top">
-                  <div class="svc-pane-header">
-                    <h3 class="svc-pane-title">{{ services[activeServiceTab].name }}</h3>
-                    <div class="svc-port-badge">Port {{ services[activeServiceTab].port }}</div>
-                  </div>
-                  <ul class="svc-pane-features">
-                    <li v-for="f in services[activeServiceTab].features" :key="f">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" :stroke="services[activeServiceTab].color" stroke-width="3" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-                      <span>{{ f }}</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <!-- CSS Mockups -->
-                <div class="svc-mockup-area">
-                  <!-- Tab 0: API Gateway -->
-                  <div v-if="activeServiceTab === 0" class="mockup-api">
-                    <div class="api-node client">Client</div>
-                    <div class="api-line line-1"><div class="api-dot"></div></div>
-                    <div class="api-node gateway">API Gateway</div>
-                    <div class="api-lines-out">
-                      <div class="api-line-out line-out-1"><div class="api-dot"></div></div>
-                      <div class="api-line-out line-out-2"><div class="api-dot" style="animation-delay: 0.5s"></div></div>
-                      <div class="api-line-out line-out-3"><div class="api-dot" style="animation-delay: 1s"></div></div>
+            <div class="horizontal-track">
+              <div v-for="(svc, i) in services" :key="svc.name" class="horizontal-panel" :style="{ '--theme-color': svc.color }">
+                <div class="svc-pane-content" style="width: 100%; max-width: 1200px;">
+                  <div class="svc-pane-text">
+                    <div class="svc-pane-icon" v-html="svc.icon"></div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                      <h3 class="svc-pane-title" style="margin-bottom: 0;">{{ svc.name }}</h3>
+                      <div class="svc-port-badge">Port {{ svc.port }}</div>
                     </div>
-                    <div class="api-services">
-                      <div class="api-node micro proj">Project</div>
-                      <div class="api-node micro task">Task</div>
-                      <div class="api-node micro noti">Notify</div>
-                    </div>
+                    <ul class="svc-pane-features">
+                      <li v-for="feat in svc.features" :key="feat">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        {{ feat }}
+                      </li>
+                    </ul>
                   </div>
                   
-                  <!-- Tab 1: Project Service -->
-                  <div v-if="activeServiceTab === 1" class="mockup-project">
-                    <div class="pj-header">Project Dashboard</div>
-                    <div class="pj-list">
-                      <div class="pj-item">
-                        <div class="pj-info"><div class="pj-avatar" style="background:#6366f1"></div><div class="pj-name">Website Redesign</div></div>
-                        <div class="pj-progress"><div class="pj-fill" style="width: 75%; background:#f59e0b"></div></div>
+                  <div class="svc-pane-visual">
+                    <div class="svc-mockup-area">
+                      <!-- Tab 0: API Gateway -->
+                      <div v-if="i === 0" class="mockup-api">
+                        <div class="api-node client">Client</div>
+                        <div class="api-line line-1"><div class="api-dot"></div></div>
+                        <div class="api-node gateway">API Gateway</div>
+                        <div class="api-lines-out">
+                          <div class="api-line-out line-out-1"><div class="api-dot"></div></div>
+                          <div class="api-line-out line-out-2"><div class="api-dot" style="animation-delay: 0.5s"></div></div>
+                          <div class="api-line-out line-out-3"><div class="api-dot" style="animation-delay: 1s"></div></div>
+                        </div>
+                        <div class="api-services">
+                          <div class="api-node micro proj">Project</div>
+                          <div class="api-node micro task">Task</div>
+                          <div class="api-node micro noti">Notify</div>
+                        </div>
                       </div>
-                      <div class="pj-item" style="animation-delay: 0.2s">
-                        <div class="pj-info"><div class="pj-avatar" style="background:#ec4899"></div><div class="pj-name">Mobile App</div></div>
-                        <div class="pj-progress"><div class="pj-fill" style="width: 40%; background:#f59e0b"></div></div>
+                      
+                      <!-- Tab 1: Project Service -->
+                      <div v-if="i === 1" class="mockup-project">
+                        <div class="pj-header">Project Dashboard</div>
+                        <div class="pj-list">
+                          <div class="pj-item">
+                            <div class="pj-info"><div class="pj-avatar" style="background:#6366f1"></div><div class="pj-name">Website Redesign</div></div>
+                            <div class="pj-progress"><div class="pj-fill" style="width: 75%; background:#f59e0b"></div></div>
+                          </div>
+                          <div class="pj-item" style="animation-delay: 0.2s">
+                            <div class="pj-info"><div class="pj-avatar" style="background:#ec4899"></div><div class="pj-name">Mobile App</div></div>
+                            <div class="pj-progress"><div class="pj-fill" style="width: 40%; background:#f59e0b"></div></div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Tab 2: Task Service -->
-                  <div v-if="activeServiceTab === 2" class="mockup-task">
-                    <div class="kb-col">
-                      <div class="kb-title">TODO</div>
-                      <div class="kb-card"></div>
-                      <div class="kb-card" style="opacity:0.5; height: 30px;"></div>
-                    </div>
-                    <div class="kb-col">
-                      <div class="kb-title">DOING</div>
-                      <div class="kb-card kb-drag"></div>
-                    </div>
-                    <div class="kb-col">
-                      <div class="kb-title">DONE</div>
-                      <div class="kb-card" style="opacity:0.3"></div>
-                    </div>
-                  </div>
-                  
-                  <!-- Tab 3: Notify Service -->
-                  <div v-if="activeServiceTab === 3" class="mockup-notify">
-                    <div class="nf-bell">
-                      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--theme-color)" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-                      <div class="nf-badge">3</div>
-                      <div class="nf-ring"></div>
-                    </div>
-                    <div class="nf-toast">
-                      <div class="nf-toast-icon">✓</div>
-                      <div class="nf-toast-text">Task completed successfully</div>
+                      
+                      <!-- Tab 2: Task Service -->
+                      <div v-if="i === 2" class="mockup-task">
+                        <div class="kb-col">
+                          <div class="kb-title">TODO</div>
+                          <div class="kb-card"></div>
+                          <div class="kb-card" style="opacity:0.5; height: 30px;"></div>
+                        </div>
+                        <div class="kb-col">
+                          <div class="kb-title">DOING</div>
+                          <div class="kb-card kb-drag"></div>
+                        </div>
+                        <div class="kb-col">
+                          <div class="kb-title">DONE</div>
+                          <div class="kb-card" style="opacity:0.3"></div>
+                        </div>
+                      </div>
+                      
+                      <!-- Tab 3: Notify Service -->
+                      <div v-if="i === 3" class="mockup-notify">
+                        <div class="nf-bell">
+                          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--theme-color)" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                          <div class="nf-badge">3</div>
+                          <div class="nf-ring"></div>
+                        </div>
+                        <div class="nf-toast">
+                          <div class="nf-toast-icon">✓</div>
+                          <div class="nf-toast-text">Task completed successfully</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </Transition>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    
     <!-- TESTIMONIALS -->
     <section class="testimonials-section py-24 relative overflow-hidden" style="border-top: 1px solid rgba(255,255,255,0.05);">
       <div class="text-center max-w-3xl mx-auto mb-16 px-6">
