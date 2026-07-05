@@ -260,6 +260,7 @@
           </div>
           
           <div class="how-right">
+            
             <!-- Step 1 Graphic -->
             <div class="how-graphic-item hg-1">
               <div class="mockup-window glass-panel">
@@ -268,13 +269,16 @@
                   <div class="mockup-title">Register.vue</div>
                 </div>
                 <div class="mockup-body align-center">
-                  <div class="fake-input">Email address</div>
-                  <div class="fake-input">Password</div>
-                  <div class="fake-btn" style="background: #6366f1;">Create Account</div>
+                  <div style="width: 40px; height: 40px; background: #6366f1; border-radius: 8px; margin-bottom: 10px; display:flex; align-items:center; justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                  <h3 style="color: white; margin-bottom: 15px; font-size: 1.2rem;">Create Account</h3>
+                  <div class="fake-input" style="justify-content: flex-start"><svg width="16" height="16" style="margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Email address</div>
+                  <div class="fake-input" style="justify-content: flex-start"><svg width="16" height="16" style="margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path></svg> Password</div>
+                  <div class="fake-btn" style="background: #6366f1; margin-top: 5px;">Sign Up</div>
+                  <div style="font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 10px;">Or continue with Google</div>
                 </div>
               </div>
             </div>
-            
+
             <!-- Step 2 Graphic -->
             <div class="how-graphic-item hg-2">
                <div class="mockup-window glass-panel" style="border-color: rgba(245,158,11,0.3);">
@@ -282,19 +286,35 @@
                   <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
                   <div class="mockup-title">ProjectBoard.vue</div>
                 </div>
-                <div class="mockup-body">
-                  <div class="fake-project-card">
-                    <div class="fpc-title">Website Redesign</div>
-                    <div class="fpc-avatars">
-                      <div class="fpc-avatar" style="background:#f59e0b"></div>
-                      <div class="fpc-avatar" style="background:#10b981"></div>
+                <div class="mockup-body" style="padding: 20px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                     <span style="color:white; font-weight:bold;">Active Projects</span>
+                     <span style="padding: 4px 10px; background:#f59e0b; color:white; border-radius:4px; font-size:12px;">+ New</span>
+                  </div>
+                  <div class="fake-project-card" style="padding: 15px;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <div class="fpc-title">Website Redesign</div>
+                        <div style="font-size:10px; padding: 2px 6px; background: rgba(16,185,129,0.2); color: #10b981; border-radius:4px">Active</div>
+                    </div>
+                    <div style="width:100%; height:4px; background:rgba(255,255,255,0.1); border-radius:2px; margin-top:5px;"><div style="width: 75%; height:100%; background:#f59e0b; border-radius:2px;"></div></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 10px;">
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.5);">Due in 2 days</div>
+                        <div class="fpc-avatars">
+                          <div class="fpc-avatar" style="background:#ef4444; border: 2px solid #1e293b"></div>
+                          <div class="fpc-avatar" style="background:#10b981; border: 2px solid #1e293b; margin-left:-10px;"></div>
+                        </div>
                     </div>
                   </div>
-                  <div class="fake-btn" style="background: rgba(255,255,255,0.1); border: 1px dashed #fff;">+ Invite Member</div>
+                  <div class="fake-project-card" style="padding: 15px; opacity: 0.7;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <div class="fpc-title">Mobile App v2</div>
+                        <div style="font-size:10px; padding: 2px 6px; background: rgba(245,158,11,0.2); color: #f59e0b; border-radius:4px">Planning</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            
+
             <!-- Step 3 Graphic -->
             <div class="how-graphic-item hg-3">
                <div class="mockup-window glass-panel" style="border-color: rgba(16,185,129,0.3);">
@@ -302,20 +322,34 @@
                   <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
                   <div class="mockup-title">Kanban.vue</div>
                 </div>
-                <div class="mockup-body row-layout">
+                <div class="mockup-body row-layout" style="padding: 20px;">
                   <div class="kanban-col">
-                     <div class="k-title">TODO</div>
-                     <div class="k-card"></div>
-                     <div class="k-card"></div>
+                     <div class="k-title">TODO <span style="background:rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 10px; margin-left:5px">2</span></div>
+                     <div class="k-card" style="padding: 10px; height: auto;">
+                        <div style="width: 30px; height: 4px; background: #ef4444; border-radius: 2px; margin-bottom: 8px;"></div>
+                        <div style="width: 80%; height: 8px; background: rgba(255,255,255,0.3); border-radius: 4px; margin-bottom: 5px;"></div>
+                        <div style="width: 50%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px;"></div>
+                     </div>
+                     <div class="k-card" style="padding: 10px; height: auto;">
+                        <div style="width: 30px; height: 4px; background: #3b82f6; border-radius: 2px; margin-bottom: 8px;"></div>
+                        <div style="width: 90%; height: 8px; background: rgba(255,255,255,0.3); border-radius: 4px;"></div>
+                     </div>
                   </div>
                   <div class="kanban-col">
-                     <div class="k-title">DOING</div>
-                     <div class="k-card" style="border-left: 3px solid #10b981;"></div>
+                     <div class="k-title">DOING <span style="background:rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 10px; margin-left:5px">1</span></div>
+                     <div class="k-card" style="border-left: 3px solid #10b981; padding: 10px; height: auto;">
+                        <div style="width: 30px; height: 4px; background: #f59e0b; border-radius: 2px; margin-bottom: 8px;"></div>
+                        <div style="width: 70%; height: 8px; background: rgba(255,255,255,0.5); border-radius: 4px; margin-bottom: 5px;"></div>
+                        <div style="width: 40%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; margin-bottom: 10px;"></div>
+                        <div style="display:flex; justify-content: flex-end;">
+                           <div style="width: 16px; height: 16px; border-radius: 50%; background: #10b981;"></div>
+                        </div>
+                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+</div>
         </div>
       </div>
     </section>
@@ -2353,6 +2387,17 @@ const services = [
 }
 
 
+/* FEEDBACK 2 TWEAKS */
+
+/* FEEDBACK 2 TWEAKS */
+.stack-card {
+  border-radius: 0 !important;
+}
+.how-graphic-item {
+  width: 95% !important;
+  max-width: 550px !important;
+}
+
 /* HOW IT WORKS SCROLL ANIMATION */
 .how-scroll-wrapper {
   height: 400vh; /* 3 steps = 300vh + 100vh base */
@@ -3578,6 +3623,17 @@ html, body {
   border-radius: 0 !important;
 }
 
+
+/* FEEDBACK 2 TWEAKS */
+
+/* FEEDBACK 2 TWEAKS */
+.stack-card {
+  border-radius: 0 !important;
+}
+.how-graphic-item {
+  width: 95% !important;
+  max-width: 550px !important;
+}
 
 /* HOW IT WORKS SCROLL ANIMATION */
 .how-scroll-wrapper {
