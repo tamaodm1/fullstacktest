@@ -717,7 +717,7 @@ function onScroll() {
 
   // 1. Apple-style Horizontal Scroll Logic
   const hSection = document.querySelector('.horizontal-scroll-section')
-  const hTrack = document.querySelector('.horizontal-track')
+  const hTrack = document.querySelector('.horizontal-track') as HTMLElement
   if (hSection && hTrack) {
     const rect = hSection.getBoundingClientRect()
     const height = rect.height - window.innerHeight
@@ -2335,7 +2335,7 @@ const services = [
 }
 .ms-header {
   position: static !important;
-  margin-bottom: 8vh !important;
+  margin-bottom: 2vh !important;
 }
 .horizontal-track {
   margin-top: 0 !important;
@@ -2463,6 +2463,16 @@ const services = [
   .how-sticky-container { position: static; height: auto; overflow: visible; }
   .how-graphic-item { position: relative; opacity: 1; transform: none !important; width: 100%; display: none; }
   .how-graphic-item.active-mobile { display: block; }
+}
+
+/* MICROSERVICES TWEAKS */
+
+.horizontal-panel {
+  border: none !important;
+  border-radius: 12px !important;
+}
+.svc-pane-icon {
+  display: none !important;
 }
 
 /* APPLE-STYLE HORIZONTAL SCROLL */
@@ -3542,7 +3552,7 @@ html, body {
 }
 .ms-header {
   position: static !important;
-  margin-bottom: 8vh !important;
+  margin-bottom: 2vh !important;
 }
 .horizontal-track {
   margin-top: 0 !important;
@@ -3670,6 +3680,16 @@ html, body {
   .how-sticky-container { position: static; height: auto; overflow: visible; }
   .how-graphic-item { position: relative; opacity: 1; transform: none !important; width: 100%; display: none; }
   .how-graphic-item.active-mobile { display: block; }
+}
+
+/* MICROSERVICES TWEAKS */
+
+.horizontal-panel {
+  border: none !important;
+  border-radius: 12px !important;
+}
+.svc-pane-icon {
+  display: none !important;
 }
 
 /* APPLE-STYLE HORIZONTAL SCROLL */
