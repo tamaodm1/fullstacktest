@@ -2337,7 +2337,7 @@ const services = [
 @keyframes toastSlide { 0%, 100% { opacity: 0; transform: translateY(20px); } 15%, 85% { opacity: 1; transform: translateY(0); } }
 
 /* REMOVE OLD BUGGY CSS IF IT EXISTS */
-.horizontal-scroll-section { display: none !important; } /* We use ms-section now */
+
 
 /* SAAS EXTRAS */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -3405,7 +3405,7 @@ html, body {
 @keyframes toastSlide { 0%, 100% { opacity: 0; transform: translateY(20px); } 15%, 85% { opacity: 1; transform: translateY(0); } }
 
 /* REMOVE OLD BUGGY CSS IF IT EXISTS */
-.horizontal-scroll-section { display: none !important; } /* We use ms-section now */
+
 
 /* SAAS EXTRAS */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
