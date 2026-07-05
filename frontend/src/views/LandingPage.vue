@@ -628,6 +628,23 @@ const isScrolled = ref(false)
 function onScroll() { isScrolled.value = window.scrollY > 50
 
   // Sticky Stacking Cards Scale Logic
+  
+  // Horizontal Scroll Logic
+  const hSection = document.querySelector('.horizontal-scroll-section')
+  const hTrack = document.querySelector('.horizontal-track')
+  if (hSection && hTrack) {
+    const rect = hSection.getBoundingClientRect()
+    const height = rect.height - window.innerHeight
+    let progress = 0
+    if (rect.top <= 0) {
+      progress = -rect.top / height
+    }
+    progress = Math.max(0, Math.min(1, progress))
+    // 4 panels = 300% translation to see the last one.
+    // 300 / 400 width = 75% translation.
+    hTrack.style.transform = `translateX(-${progress * 75}%)`
+  }
+
   const stackCards = document.querySelectorAll('.stack-card')
   if (stackCards.length > 0) {
     stackCards.forEach((card, index) => {
@@ -2010,6 +2027,92 @@ const services = [
 }
 
 
+
+/* HORIZONTAL SCROLL SECTION */
+.horizontal-scroll-section {
+  height: 400vh; /* 4 panels * 100vh */
+  position: relative;
+  width: 100%;
+  margin-top: 50px;
+}
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.horizontal-header {
+  position: absolute;
+  top: 15vh;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+.horizontal-track {
+  display: flex;
+  width: 400vw;
+  height: 100%;
+  will-change: transform;
+  align-items: center;
+}
+.horizontal-panel {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5vw;
+}
+.svc-pane-content {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 40px;
+  padding: 50px;
+  display: flex;
+  gap: 50px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+  align-items: center;
+}
+.svc-pane-text { flex: 1; text-align: left; }
+.svc-pane-visual { flex: 1; }
+.svc-pane-icon { 
+  width: 60px; height: 60px; 
+  border-radius: 20px; 
+  background: var(--theme-color); 
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+}
+.svc-pane-title { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 16px; }
+.svc-pane-desc { font-size: 1.1rem; color: #a1a1aa; line-height: 1.6; margin-bottom: 30px; }
+.svc-pane-features { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.svc-pane-features li { display: flex; align-items: center; gap: 10px; color: #e4e4e7; font-size: 0.95rem; }
+.svc-pane-features svg { color: var(--theme-color); }
+.svc-mockup-area { 
+  background: #09090b; 
+  border: 1px solid rgba(255,255,255,0.08); 
+  border-radius: 24px; 
+  padding: 30px; 
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 50px rgba(var(--theme-color-rgb), 0.1);
+}
+@media (max-width: 900px) {
+  .svc-pane-content { flex-direction: column; padding: 30px; }
+  .horizontal-header { top: 5vh; }
+  .horizontal-scroll-section { height: 400vh; }
+  .svc-pane-features { grid-template-columns: 1fr; }
+  .svc-mockup-area { height: 300px; }
+}
+
+/* END HORIZONTAL SCROLL SECTION */
+
 /* SAAS EXTRAS */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 .title-text { color: #e4e4e7; }
@@ -2799,6 +2902,92 @@ html, body {
 .card-inner { width: 100%; height: 100%; max-height: 550px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: row; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); }
 .card-content { width: 45%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .card-image-wrap { width: 55%; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); }
+
+
+/* HORIZONTAL SCROLL SECTION */
+.horizontal-scroll-section {
+  height: 400vh; /* 4 panels * 100vh */
+  position: relative;
+  width: 100%;
+  margin-top: 50px;
+}
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.horizontal-header {
+  position: absolute;
+  top: 15vh;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+.horizontal-track {
+  display: flex;
+  width: 400vw;
+  height: 100%;
+  will-change: transform;
+  align-items: center;
+}
+.horizontal-panel {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5vw;
+}
+.svc-pane-content {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 40px;
+  padding: 50px;
+  display: flex;
+  gap: 50px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+  align-items: center;
+}
+.svc-pane-text { flex: 1; text-align: left; }
+.svc-pane-visual { flex: 1; }
+.svc-pane-icon { 
+  width: 60px; height: 60px; 
+  border-radius: 20px; 
+  background: var(--theme-color); 
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+}
+.svc-pane-title { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 16px; }
+.svc-pane-desc { font-size: 1.1rem; color: #a1a1aa; line-height: 1.6; margin-bottom: 30px; }
+.svc-pane-features { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.svc-pane-features li { display: flex; align-items: center; gap: 10px; color: #e4e4e7; font-size: 0.95rem; }
+.svc-pane-features svg { color: var(--theme-color); }
+.svc-mockup-area { 
+  background: #09090b; 
+  border: 1px solid rgba(255,255,255,0.08); 
+  border-radius: 24px; 
+  padding: 30px; 
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 50px rgba(var(--theme-color-rgb), 0.1);
+}
+@media (max-width: 900px) {
+  .svc-pane-content { flex-direction: column; padding: 30px; }
+  .horizontal-header { top: 5vh; }
+  .horizontal-scroll-section { height: 400vh; }
+  .svc-pane-features { grid-template-columns: 1fr; }
+  .svc-mockup-area { height: 300px; }
+}
+
+/* END HORIZONTAL SCROLL SECTION */
 
 /* SAAS EXTRAS */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
