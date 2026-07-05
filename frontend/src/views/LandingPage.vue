@@ -571,39 +571,7 @@ function animateCounter(key: 'services' | 'tasks', target: number, duration = 15
 // ── PARTICLES ──
 const particleCanvas = ref<HTMLCanvasElement | null>(null)
 let animFrame = 0
-function initParticles()
-
-  // Horizontal Scroll Snap (1 lướt 1 cái)
-  const msContainer = document.querySelector('.ms-horizontal-container');
-  if (msContainer) {
-    let isScrolling = false;
-    msContainer.addEventListener('wheel', (e) => {
-      const panels = msContainer.querySelectorAll('.ms-panel');
-      if (panels.length === 0) return;
-      
-      // Calculate current panel index based on scrollLeft
-      const panelWidth = panels[0].clientWidth;
-      let currentIndex = Math.round(msContainer.scrollLeft / panelWidth);
-      
-      if (e.deltaY > 0 && currentIndex < panels.length - 1) {
-        currentIndex++;
-      } else if (e.deltaY < 0 && currentIndex > 0) {
-        currentIndex--;
-      } else {
-        // At the boundaries, let the page scroll vertically
-        return; 
-      }
-      
-      e.preventDefault(); // Stop vertical scroll
-      if (isScrolling) return;
-      
-      isScrolling = true;
-      panels[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      
-      setTimeout(() => { isScrolling = false; }, 600); // Cooldown for 1 scroll
-    }, { passive: false });
-  }
- {
+function initParticles() {
   if (!particleCanvas.value) return
   const canvas: HTMLCanvasElement = particleCanvas.value
   const ctx = canvas.getContext('2d')!
