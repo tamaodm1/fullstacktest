@@ -647,71 +647,68 @@ const toggleTheme = () => {
 }
 
 const isScrolled = ref(false)
-function onScroll() { isScrolled.value = window.scrollY > 50
+function onScroll() { 
+  isScrolled.value = window.scrollY > 50
 
-  // Sticky Stacking Cards Scale Logic
-  
-  
-
-  
-  // Apple-style Horizontal Scroll Logic
-  
-    // Apple-style Horizontal Scroll Logic
-    const hSection = document.querySelector('.horizontal-scroll-section')
-    const hTrack = document.querySelector('.horizontal-track')
-    if (hSection && hTrack) {
-      const rect = hSection.getBoundingClientRect()
-      const height = rect.height - window.innerHeight
-      let progress = 0
-      if (rect.top <= 0) {
-        progress = -rect.top / height
-      }
-      progress = Math.max(0, Math.min(1, progress))
-      // Track width minus viewport width gives max translation
-      const maxTranslate = hTrack.scrollWidth - window.innerWidth
-      hTrack.style.transform = `translateX(-${progress * maxTranslate}px)`
+  // 1. Apple-style Horizontal Scroll Logic
+  const hSection = document.querySelector('.horizontal-scroll-section')
+  const hTrack = document.querySelector('.horizontal-track')
+  if (hSection && hTrack) {
+    const rect = hSection.getBoundingClientRect()
+    const height = rect.height - window.innerHeight
+    let progress = 0
+    if (rect.top <= 0) {
+      progress = -rect.top / height
     }
-
+    progress = Math.max(0, Math.min(1, progress))
+    // Track width minus viewport width gives max translation
+    const maxTranslate = hTrack.scrollWidth - window.innerWidth
+    hTrack.style.transform = `translateX(-${progress * maxTranslate}px)`
   }
 
+  // 2. Stacking Cards Logic
   const stackCards = document.querySelectorAll('.stack-card')
-  if (stackCards.length > 0) {
+  const stackContainer = document.querySelector('.features-stack')
+  
+  if (stackCards.length > 0 && stackContainer) {
     stackCards.forEach((card, index) => {
-      const rect = card.getBoundingClientRect()
-      // If card is sticky at its top position (which is 15vh + index*40px)
+      // Each card is sticky at (15vh + index * 40px)
       const stickyTop = (window.innerHeight * 0.15) + (index * 40)
-      if (rect.top <= stickyTop + 5) {
-        // Calculate how far the page has scrolled past this card
-        // unused variable removed
-        const distance = Math.max(0, -rect.top + stickyTop);
-        let scale = 1 - (distance * 0.0004);
-        scale = Math.max(0.85, scale);
-        let rotateX = Math.min(10, distance * 0.015);
-        let yOffset = distance * -0.15; // Shift Up significantly
-        let translateX = distance * -0.3; // Shift Left significantly to create Top-Left diagonal stack
+      
+      let distance = 0;
+      if (index < stackCards.length - 1) {
+        const nextCard = stackCards[index + 1]
+        const nextRect = nextCard.getBoundingClientRect()
+        const nextStickyTop = (window.innerHeight * 0.15) + ((index + 1) * 40)
         
-        let opacity = Math.max(0.3, 1 - (distance * 0.0015));
-        let blur = Math.min(15, distance * 0.025); // Stronger Blur effect
-        
-        const inner = card.querySelector('.card-inner') as HTMLElement;
-        if (inner) {
-          inner.style.transform = `scale(${scale}) perspective(1200px) rotateX(${rotateX}deg) translate(${translateX}px, ${yOffset}px)`;
-          inner.style.opacity = opacity.toString();
-          inner.style.filter = `blur(${blur}px)`;
-          inner.style.transformOrigin = 'top center';
-          // Smoother transition for blur and transform
-          
-        }
+        // maxOverlap is roughly the height of the card (65vh)
+        const maxOverlap = window.innerHeight * 0.65;
+        const currentOverlap = maxOverlap - (nextRect.top - nextStickyTop)
+        distance = Math.max(0, currentOverlap);
       } else {
-        const inner = card.querySelector('.card-inner') as HTMLElement
-        if (inner) {
-          inner.style.transform = `scale(1)`
-          inner.style.filter = `blur(0px)`
-        }
+         const rect = card.getBoundingClientRect();
+         distance = Math.max(0, -rect.top + stickyTop); // ONLY works when pushed by bottom of container
+      }
+      
+      let scale = 1 - (distance * 0.0004);
+      scale = Math.max(0.85, scale);
+      let rotateX = Math.min(10, distance * 0.015);
+      let yOffset = distance * -0.15; // Shift Up significantly
+      let translateX = distance * -0.3; // Shift Left significantly to create Top-Left diagonal stack
+      
+      let opacity = Math.max(0.3, 1 - (distance * 0.0015));
+      let blur = Math.min(15, distance * 0.025); // Stronger Blur effect
+      
+      const inner = card.querySelector('.card-inner') as HTMLElement;
+      if (inner) {
+        inner.style.transform = `scale(${scale}) perspective(1200px) rotateX(${rotateX}deg) translate(${translateX}px, ${yOffset}px)`;
+        inner.style.opacity = opacity.toString();
+        inner.style.filter = `blur(${blur}px)`;
+        inner.style.transformOrigin = 'top center';
       }
     })
   }
- }
+}
 
 onMounted(() => {
   typeLoop()
