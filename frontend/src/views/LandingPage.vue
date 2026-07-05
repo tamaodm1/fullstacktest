@@ -225,13 +225,11 @@
             </div>
             <p style="text-align: left; color: #a1a1aa; line-height: 1.6; margin-bottom: 24px; width: 100%; font-size: 1rem;">{{ feat.desc }}</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%;">
-              <div v-for="(item, idx) in (feat.items as any[])" :key="idx" style="background: #18181b; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;">
-                <div style="color: #60a5fa;" v-html="item.icon || `<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'></polyline></svg>`"></div>
-                <div style="font-weight: 600; font-size: 0.95rem; color: #f4f4f5; text-align: left; line-height: 1.4;">{{ item.text || item }}</div>
+              <div v-for="(item, idx) in (feat.items as any[])" :key="idx" style="background: #18181b; border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: flex-start; text-align: left; border: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;">
+                <div style="font-weight: 600; font-size: 0.95rem; color: #f4f4f5; line-height: 1.4;">{{ item.text || item }}</div>
               </div>
             </div>
           </div>
-
             <div class="card-image-wrap">
               <div class="feat-preview-html" v-html="feat.mockupHtml" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
             </div>
